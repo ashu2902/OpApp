@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "820580861056",
+    "project_id": "op-bhalla-foundation",
+    "storage_bucket": "op-bhalla-foundation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820580861056:android:9d01aa90f803d0fcf41265",
+        "android_client_info": {
+          "package_name": "com.example.opbhallafoundation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820580861056-cia41kamr0leitlvrnt7p10dpluialfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsCCWas1qEhLCItYfkme2ay0BqBsg6chM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820580861056-cia41kamr0leitlvrnt7p10dpluialfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
