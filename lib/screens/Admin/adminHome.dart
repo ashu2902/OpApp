@@ -16,66 +16,57 @@ class _AdminHomeState extends State<AdminHome> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-  List<UploadTask> uploadedTasks = [];
+  List<UploadTask> uploadedTasks = <UploadTask>[];
 
-  List<File> selectedFiles =
-      []; //creating a list of files that are stored temporarily to be uploaded later
+  List<File> selectedFiles = <
+      File>[]; //creating a list of files that are stored temporarily to be uploaded later
 
-  uploadToStorage(File file) {
-    //to upload selected files to Firebase Storaage
+  uploadFileToStorage(File file) {
     UploadTask task = _firebaseStorage
         .ref()
-        .child("Images/${DateTime.now().toString()}")
+        .child("images/${DateTime.now().toString()}")
         .putFile(file);
-
     return task;
   }
 
-  saveImageURLtoFirestore(UploadTask task) {
-    //to get image url from Firebase Storage
+  writeImageUrlToFireStore(imageUrl) {
+    _firebaseFirestore.collection("images").add({"url": imageUrl}).whenComplete(
+        () => print("$imageUrl is saved in Firestore"));
+  }
+
+  saveImageUrlToFirebase(UploadTask task) {
     task.snapshotEvents.listen((snapShot) {
       if (snapShot.state == TaskState.success) {
         snapShot.ref
             .getDownloadURL()
-            .then((imageURL) => writeImgURLtoFitersore(imageURL));
+            .then((imageUrl) => writeImageUrlToFireStore(imageUrl));
       }
-      print('error');
     });
   }
 
-  writeImgURLtoFitersore(imageURL) {
-    //writes the fetched url from FbStorage to Firestore
-    _firebaseFirestore
-        .collection("Images/")
-        .add({'url': imageURL}).whenComplete(
-            () => print("$imageURL is succesfully saved to Firestore"));
-  }
-
-  //func to select files to upload
   Future selectFileToUpload() async {
     try {
-      FilePickerResult result = await FilePicker.platform.pickFiles(
-          allowMultiple: true,
-          type: FileType.image); //to catch an exception if it happens
+      FilePickerResult result = await FilePicker.platform
+          .pickFiles(allowMultiple: true, type: FileType.image);
 
       if (result != null) {
-        selectedFiles.clear(); //this clears the previously selected files
-        //this block converts the type from "platform file" to "file object"
+        selectedFiles.clear();
+
         result.files.forEach((selectedFile) {
           File file = File(selectedFile.path);
-          selectedFiles.add(
-              file); //adds the user selected files to the 'selectedFiles' list
+          selectedFiles.add(file);
+        });
 
-          selectedFiles.forEach((file) {
-            final UploadTask task = uploadToStorage(
-                file); //lets the user see progress of uploading images
-            setState(() {
-              uploadedTasks.add(task);
-            });
+        selectedFiles.forEach((file) {
+          final UploadTask task = uploadFileToStorage(file);
+          saveImageUrlToFirebase(task);
+
+          setState(() {
+            uploadedTasks.add(task);
           });
         });
       } else {
-        print('User has cancelled');
+        print("User has cancelled the selection");
       }
     } catch (e) {
       print(e);

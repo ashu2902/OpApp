@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class _UserHomePageState extends State<UserHomePage> {
       body: Container(
         padding: const EdgeInsets.all(8),
         child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection("Images").snapshots(),
+          stream: _firestore.collection("images").snapshots(),
           builder: (context, snapshot) {
             return snapshot.hasError
                 ? Center(
