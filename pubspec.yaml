@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  carousel_pro: ^1.0.0
   carousel_slider: ^3.0.0
   cloud_firestore: ^1.0.6
   cupertino_icons: ^1.0.2

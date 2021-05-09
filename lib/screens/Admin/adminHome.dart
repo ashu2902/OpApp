@@ -24,14 +24,16 @@ class _AdminHomeState extends State<AdminHome> {
   uploadFileToStorage(File file) {
     UploadTask task = _firebaseStorage
         .ref()
-        .child("images/${DateTime.now().toString()}")
+        .child("images/highlights/${DateTime.now().toString()}")
         .putFile(file);
     return task;
   }
 
   writeImageUrlToFireStore(imageUrl) {
-    _firebaseFirestore.collection("images").add({"url": imageUrl}).whenComplete(
-        () => print("$imageUrl is saved in Firestore"));
+    _firebaseFirestore
+        .collection("highlights")
+        .add({"url": imageUrl}).whenComplete(
+            () => print("$imageUrl is saved in Firestore"));
   }
 
   saveImageUrlToFirebase(UploadTask task) {
@@ -76,48 +78,49 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                icon: Icon(Icons.photo_album),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserHomePage()));
-                })
-          ],
-          title: Text('Admin Panel'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            selectFileToUpload();
-          },
-        ),
-        body: uploadedTasks.length == 0
-            ? Center(
-                child: Text('please select images to upload'),
-              )
-            : ListView.separated(
-                itemBuilder: (context, index) {
-                  return StreamBuilder<TaskSnapshot>(
-                    builder: (context, snapShot) {
-                      return snapShot.connectionState == ConnectionState.waiting
-                          ? CircularProgressIndicator()
-                          : snapShot.hasError
-                              ? Center(
-                                  child: Text("there's an error"),
-                                )
-                              : snapShot.hasData
-                                  ? ListTile(
-                                      title: Text(
-                                          "${snapShot.data.bytesTransferred}/${snapShot.data.totalBytes} ${snapShot.data.state == TaskState.success ? 'completed' : snapShot.data.state == TaskState.running ? 'In Progress' : 'Error'}"),
-                                    )
-                                  : Container();
-                    },
-                    stream: uploadedTasks[index].snapshotEvents,
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: uploadedTasks.length));
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: Icon(Icons.photo_album),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => UserHomePage()));
+              })
+        ],
+        title: Text('Admin Panel'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          selectFileToUpload();
+        },
+      ),
+      body: uploadedTasks.length == 0
+          ? Center(
+              child: Text('please select images to upload'),
+            )
+          : ListView.separated(
+              itemBuilder: (context, index) {
+                return StreamBuilder<TaskSnapshot>(
+                  builder: (context, snapShot) {
+                    return snapShot.connectionState == ConnectionState.waiting
+                        ? CircularProgressIndicator()
+                        : snapShot.hasError
+                            ? Center(
+                                child: Text("there's an error"),
+                              )
+                            : snapShot.hasData
+                                ? ListTile(
+                                    title: Text(
+                                        "${snapShot.data.bytesTransferred}/${snapShot.data.totalBytes} ${snapShot.data.state == TaskState.success ? 'completed' : snapShot.data.state == TaskState.running ? 'In Progress' : 'Error'}"),
+                                  )
+                                : Container();
+                  },
+                  stream: uploadedTasks[index].snapshotEvents,
+                );
+              },
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: uploadedTasks.length),
+    );
   }
 }
