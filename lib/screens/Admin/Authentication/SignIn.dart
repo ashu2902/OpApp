@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/Admin/Authentication/SplashScreen.dart';
 import 'package:opbhallafoundation/screens/Admin/Categories.dart';
 import 'package:opbhallafoundation/screens/Admin/adminHome.dart';
 
@@ -13,48 +14,78 @@ class _SignInState extends State<SignIn> {
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('SignIn'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(hintText: 'Enter Email'),
-            onChanged: (value) {
-              _email = value.trim();
-            },
-          ),
-          TextField(
-            controller: _passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(hintText: 'Enter Password'),
-            onChanged: (value) {
-              _password = value.trim();
-            },
-          ),
-          Row(
+      body: Container(
+        child: Center(
+          child: Column(
             children: [
-              ElevatedButton(
-                child: Text('SignUp'),
-                onPressed: () {
-                  signIn();
-                  _emailController.clear();
-                  _passwordController.clear();
-                },
+              Padding(
+                padding: const EdgeInsets.only(bottom: 150, top: 100),
+                child: Container(
+                  child: Text(
+                    'Sign In as Admin',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('SignIn'),
+              Container(
+                width: _width / 1.5,
+                child: TextField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: 'Enter Email', border: OutlineInputBorder()),
+                  onChanged: (value) {
+                    _email = value.trim();
+                  },
+                ),
               ),
+              SizedBox(
+                height: _height / 69,
+              ),
+              Container(
+                width: _width / 1.5,
+                child: TextField(
+                  obscureText: true,
+                  controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                      hintText: 'Enter Password', border: OutlineInputBorder()),
+                  onChanged: (value) {
+                    _password = value.trim();
+                  },
+                ),
+              ),
+              SizedBox(
+                height: _height / 69,
+              ),
+              Container(
+                height: _height / 20,
+                width: _width / 2.5,
+                child: ElevatedButton(
+                  child: Text('Sign In '),
+                  onPressed: () {
+                    signIn();
+                    _emailController.clear();
+                    _passwordController.clear();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AdminSplashScreen()));
+                  },
+                ),
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
@@ -64,7 +95,6 @@ class _SignInState extends State<SignIn> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: _email, password: _password);
       print('User Signed In');
-      return Categories();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('User does not exist');
