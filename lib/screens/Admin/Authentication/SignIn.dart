@@ -26,13 +26,14 @@ class _SignInState extends State<SignIn> {
       body: Container(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 150, top: 100),
+                padding: const EdgeInsets.only(top: 0, bottom: 60),
                 child: Container(
                   child: Text(
                     'Sign In as Admin',
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ),
               ),
