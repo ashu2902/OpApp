@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/RecentActivities.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -7,6 +9,8 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -15,7 +19,7 @@ class _CategoriesState extends State<Categories> {
       appBar: AppBar(
         title: Center(
             child: Text(
-          'Categories',
+          'Admin Panel',
         )),
       ),
       body: Container(
@@ -109,15 +113,6 @@ class _CategoriesState extends State<Categories> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class EditRecentActivities extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Edit Recent Activities'),
     );
   }
 }

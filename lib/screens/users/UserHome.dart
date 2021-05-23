@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
+import 'package:opbhallafoundation/screens/Admin/Categories.dart';
+import 'package:opbhallafoundation/widgets/Carousels.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -17,164 +20,112 @@ class _UserHomePageState extends State<UserHomePage> {
     final _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        animationDuration: Duration(milliseconds: 300),
-        index: 1,
-        height: _height / 15,
-        backgroundColor: Colors.white,
-        buttonBackgroundColor: Colors.blue,
-        items: <Widget>[
-          Icon(
-            Icons.monetization_on_outlined,
-            size: 40,
-            key: Key('Donate'),
-          ),
-          Icon(Icons.home, size: 40),
-          Icon(Icons.calendar_today_outlined, size: 40),
-        ],
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DonationScreen()));
-          }
-          if (index == 1) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserHomePage()));
-          }
-          if (index == 2) {
-            return Container(child: Text('Spotlight'));
-          }
-        },
-      ),
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.white,
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   animationDuration: Duration(milliseconds: 800),
+      //   index: 1,
+      //   height: 75,
+      //   color: Colors.redAccent,
+      //   backgroundColor: Colors.white,
+      //   buttonBackgroundColor: Colors.transparent,
+      //   animationCurve: Curves.bounceIn,
+      //   items: <Widget>[
+      //     Icon(Icons.monetization_on_outlined,
+      //         size: 46, color: Colors.black, semanticLabel: 'Donate'),
+      //     Icon(Icons.home,
+      //         size: 46, color: Colors.black, semanticLabel: 'Home'),
+      //     Icon(Icons.calendar_today_outlined, size: 46, color: Colors.black),
+      //   ],
+      //   onTap: (index) {
+      //     if (index == 0) {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => DonationScreen(),
+      //         ),
+      //       );
+      //     }
+      //     if (index == 1) {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => UserHomePage(),
+      //         ),
+      //       );
+      //     }
+      //     if (index == 2) {
+      //       return Container(
+      //         child: Text('Spotlight'),
+      //       );
+      //     }
+      //   },
+      // ),
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         title: Text(
           'The OP Bhalla Foundation',
+          style: TextStyle(color: Colors.black),
           textAlign: TextAlign.center,
         ),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            color: Colors.black,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
       ),
-      drawer: Drawer(child: ListTile(),),
-      body: Container(
-        padding: const EdgeInsets.all(8),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection("images").snapshots(),
-          builder: (context, snapshot) {
-            return snapshot.hasError
-                ? Center(
-                    child: Text("There is some problem loading your images"),
-                  )
-                : snapshot.hasData
-                    ? ListView(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 1.0),
-                              height: _height / 18,
-                              child: Center(
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: 'Highlights ',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 24),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: _height / 3,
-                            width: _width / 2,
-                            child: CarouselSlider(
-                              items: snapshot.data.docs
-                                  .map(
-                                    (e) => Stack(
-                                      children: [
-                                        Container(
-                                          width: _width,
-                                          height: _height,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.transparent),
-                                          child: Image.network(
-                                            e.get('url'),
-                                            fit: BoxFit.cover,
-                                            scale: 1,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          child: Container(
-                                            height: _height / 9,
-                                            width: _width,
-                                            color: const Color(0xFF696969)
-                                                .withOpacity(0.5),
-                                            child: Text(
-                                              'This is a text',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
-                              options: CarouselOptions(
-                                  height: _height,
-                                  autoPlayAnimationDuration:
-                                      Duration(seconds: 2),
-                                  autoPlayInterval: Duration(seconds: 6),
-                                  autoPlay: true,
-                                  enlargeCenterPage: true,
-                                  aspectRatio: 16 / 9,
-                                  viewportFraction: 1),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 1.0),
-                              height: _height / 18,
-                              child: Center(
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: 'Recent Activities',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 24),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: _height / 3,
-                            child: Container(
-                              child: CarouselSlider(
-                                items: snapshot.data.docs
-                                    .map((e) => Image.network(
-                                          e.get('url'),
-                                          height: _height,
-                                          width: _width,
-                                          fit: BoxFit.cover,
-                                        ))
-                                    .toList(),
-                                options: CarouselOptions(
-                                  autoPlayAnimationDuration:
-                                      Duration(seconds: 2),
-                                  autoPlayInterval: Duration(seconds: 6),
-                                  height: _height,
-                                  autoPlay: true,
-                                  enlargeCenterPage: true,
-                                  aspectRatio: 16 / 9,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Container();
-          },
+      drawer: Drawer(
+        child: ListTile(
+          title: Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Categories(),
+                  ),
+                );
+              },
+              child: TextButton(
+                child: Text('Sign In as Admin'),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignIn(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Highlights',
+                  style: TextStyle(fontSize: 18, color: Colors.black45),
+                ),
+              ),
+              HighlightsCarousel(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Recent Activities',
+                  style: TextStyle(fontSize: 18, color: Colors.black45),
+                ),
+              ),
+              RecentActivitiesCarousel(),
+            ],
+          ),
         ),
       ),
     );
@@ -184,7 +135,49 @@ class _UserHomePageState extends State<UserHomePage> {
 class DonationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        bottomNavigationBar: CurvedNavigationBar(
+          animationDuration: Duration(milliseconds: 800),
+          index: 0,
+          height: 75,
+          color: Colors.redAccent,
+          backgroundColor: Colors.white,
+          buttonBackgroundColor: Colors.transparent,
+          animationCurve: Curves.bounceIn,
+          items: <Widget>[
+            Icon(Icons.monetization_on_outlined,
+                size: 46, color: Colors.black, semanticLabel: 'Donate'),
+            Icon(Icons.home,
+                size: 46, color: Colors.black, semanticLabel: 'Home'),
+            Icon(Icons.calendar_today_outlined, size: 46, color: Colors.black),
+          ],
+          onTap: (index) {
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DonationScreen(),
+                ),
+              );
+            }
+            if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserHomePage(),
+                ),
+              );
+            }
+            if (index == 2) {
+              return Container(
+                child: Text('Spotlight'),
+              );
+            }
+          },
+        ),
+        body: Container(
+          child: Center(child: Text('Donation Screen')),
+        ));
   }
 }
 
@@ -195,12 +188,9 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-
 class DrawerTiles extends StatelessWidget {
   @override
-  Widget build(BuildContext context ) {
-    return Container(
-      
-    );
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

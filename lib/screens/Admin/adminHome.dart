@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
 import 'package:opbhallafoundation/screens/users/UserHome.dart';
 
 class AdminHome extends StatefulWidget {
@@ -29,11 +30,15 @@ class _AdminHomeState extends State<AdminHome> {
     return task;
   }
 
-  writeImageUrlToFireStore(imageUrl) {
+  writeImageUrlToFireStore(imageUrl) async {
     _firebaseFirestore
         .collection("highlights")
-        .add({"url": imageUrl}).whenComplete(
+        .add({"url": imageUrl, "desc": getDesc(), "id": ""}).whenComplete(
             () => print("$imageUrl is saved in Firestore"));
+  }
+
+  getDesc() {
+    TextEditingController imageController = TextEditingController();
   }
 
   saveImageUrlToFirebase(UploadTask task) {
@@ -78,49 +83,61 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.photo_album),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserHomePage()));
-              })
-        ],
-        title: Text('Admin Panel'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          selectFileToUpload();
-        },
-      ),
-      body: uploadedTasks.length == 0
-          ? Center(
-              child: Text('please select images to upload'),
-            )
-          : ListView.separated(
-              itemBuilder: (context, index) {
-                return StreamBuilder<TaskSnapshot>(
-                  builder: (context, snapShot) {
-                    return snapShot.connectionState == ConnectionState.waiting
-                        ? CircularProgressIndicator()
-                        : snapShot.hasError
-                            ? Center(
-                                child: Text("there's an error"),
-                              )
-                            : snapShot.hasData
-                                ? ListTile(
-                                    title: Text(
-                                        "${snapShot.data.bytesTransferred}/${snapShot.data.totalBytes} ${snapShot.data.state == TaskState.success ? 'completed' : snapShot.data.state == TaskState.running ? 'In Progress' : 'Error'}"),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+                icon: Icon(Icons.photo_album),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserHomePage()));
+                })
+          ],
+          title: Text('Admin Panel'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            selectFileToUpload();
+          },
+        ),
+        body: Column(children: [
+          uploadedTasks.length == 0
+              ? Center(
+                  child: Text('please select images to upload'),
+                )
+              : ListView.separated(
+                  itemBuilder: (context, index) {
+                    return StreamBuilder<TaskSnapshot>(
+                      builder: (context, snapShot) {
+                        return snapShot.connectionState ==
+                                ConnectionState.waiting
+                            ? CircularProgressIndicator()
+                            : snapShot.hasError
+                                ? Center(
+                                    child: Text("there's an error"),
                                   )
-                                : Container();
+                                : snapShot.hasData
+                                    ? ListTile(
+                                        title: Text(
+                                            "${snapShot.data.bytesTransferred}/${snapShot.data.totalBytes} ${snapShot.data.state == TaskState.success ? 'completed' : snapShot.data.state == TaskState.running ? 'In Progress' : 'Error'}"),
+                                      )
+                                    : Container();
+                      },
+                      stream: uploadedTasks[index].snapshotEvents,
+                    );
                   },
-                  stream: uploadedTasks[index].snapshotEvents,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: uploadedTasks.length),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditHighlights(),
+                  ),
                 );
               },
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: uploadedTasks.length),
-    );
+              child: Text('Highlights'))
+        ]));
   }
 }

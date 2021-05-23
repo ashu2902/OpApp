@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:opbhallafoundation/screens/Admin/Categories.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
-import 'package:opbhallafoundation/screens/Admin/adminHome.dart';
+import 'package:opbhallafoundation/screens/Admin/Authentication/Register.dart';
+
 import 'package:opbhallafoundation/screens/users/UserHome.dart';
 
 void main() async {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: EditHighlights(),
+      home: UserHomePage(),
     );
   }
 }
