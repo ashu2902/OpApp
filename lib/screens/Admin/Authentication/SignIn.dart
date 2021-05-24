@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SplashScreen.dart';
-import 'package:opbhallafoundation/screens/Admin/Categories.dart';
-import 'package:opbhallafoundation/screens/Admin/adminHome.dart';
+import 'package:opbhallafoundation/screens/users/UserHome.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -21,7 +21,14 @@ class _SignInState extends State<SignIn> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('SignIn'),
+        leading: IconButton(
+            icon: Icon(Icons.home_outlined),
+            onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => UserHomePage()),
+                (route) => false)),
+        title: Text('Admin Authentication'),
+        centerTitle: true,
       ),
       body: Container(
         child: Center(
@@ -74,13 +81,13 @@ class _SignInState extends State<SignIn> {
                 child: ElevatedButton(
                   child: Text('Sign In '),
                   onPressed: () {
-                    signIn();
+                    signIn(_email, _password);
                     _emailController.clear();
                     _passwordController.clear();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AdminSplashScreen()));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => AdminSplashScreen()));
                   },
                 ),
               )
@@ -91,28 +98,20 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  signIn() async {
+  signIn(String _email, String _password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password);
-      print('User Signed In');
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('User does not exist');
-        return Container(
-          child: Center(child: Text('User Does not exist \n ${e.message}')),
-        );
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-        return Dialog(
-          child: Container(
-            child: Text(
-              "You've entered a wrong password",
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
+      await auth.signInWithEmailAndPassword(email: _email, password: _password);
+      if (auth.currentUser != null) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AdminSplashScreen()));
+        print('User Signed In');
       }
+    } on FirebaseAuthException catch (error) {
+      Fluttertoast.showToast(
+          msg: error.message,
+          gravity: ToastGravity.TOP,
+          fontSize: 10,
+          backgroundColor: Colors.white);
     }
   }
 }

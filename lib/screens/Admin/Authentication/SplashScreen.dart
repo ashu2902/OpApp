@@ -14,11 +14,13 @@ class _AdminSplashScreenState extends State<AdminSplashScreen> {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
       if (auth.currentUser == null) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
+        print('please sign in');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+        );
       } else {
+        print('user signed in');
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => Categories()),

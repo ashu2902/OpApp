@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:opbhallafoundation/screens/Admin/Authentication/Register.dart';
-
 import 'package:opbhallafoundation/screens/users/UserHome.dart';
 
 void main() async {

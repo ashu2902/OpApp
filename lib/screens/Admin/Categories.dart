@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/RecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,11 @@ class _CategoriesState extends State<Categories> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              signOut();
+            }),
         title: Center(
             child: Text(
           'Admin Panel',
@@ -114,6 +120,14 @@ class _CategoriesState extends State<Categories> {
         ),
       ),
     );
+  }
+
+  signOut() async {
+    await auth.signOut();
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => SignIn()), (route) => false);
+    print('user signed out');
   }
 }
 

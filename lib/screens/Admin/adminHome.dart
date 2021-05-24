@@ -33,12 +33,8 @@ class _AdminHomeState extends State<AdminHome> {
   writeImageUrlToFireStore(imageUrl) async {
     _firebaseFirestore
         .collection("highlights")
-        .add({"url": imageUrl, "desc": getDesc(), "id": ""}).whenComplete(
+        .add({"url": imageUrl, "id": ""}).whenComplete(
             () => print("$imageUrl is saved in Firestore"));
-  }
-
-  getDesc() {
-    TextEditingController imageController = TextEditingController();
   }
 
   saveImageUrlToFirebase(UploadTask task) {

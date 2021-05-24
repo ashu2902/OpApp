@@ -158,7 +158,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                                             ),
                                                             Container(
                                                               child:
-                                                                  SpecificDelete(),
+                                                                  DeleteButton(),
                                                             ),
                                                           ],
                                                         ),
@@ -209,37 +209,40 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                 onPressed: () => showDialog(
                                   context: context,
                                   builder: (context) => Dialog(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: _width / 2,
-                                          height: _height / 20,
-                                          child: TextField(
-                                            onEditingComplete: () {
-                                              desc = highlightController.text;
-                                            },
-                                            controller: highlightController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              border: UnderlineInputBorder(),
-                                              hintText: 'Enter Description',
+                                    child: Container(
+                                      height: _height / 4,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: _width / 2,
+                                            height: _height / 20,
+                                            child: TextField(
+                                              onEditingComplete: () {
+                                                desc = highlightController.text;
+                                              },
+                                              controller: highlightController,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                border: UnderlineInputBorder(),
+                                                hintText: 'Enter Description',
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          child: ElevatedButton(
-                                            child: Text('Add Activity'),
-                                            onPressed: () {
-                                              selectFileToUpload();
-                                              Navigator.pop(context);
-                                            },
+                                          Container(
+                                            child: ElevatedButton(
+                                              child: Text('Add Activity'),
+                                              onPressed: () {
+                                                selectFileToUpload();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -273,99 +276,10 @@ class _DeleteButtonState extends State<DeleteButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextButton(
-          onPressed: () => deleteHighlight(),
-          child: Container(
-            color: Colors.red,
-            child: Text('Delete This'),
-          )),
-    );
-  }
-}
-
-class SpecificDelete extends StatefulWidget {
-  @override
-  _SpecificDeleteState createState() => _SpecificDeleteState();
-}
-
-class _SpecificDeleteState extends State<SpecificDelete> {
-  CollectionReference documents =
-      FirebaseFirestore.instance.collection('RecentActivities');
-
-  getData() async {
-    return FirebaseFirestore.instance
-        .collection('RecentActivities')
-        .snapshots();
-  }
-
-  deleteData(docID) {
-    FirebaseFirestore.instance
-        .collection('RecentActivities/')
-        .doc(docID)
-        .delete()
-        .catchError((e) {
-      print(e);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-          onPressed: () {},
-          child: Container(
-            color: Colors.red,
-            child: Text('Delete This Activity'),
-          )),
-    );
-  }
-}
-
-class GetUserName extends StatelessWidget {
-  final String documentId;
-
-  GetUserName(this.documentId);
-
-  getData() async {
-    return await FirebaseFirestore.instance
-        .collection('RecentActivities')
-        .snapshots();
-  }
-
-  deleteData(docID) {
-    FirebaseFirestore.instance
-        .collection('RecentActivities')
-        .doc(docID)
-        .delete()
-        .catchError((e) {
-      print(e);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference users =
-        FirebaseFirestore.instance.collection('RecentActivities');
-
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(documentId).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data.exists) {
-          return Text("Document does not exist");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data.data();
-          return Text("url: ${data['url']} ${data['desc']}");
-        }
-
-        return Text("loading");
-      },
+      child: ElevatedButton(
+        onPressed: () => deleteHighlight(),
+        child: Text('Delete This'),
+      ),
     );
   }
 }
