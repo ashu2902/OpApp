@@ -5,12 +5,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class EditRecentActivities extends StatefulWidget {
+class EditOurInitiatives extends StatefulWidget {
   @override
-  _EditRecentActivitiesState createState() => _EditRecentActivitiesState();
+  _EditOurInitiativesState createState() => _EditOurInitiativesState();
 }
 
-class _EditRecentActivitiesState extends State<EditRecentActivities> {
+class _EditOurInitiativesState extends State<EditOurInitiatives> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -22,7 +22,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
   uploadFileToStorage(File file) {
     UploadTask task = _firebaseStorage
         .ref()
-        .child("images/RecentActivities/${DateTime.now().toString()}")
+        .child("images/OurInitiatives/${DateTime.now().toString()}")
         .putFile(file);
     return task;
   }
@@ -36,7 +36,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
   ) {
     desc = highlightController.text;
     _firebaseFirestore
-        .collection("RecentActivities")
+        .collection("OurInitiatives")
         .add({"url": imageUrl, "desc": desc}).whenComplete(
             () => print("$imageUrl is saved in Firestore. $desc"));
   }
@@ -86,20 +86,19 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Recent Activities'),
+        title: Text('Edit Our Initiatives'),
       ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: StreamBuilder(
-          stream: _firebaseFirestore.collection('RecentActivities').snapshots(),
+          stream: _firebaseFirestore.collection('OurInitiatives').snapshots(),
           builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
             return snapshot.hasError
                 ? Container(
                     child: Text('error'),
                   )
                 : snapshot.hasData
-                    ? 
-                    Column(
+                    ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -115,7 +114,6 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                 itemBuilder: (context, index) {
                                   var doc = snapshot.data.docs[index].data();
                                   var img = snapshot.data.docs[index].data();
-                                  
 
                                   return Column(
                                     children: [
@@ -282,8 +280,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                           ),
                         ],
                       )
-                    :
-                    CircularProgressIndicator(
+                    : CircularProgressIndicator(
                         value: 2,
                         semanticsLabel: 'Loading',
                       );
@@ -301,7 +298,7 @@ class DeleteButton extends StatefulWidget {
 
 class _DeleteButtonState extends State<DeleteButton> {
   CollectionReference highlights =
-      FirebaseFirestore.instance.collection('RecentActivities');
+      FirebaseFirestore.instance.collection('OurInitiatives');
 
   deleteHighlight() async {
     QuerySnapshot snapshot = await highlights.get();
@@ -318,5 +315,3 @@ class _DeleteButtonState extends State<DeleteButton> {
     );
   }
 }
-
-

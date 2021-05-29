@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/Admin/Authentication/Register.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditInitiatives.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/RecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +25,12 @@ class _CategoriesState extends State<Categories> {
             onPressed: () {
               signOut();
             }),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AdminRegister())))
+        ],
         title: Center(
             child: Text(
           'Admin Panel',
@@ -111,6 +119,25 @@ class _CategoriesState extends State<Categories> {
                                         builder: (context) => EditGallery()));
                               },
                               child: Text('Gallery'))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: _height / 10,
+                        width: _width / 2,
+                        decoration: BoxDecoration(color: Colors.red),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditOurInitiatives(),
+                              ),
+                            );
+                          },
+                          child: Text('Our Initiatives'),
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
-import 'package:opbhallafoundation/screens/Admin/Categories.dart';
+import 'package:opbhallafoundation/screens/Admin/AdministratorHome.dart';
 
 class AdminSplashScreen extends StatefulWidget {
   @override

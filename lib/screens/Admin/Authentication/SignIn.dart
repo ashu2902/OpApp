@@ -50,9 +50,11 @@ class _SignInState extends State<SignIn> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      hintText: 'Enter Email', border: OutlineInputBorder()),
+                    hintText: 'Enter Email',
+                    border: OutlineInputBorder(),
+                  ),
                   onChanged: (value) {
-                    _email = value.trim();
+                    _email = value.trim().toLowerCase();
                   },
                 ),
               ),
@@ -66,7 +68,9 @@ class _SignInState extends State<SignIn> {
                   controller: _passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                      hintText: 'Enter Password', border: OutlineInputBorder()),
+                    hintText: 'Enter Password',
+                    border: OutlineInputBorder(),
+                  ),
                   onChanged: (value) {
                     _password = value.trim();
                   },
@@ -110,7 +114,8 @@ class _SignInState extends State<SignIn> {
       Fluttertoast.showToast(
           msg: error.message,
           gravity: ToastGravity.TOP,
-          fontSize: 10,
+          fontSize: 20,
+          timeInSecForIosWeb: 2,
           backgroundColor: Colors.white);
     }
   }

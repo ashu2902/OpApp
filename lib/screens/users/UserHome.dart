@@ -1,9 +1,9 @@
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
-import 'package:opbhallafoundation/screens/Admin/Categories.dart';
 import 'package:opbhallafoundation/widgets/Carousels.dart';
+
+import '../SupportUs.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -11,53 +11,27 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
-
   @override
   Widget build(BuildContext context) {
-  
-
+    final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
-      // bottomNavigationBar: CurvedNavigationBar(
-      //   animationDuration: Duration(milliseconds: 800),
-      //   index: 1,
-      //   height: 75,
-      //   color: Colors.redAccent,
-      //   backgroundColor: Colors.white,
-      //   buttonBackgroundColor: Colors.transparent,
-      //   animationCurve: Curves.bounceIn,
-      //   items: <Widget>[
-      //     Icon(Icons.monetization_on_outlined,
-      //         size: 46, color: Colors.black, semanticLabel: 'Donate'),
-      //     Icon(Icons.home,
-      //         size: 46, color: Colors.black, semanticLabel: 'Home'),
-      //     Icon(Icons.calendar_today_outlined, size: 46, color: Colors.black),
-      //   ],
-      //   onTap: (index) {
-      //     if (index == 0) {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => DonationScreen(),
-      //         ),
-      //       );
-      //     }
-      //     if (index == 1) {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => UserHomePage(),
-      //         ),
-      //       );
-      //     }
-      //     if (index == 2) {
-      //       return Container(
-      //         child: Text('Spotlight'),
-      //       );
-      //     }
-      //   },
-      // ),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: 1,
+        height: _height / 15,
+        color: Colors.blue[900],
+        backgroundColor: Colors.white,
+        buttonBackgroundColor: Colors.white,
+        animationCurve: Curves.easeIn,
+        animationDuration: Duration(milliseconds: 250),
+        items: <Widget>[
+          Icon(Icons.attach_money,
+              size: 36, color: Colors.black, semanticLabel: 'Donate'),
+          Icon(Icons.home,
+              size: 36, color: Colors.black, semanticLabel: 'Home'),
+          Icon(Icons.calendar_today_outlined, size: 36, color: Colors.black),
+        ],
+      ),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -76,42 +50,20 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
         ),
       ),
-      drawer: Drawer(
-        child: ListTile(
-          title: Center(
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Categories(),
-                  ),
-                );
-              },
-              child: TextButton(
-                child: Text('Sign In as Admin'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignIn(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      drawer: Drawer(child: DrawerTiles()),
       body: SingleChildScrollView(
         child: Container(
+          color: Colors.white,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Highlights',
-                  style: TextStyle(fontSize: 18, color: Colors.black45),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 40, bottom: 8),
+              //   child: Text(
+              //     'Highlights',
+              //     style: TextStyle(fontSize: 18, color: Colors.black45),
+              //   ),
+              // ),
               HighlightsCarousel(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -129,65 +81,100 @@ class _UserHomePageState extends State<UserHomePage> {
   }
 }
 
-class DonationScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          animationDuration: Duration(milliseconds: 800),
-          index: 0,
-          height: 75,
-          color: Colors.redAccent,
-          backgroundColor: Colors.white,
-          buttonBackgroundColor: Colors.transparent,
-          animationCurve: Curves.bounceIn,
-          items: <Widget>[
-            Icon(Icons.monetization_on_outlined,
-                size: 46, color: Colors.black, semanticLabel: 'Donate'),
-            Icon(Icons.home,
-                size: 46, color: Colors.black, semanticLabel: 'Home'),
-            Icon(Icons.calendar_today_outlined, size: 46, color: Colors.black),
-          ],
-          onTap: (index) {
-            if (index == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DonationScreen(),
-                ),
-              );
-            }
-            if (index == 1) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserHomePage(),
-                ),
-              );
-            }
-            if (index == 2) {
-              return Container(
-                child: Text('Spotlight'),
-              );
-            }
-          },
-        ),
-        body: Container(
-          child: Center(child: Text('Donation Screen')),
-        ));
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 class DrawerTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Stack(children: [
+        ListView(addRepaintBoundaries: true, children: [
+          DrawerHeader(
+              child: Image(
+            image: AssetImage("assets/FoundationLogo.png"),
+          )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ListTile(
+                  title: Text(
+                    'Our Initiatives',
+                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  ),
+                  onTap: () {}),
+              ListTile(
+                  title: Text(
+                    'Gallery',
+                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  ),
+                  onTap: () {}),
+              ListTile(
+                title: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      onChanged: (value) {
+                        if (value == 'Support as Volunteer') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SupportAsVolunteer()));
+                        } else if (value == 'Support as Intern') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SupportAsIntern()));
+                        }
+                      },
+                      hint: Text(
+                        'Support Us',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                      ),
+                      items: <String>[
+                        'Support as Volunteer',
+                        'Support as Intern'
+                      ].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList()),
+                ),
+              ),
+              ListTile(
+                  title: Text(
+                    'Event Registration',
+                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  ),
+                  onTap: () {}),
+              ListTile(
+                  title: Text(
+                    'About Us',
+                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  ),
+                  onTap: () {}),
+              ListTile(
+                  title: Text(
+                    'Contact Us',
+                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  ),
+                  onTap: () {}),
+            ],
+          ),
+        ]),
+        Positioned(
+            left: 1,
+            right: 1,
+            bottom: 2,
+            child: TextButton(
+              child: Text(
+                'Sign In as Admin',
+                style: TextStyle(fontSize: 13, color: Colors.black),
+              ),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignIn(),
+                ),
+              ),
+            )),
+      ]),
+    );
   }
 }

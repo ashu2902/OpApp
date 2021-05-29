@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Authentication extends StatefulWidget {
+class AdminRegister extends StatefulWidget {
   @override
-  _AuthenticationState createState() => _AuthenticationState();
+  _AdminRegisterState createState() => _AdminRegisterState();
 }
 
-class _AuthenticationState extends State<Authentication> {
+class _AdminRegisterState extends State<AdminRegister> {
   String _email, _password = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _emailController = TextEditingController();
@@ -14,32 +14,64 @@ class _AuthenticationState extends State<Authentication> {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('Authentication'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(hintText: 'Enter Email'),
-            onChanged: (value) {
-              _email = value.trim();
-            },
-          ),
-          TextField(
-            controller: _passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(hintText: 'Enter Password'),
-            onChanged: (value) {
-              _password = value.trim();
-            },
-          ),
-          Row(
-            children: [
-              ElevatedButton(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 0, bottom: 60),
+              child: Container(
+                child: Text(
+                  'Create a new Admin',
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+            ),
+            Container(
+              width: _width / 1.5,
+              child: TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  hintText: 'Enter Email',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  _email = value.trim().toLowerCase();
+                },
+              ),
+            ),
+            SizedBox(
+              height: _height / 69,
+            ),
+            Container(
+              width: _width / 1.5,
+              child: TextField(
+                obscureText: true,
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  hintText: 'Enter Password',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  _password = value.trim();
+                },
+              ),
+            ),
+            SizedBox(
+              height: _height / 69,
+            ),
+            Container(
+              height: _height / 20,
+              width: _width / 2.5,
+              child: ElevatedButton(
                 child: Text('SignUp'),
                 onPressed: () {
                   signUp();
@@ -47,13 +79,9 @@ class _AuthenticationState extends State<Authentication> {
                   _passwordController.clear();
                 },
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('SignIn'),
-              ),
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
