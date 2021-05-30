@@ -184,22 +184,24 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                                               ),
                                                             ),
                                                             ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .update({
-                                                                    "desc":
-                                                                        editRecentActDescriptionController
-                                                                            .text
-                                                                  }).whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
-                                                                },
-                                                                child: Text(
-                                                                    'Edit Description')),
+                                                              onPressed: () {
+                                                                snapshot
+                                                                    .data
+                                                                    .docs[index]
+                                                                    .reference
+                                                                    .update({
+                                                                  "desc":
+                                                                      editRecentActDescriptionController
+                                                                          .text
+                                                                }).whenComplete(
+                                                                  () => Navigator
+                                                                      .pop(
+                                                                          context),
+                                                                );
+                                                              },
+                                                              child: Text(
+                                                                  'Edit Description'),
+                                                            ),
                                                             Container(
                                                               child:
                                                                   ElevatedButton(
@@ -210,9 +212,10 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                                                           index]
                                                                       .reference
                                                                       .delete()
-                                                                      .whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
+                                                                      .whenComplete(
+                                                                        () => Navigator.pop(
+                                                                            context),
+                                                                      );
                                                                 },
                                                                 child: Text(
                                                                     'Delete'),
@@ -332,9 +335,11 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                           ),
                         ],
                       )
-                    : CircularProgressIndicator(
-                        value: 2,
-                        semanticsLabel: 'Loading',
+                    :  Center(
+                        child: CircularProgressIndicator(
+                          value: 5,
+                          semanticsLabel: 'Loading',
+                        ),
                       );
           },
         ),

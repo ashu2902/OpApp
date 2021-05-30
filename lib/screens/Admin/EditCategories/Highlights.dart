@@ -308,7 +308,12 @@ class _EditHighlightsState extends State<EditHighlights> {
                           ),
                         ],
                       )
-                    : Container();
+                    :  Center(
+                        child: CircularProgressIndicator(
+                          value: 5,
+                          semanticsLabel: 'Loading',
+                        ),
+                      );
           },
         ),
       ),

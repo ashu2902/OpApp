@@ -332,9 +332,11 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                           ),
                         ],
                       )
-                    : CircularProgressIndicator(
-                        value: 2,
-                        semanticsLabel: 'Loading',
+                    : Center(
+                        child: CircularProgressIndicator(
+                          value: 5,
+                          semanticsLabel: 'Loading',
+                        ),
                       );
           },
         ),
