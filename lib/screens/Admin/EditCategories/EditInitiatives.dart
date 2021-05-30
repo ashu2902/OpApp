@@ -28,13 +28,15 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
   }
 
   var desc = '';
-  TextEditingController highlightController = TextEditingController();
+  var editDesc = '';
+  TextEditingController initiativeController = TextEditingController();
+  TextEditingController editDescriptionController = TextEditingController();
 
   writeImageUrlToFireStore(
     imageUrl,
     desc,
   ) {
-    desc = highlightController.text;
+    desc = initiativeController.text;
     _firebaseFirestore
         .collection("OurInitiatives")
         .add({"url": imageUrl, "desc": desc}).whenComplete(
@@ -144,6 +146,8 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                               IconButton(
                                                   icon: Icon(Icons.edit),
                                                   onPressed: () {
+                                                    editDescriptionController
+                                                        .text = doc['desc'];
                                                     showDialog(
                                                       context: context,
                                                       builder: (context) =>
@@ -157,14 +161,61 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                   .center,
                                                           children: [
                                                             Container(
-                                                              child: Expanded(
-                                                                child:
-                                                                    TextField(),
+                                                              width: _width / 2,
+                                                              child: TextField(
+                                                                onEditingComplete:
+                                                                    () {
+                                                                  editDesc =
+                                                                      editDescriptionController
+                                                                          .text;
+                                                                },
+                                                                controller:
+                                                                    editDescriptionController,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  border:
+                                                                      UnderlineInputBorder(),
+                                                                  hintText:
+                                                                      'Enter Description',
+                                                                ),
                                                               ),
                                                             ),
+                                                            ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .update({
+                                                                    "desc":
+                                                                        editDescriptionController
+                                                                            .text
+                                                                  }).whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Edit Description')),
                                                             Container(
                                                               child:
-                                                                  DeleteButton(),
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .delete()
+                                                                      .whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Delete'),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -251,9 +302,10 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                             height: _height / 20,
                                             child: TextField(
                                               onEditingComplete: () {
-                                                desc = highlightController.text;
+                                                desc =
+                                                    initiativeController.text;
                                               },
-                                              controller: highlightController,
+                                              controller: initiativeController,
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 border: UnderlineInputBorder(),

@@ -28,7 +28,10 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
   }
 
   var desc = '';
+  var editDesc = '';
   TextEditingController highlightController = TextEditingController();
+  TextEditingController editRecentActDescriptionController =
+      TextEditingController();
 
   writeImageUrlToFireStore(
     imageUrl,
@@ -98,8 +101,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                     child: Text('error'),
                   )
                 : snapshot.hasData
-                    ? 
-                    Column(
+                    ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -115,7 +117,6 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                 itemBuilder: (context, index) {
                                   var doc = snapshot.data.docs[index].data();
                                   var img = snapshot.data.docs[index].data();
-                                  
 
                                   return Column(
                                     children: [
@@ -146,6 +147,8 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                               IconButton(
                                                   icon: Icon(Icons.edit),
                                                   onPressed: () {
+                                                    editRecentActDescriptionController
+                                                        .text = doc['desc'];
                                                     showDialog(
                                                       context: context,
                                                       builder: (context) =>
@@ -159,14 +162,61 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                                                   .center,
                                                           children: [
                                                             Container(
-                                                              child: Expanded(
-                                                                child:
-                                                                    TextField(),
+                                                              width: _width / 2,
+                                                              child: TextField(
+                                                                onEditingComplete:
+                                                                    () {
+                                                                  editDesc =
+                                                                      editRecentActDescriptionController
+                                                                          .text;
+                                                                },
+                                                                controller:
+                                                                    editRecentActDescriptionController,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  border:
+                                                                      UnderlineInputBorder(),
+                                                                  hintText:
+                                                                      'Enter Description',
+                                                                ),
                                                               ),
                                                             ),
+                                                            ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .update({
+                                                                    "desc":
+                                                                        editRecentActDescriptionController
+                                                                            .text
+                                                                  }).whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Edit Description')),
                                                             Container(
                                                               child:
-                                                                  DeleteButton(),
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .delete()
+                                                                      .whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Delete'),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -282,8 +332,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                           ),
                         ],
                       )
-                    :
-                    CircularProgressIndicator(
+                    : CircularProgressIndicator(
                         value: 2,
                         semanticsLabel: 'Loading',
                       );
@@ -318,5 +367,3 @@ class _DeleteButtonState extends State<DeleteButton> {
     );
   }
 }
-
-

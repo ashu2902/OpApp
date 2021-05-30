@@ -27,8 +27,11 @@ class _EditHighlightsState extends State<EditHighlights> {
     return task;
   }
 
+  var editDesc = '';
   var desc = '';
   TextEditingController highlightController = TextEditingController();
+  TextEditingController editHighlightDescriptionController =
+      TextEditingController();
 
   writeImageUrlToFireStore(imageUrl, desc) {
     desc = highlightController.text;
@@ -43,7 +46,8 @@ class _EditHighlightsState extends State<EditHighlights> {
       if (snapShot.state == TaskState.success) {
         snapShot.ref
             .getDownloadURL()
-            .then((imageUrl) => writeImageUrlToFireStore(imageUrl, desc));
+            .then((imageUrl) => writeImageUrlToFireStore(imageUrl, desc))
+            .catchError((error) => print("Failed to update user: $error"));
       }
     });
   }
@@ -141,21 +145,80 @@ class _EditHighlightsState extends State<EditHighlights> {
                                               IconButton(
                                                   icon: Icon(Icons.edit),
                                                   onPressed: () {
+                                                    editHighlightDescriptionController
+                                                        .text = doc['desc'];
                                                     showDialog(
                                                       context: context,
                                                       builder: (context) =>
                                                           Dialog(
                                                         child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
                                                           children: [
                                                             Container(
-                                                              child: Expanded(
-                                                                child:
-                                                                    TextField(),
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              2)),
+                                                              width: _width / 2,
+                                                              child: TextField(
+                                                                onEditingComplete:
+                                                                    () {
+                                                                  editDesc =
+                                                                      editHighlightDescriptionController
+                                                                          .text;
+                                                                },
+                                                                controller:
+                                                                    editHighlightDescriptionController,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  border:
+                                                                      UnderlineInputBorder(),
+                                                                  hintText:
+                                                                      'Enter Description',
+                                                                ),
                                                               ),
                                                             ),
+                                                            ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .update({
+                                                                    "desc":
+                                                                        editHighlightDescriptionController
+                                                                            .text
+                                                                  }).whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Edit Description')),
                                                             Container(
                                                               child:
-                                                                  DeleteButton(),
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  snapshot
+                                                                      .data
+                                                                      .docs[
+                                                                          index]
+                                                                      .reference
+                                                                      .delete()
+                                                                      .whenComplete(() =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                    'Delete'),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -270,12 +333,17 @@ class _DeleteButtonState extends State<DeleteButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextButton(
-          onPressed: () => deleteHighlight(),
-          child: Container(
-            color: Colors.red,
-            child: Text('Delete'),
-          )),
-    );
+        child: ElevatedButton(
+      onPressed: () => deleteHighlight(),
+      child: Text('Delete'),
+    )
+
+        // TextButton(
+        //     onPressed: () => deleteHighlight(),
+        //     child: Container(
+        //       color: Colors.red,
+        //       child: Text('Delete'),
+        //     )),
+        );
   }
 }
