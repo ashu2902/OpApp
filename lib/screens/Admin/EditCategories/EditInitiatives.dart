@@ -344,28 +344,3 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
     );
   }
 }
-
-class DeleteButton extends StatefulWidget {
-  @override
-  _DeleteButtonState createState() => _DeleteButtonState();
-}
-
-class _DeleteButtonState extends State<DeleteButton> {
-  CollectionReference highlights =
-      FirebaseFirestore.instance.collection('OurInitiatives');
-
-  deleteHighlight() async {
-    QuerySnapshot snapshot = await highlights.get();
-    snapshot.docs[0].reference.delete();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () => deleteHighlight(),
-        child: Text('Delete This'),
-      ),
-    );
-  }
-}

@@ -157,6 +157,8 @@ class _EditHighlightsState extends State<EditHighlights> {
                                                                   .center,
                                                           children: [
                                                             Container(
+                                                              height:
+                                                                  _height / 2,
                                                               decoration: BoxDecoration(
                                                                   color: Colors
                                                                       .white,
@@ -308,7 +310,7 @@ class _EditHighlightsState extends State<EditHighlights> {
                           ),
                         ],
                       )
-                    :  Center(
+                    : Center(
                         child: CircularProgressIndicator(
                           value: 5,
                           semanticsLabel: 'Loading',
@@ -318,37 +320,5 @@ class _EditHighlightsState extends State<EditHighlights> {
         ),
       ),
     );
-  }
-}
-
-class DeleteButton extends StatefulWidget {
-  @override
-  _DeleteButtonState createState() => _DeleteButtonState();
-}
-
-class _DeleteButtonState extends State<DeleteButton> {
-  CollectionReference highlights =
-      FirebaseFirestore.instance.collection('highlights');
-
-  deleteHighlight() async {
-    QuerySnapshot snapshot = await highlights.get();
-    snapshot.docs[0].reference.delete();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: ElevatedButton(
-      onPressed: () => deleteHighlight(),
-      child: Text('Delete'),
-    )
-
-        // TextButton(
-        //     onPressed: () => deleteHighlight(),
-        //     child: Container(
-        //       color: Colors.red,
-        //       child: Text('Delete'),
-        //     )),
-        );
   }
 }

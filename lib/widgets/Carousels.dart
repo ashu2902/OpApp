@@ -143,7 +143,12 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                           aspectRatio: 16 / 9,
                           viewportFraction: 1),
                     )
-                  : Container();
+                  : Center(
+                      child: CircularProgressIndicator(
+                        value: 5,
+                        semanticsLabel: 'Loading',
+                      ),
+                    );
         },
       ),
     );

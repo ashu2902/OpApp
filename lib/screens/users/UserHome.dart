@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/widgets/Carousels.dart';
+import 'package:opbhallafoundation/widgets/RecentActivitiesList.dart';
 
 import '../SupportUs.dart';
 
@@ -11,17 +13,19 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: CurvedNavigationBar(
         index: 1,
-        height: _height / 15,
+        height: _height / 14,
         color: Colors.blue[900],
         backgroundColor: Colors.white,
-        buttonBackgroundColor: Colors.white,
+        buttonBackgroundColor: Colors.blue[700],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(milliseconds: 250),
         items: <Widget>[
@@ -51,29 +55,36 @@ class _UserHomePageState extends State<UserHomePage> {
         ),
       ),
       drawer: Drawer(child: DrawerTiles()),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 40, bottom: 8),
-              //   child: Text(
-              //     'Highlights',
-              //     style: TextStyle(fontSize: 18, color: Colors.black45),
-              //   ),
-              // ),
-              HighlightsCarousel(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Recent Activities',
-                  style: TextStyle(fontSize: 18, color: Colors.black45),
+      body: Container(
+        color: Colors.white,
+        height: _height,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 40, bottom: 8),
+                //   child: Text(
+                //     'Highlights',
+                //     style: TextStyle(fontSize: 18, color: Colors.black45),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: HighlightsCarousel(),
                 ),
-              ),
-              RecentActivitiesCarousel(),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Recent Activities',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ),
+                // RecentActivitiesCarousel(),
+                RecentActivitiesList()
+              ],
+            ),
           ),
         ),
       ),
