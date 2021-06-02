@@ -22,9 +22,9 @@ class _UserHomePageState extends State<UserHomePage> {
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: CurvedNavigationBar(
         index: 1,
-        height: _height / 14,
+        height: _height / 17,
         color: Colors.blue[900],
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white.withOpacity(0.0),
         buttonBackgroundColor: Colors.blue[700],
         animationCurve: Curves.easeIn,
         animationDuration: Duration(milliseconds: 250),
@@ -56,6 +56,7 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
       drawer: Drawer(child: DrawerTiles()),
       body: Container(
+        width: _width,
         color: Colors.white,
         height: _height,
         child: SingleChildScrollView(
@@ -70,6 +71,9 @@ class _UserHomePageState extends State<UserHomePage> {
                 //     style: TextStyle(fontSize: 18, color: Colors.black45),
                 //   ),
                 // ),
+                SizedBox(
+                  height: _height / 25,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: HighlightsCarousel(),

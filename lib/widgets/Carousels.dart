@@ -94,7 +94,7 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       padding: EdgeInsets.all(2),
-      height: _height / 3,
+      height: _height / 3.4,
       width: _width,
       child: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection("highlights").snapshots(),
@@ -107,41 +107,45 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                   ? CarouselSlider(
                       items: snapshot.data.docs
                           .map(
-                            (e) => Stack(
-                              children: [
-                                Container(
-                                  height: _height,
-                                  width: _width,
-                                  child: Image.network(
-                                    e.get('url'),
-                                    fit: BoxFit.cover,
-                                    scale: 1,
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                    height: _height / 10,
+                            (e) => Card(
+                              elevation: 15,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: _height,
                                     width: _width,
-                                    color: const Color(0xF).withOpacity(0.5),
-                                    child: Text(
-                                      e.get('desc'),
-                                      style: TextStyle(color: Colors.white),
+                                    child: Image.network(
+                                      e.get('url'),
+                                      fit: BoxFit.cover,
+                                      scale: 1,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Positioned(
+                                    bottom: 0,
+                                    child: Container(
+                                      height: _height / 10,
+                                      width: _width / 1.2,
+                                      color: Colors.white10.withOpacity(0.2),
+                                      child: Text(
+                                        e.get('desc'),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                           .toList(),
                       options: CarouselOptions(
-                          height: _height,
+                          height: _height / 3,
                           autoPlayAnimationDuration: Duration(seconds: 2),
                           autoPlayInterval: Duration(seconds: 6),
-                          autoPlay: false,
+                          autoPlay: true,
                           enlargeCenterPage: true,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 1),
+                          viewportFraction: 0.82),
                     )
                   : Center(
                       child: CircularProgressIndicator(

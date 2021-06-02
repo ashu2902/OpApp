@@ -90,104 +90,106 @@ class _EditHighlightsState extends State<EditHighlights> {
         title: Text('Edit Higlights'),
       ),
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: StreamBuilder(
-          stream: _firebaseFirestore.collection('highlights').snapshots(),
-          builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return snapshot.hasError
-                ? Container(
-                    child: Text('error'),
-                  )
-                : snapshot.hasData
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: _height / 1.35,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.docs.length,
-                                itemBuilder: (context, index) {
-                                  var doc = snapshot.data.docs[index].data();
-                                  var img = snapshot.data.docs[index].data();
+      body: StreamBuilder(
+        stream: _firebaseFirestore.collection('highlights').snapshots(),
+        builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return snapshot.hasError
+              ? Container(
+                  child: Text('error'),
+                )
+              : snapshot.hasData
+                  ? Container(
+                      height: _height,
+                      child: Stack(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            height: _height / 1.35,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              clipBehavior: Clip.hardEdge,
+                              itemCount: snapshot.data.docs.length,
+                              itemBuilder: (context, index) {
+                                var doc = snapshot.data.docs[index].data();
+                                var img = snapshot.data.docs[index].data();
 
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 8,
-                                                offset: Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
-                                          ),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              IconButton(
-                                                  icon: Icon(Icons.edit),
-                                                  onPressed: () {
-                                                    editHighlightDescriptionController
-                                                        .text = doc['desc'];
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          Dialog(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              height:
-                                                                  _height / 2,
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              2)),
-                                                              width: _width / 2,
-                                                              child: TextField(
-                                                                onEditingComplete:
-                                                                    () {
-                                                                  editDesc =
-                                                                      editHighlightDescriptionController
-                                                                          .text;
-                                                                },
-                                                                controller:
-                                                                    editHighlightDescriptionController,
-                                                                obscureText:
-                                                                    false,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  border:
-                                                                      UnderlineInputBorder(),
-                                                                  hintText:
-                                                                      'Enter Description',
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: _height / 6,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 8,
+                                              offset: Offset(0,
+                                                  3), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              width: _width / 9,
+                                              child: Center(
+                                                child: IconButton(
+                                                    icon: Icon(Icons.edit),
+                                                    constraints:
+                                                        BoxConstraints.expand(),
+                                                    onPressed: () {
+                                                      editHighlightDescriptionController
+                                                          .text = doc['desc'];
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            Dialog(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    _width / 2,
+                                                                child:
+                                                                    TextField(
+                                                                  onEditingComplete:
+                                                                      () {
+                                                                    editDesc =
+                                                                        editHighlightDescriptionController
+                                                                            .text;
+                                                                  },
+                                                                  controller:
+                                                                      editHighlightDescriptionController,
+                                                                  obscureText:
+                                                                      false,
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    border:
+                                                                        UnderlineInputBorder(),
+                                                                    hintText:
+                                                                        'Enter Description',
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            ElevatedButton(
+                                                              ElevatedButton(
                                                                 onPressed: () {
                                                                   snapshot
                                                                       .data
@@ -198,126 +200,129 @@ class _EditHighlightsState extends State<EditHighlights> {
                                                                     "desc":
                                                                         editHighlightDescriptionController
                                                                             .text
-                                                                  }).whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
+                                                                  }).whenComplete(
+                                                                    () => Navigator
+                                                                        .pop(
+                                                                            context),
+                                                                  );
                                                                 },
                                                                 child: Text(
-                                                                    'Edit Description')),
-                                                            Container(
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .delete()
-                                                                      .whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
-                                                                },
-                                                                child: Text(
-                                                                    'Delete'),
+                                                                    'Edit Description'),
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Container(
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    snapshot
+                                                                        .data
+                                                                        .docs[
+                                                                            index]
+                                                                        .reference
+                                                                        .delete()
+                                                                        .whenComplete(
+                                                                          () =>
+                                                                              Navigator.pop(context),
+                                                                        );
+                                                                  },
+                                                                  child: Text(
+                                                                      'Delete'),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  }),
-                                              Container(
-                                                width: _width / 3,
+                                                      );
+                                                    }),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: _width / 3,
+                                              child: SingleChildScrollView(
                                                 child: ListTile(
                                                   title: Text(
                                                     doc["desc"],
                                                   ),
                                                 ),
                                               ),
-                                              Container(
+                                            ),
+                                            Container(
+                                              child: Center(
                                                 child: Image.network(
                                                   img['url'],
-                                                  height: _height / 8,
                                                   width: _height / 6,
                                                   fit: BoxFit.fill,
                                                   alignment: Alignment.topRight,
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  );
-                                },
-                              ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ),
-                          Positioned(
-                            bottom: 1,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: _height / 10,
-                              alignment: Alignment.bottomCenter,
-                              // ignore: deprecated_member_use
-                              child: RaisedButton(
-                                elevation: 10,
-                                focusElevation: 10,
-                                color: Colors.blue,
-                                child: Text('Add Highlight'),
-                                onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => Dialog(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: _width / 2,
-                                          height: _height / 20,
-                                          child: TextField(
-                                            onEditingComplete: () {
-                                              desc = highlightController.text;
-                                            },
-                                            controller: highlightController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              border: UnderlineInputBorder(),
-                                              hintText: 'Enter Description',
-                                            ),
-                                          ),
+                        ),
+                        Positioned.directional(
+                          textDirection: TextDirection.ltr,
+                          start: _width / 4,
+                          width: _width / 2,
+                          height: _height / 15,
+                          bottom: 20,
+                          child: ElevatedButton(
+                            child: Text(
+                              'Add Highlight',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: _width / 2,
+                                      height: _height / 20,
+                                      child: TextField(
+                                        onEditingComplete: () {
+                                          desc = highlightController.text;
+                                        },
+                                        controller: highlightController,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          hintText: 'Enter Description',
                                         ),
-                                        Container(
-                                          child: ElevatedButton(
-                                            child: Text('Add Highlight'),
-                                            onPressed: () {
-                                              selectFileToUpload();
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      child: ElevatedButton(
+                                        child: Text('Add Highlight'),
+                                        onPressed: () {
+                                          selectFileToUpload();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          value: 5,
-                          semanticsLabel: 'Loading',
                         ),
-                      );
-          },
-        ),
+                      ]),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        value: 5,
+                        semanticsLabel: 'Loading',
+                      ),
+                    );
+        },
       ),
     );
   }
