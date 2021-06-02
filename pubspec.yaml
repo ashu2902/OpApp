@@ -23,19 +23,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carousel_pro: ^1.0.0
   carousel_slider: ^3.0.0
   cloud_firestore: ^1.0.6
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^0.3.7
-  file_picker: ^3.0.1
+  file_picker: ^3.0.2+2  
   firebase: ^9.0.1
   firebase_auth: ^1.1.2
   firebase_core: ^1.0.4
   firebase_database: ^6.1.2
   firebase_storage: ^8.0.4
   fluttertoast: ^8.0.7
-  image_picker: ^0.7.4
 
 dev_dependencies:
   flutter_test:
