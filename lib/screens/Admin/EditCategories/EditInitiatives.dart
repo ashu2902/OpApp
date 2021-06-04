@@ -92,18 +92,17 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
         title: Text('Edit Our Initiatives'),
       ),
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: StreamBuilder(
-          stream: _firebaseFirestore.collection('OurInitiatives').snapshots(),
-          builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return snapshot.hasError
-                ? Container(
-                    child: Text('error'),
-                  )
-                : snapshot.hasData
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.max,
+      body: StreamBuilder(
+        stream: _firebaseFirestore.collection('OurInitiatives').snapshots(),
+        builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return snapshot.hasError
+              ? Container(
+                  child: Text('error'),
+                )
+              : snapshot.hasData
+                  ? Container(
+                      height: _height,
+                      child: Stack(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -123,6 +122,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
+                                          height: _height / 6,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
@@ -298,74 +298,68 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                               ),
                             ),
                           ),
-                          Positioned(
-                            bottom: 1,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                          Positioned.directional(
+                            textDirection: TextDirection.ltr,
+                            start: _width / 4,
+                            width: _width / 2,
+                            height: _height / 15,
+                            bottom: 20,
+                            child: ElevatedButton(
+                              child: Text(
+                                'Add Highlight',
+                                style: TextStyle(fontSize: 18),
                               ),
-                              height: _height / 10,
-                              alignment: Alignment.bottomCenter,
-                              // ignore: deprecated_member_use
-                              child: RaisedButton(
-                                elevation: 10,
-                                focusElevation: 10,
-                                color: Colors.blue,
-                                child: Text('Add Initiative'),
-                                onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => Dialog(
-                                    child: Container(
-                                      height: _height / 4,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: _width / 2,
-                                            height: _height / 20,
-                                            child: TextField(
-                                              onEditingComplete: () {
-                                                desc =
-                                                    initiativeController.text;
-                                              },
-                                              controller: initiativeController,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                border: UnderlineInputBorder(),
-                                                hintText: 'Enter the Link',
-                                              ),
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  child: Container(
+                                    height: _height / 4,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: _width / 2,
+                                          height: _height / 20,
+                                          child: TextField(
+                                            onEditingComplete: () {
+                                              desc = initiativeController.text;
+                                            },
+                                            controller: initiativeController,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              border: UnderlineInputBorder(),
+                                              hintText: 'Enter the Link',
                                             ),
                                           ),
-                                          Container(
-                                            width: _width / 2,
-                                            height: _height / 20,
-                                            child: TextField(
-                                              onEditingComplete: () {
-                                                desc = headingController.text;
-                                              },
-                                              controller: headingController,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                border: UnderlineInputBorder(),
-                                                hintText: 'Enter the Heading',
-                                              ),
+                                        ),
+                                        Container(
+                                          width: _width / 2,
+                                          height: _height / 20,
+                                          child: TextField(
+                                            onEditingComplete: () {
+                                              desc = headingController.text;
+                                            },
+                                            controller: headingController,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              border: UnderlineInputBorder(),
+                                              hintText: 'Enter the Heading',
                                             ),
                                           ),
-                                          Container(
-                                            child: ElevatedButton(
-                                              child:
-                                                  Text('Select Image and add'),
-                                              onPressed: () {
-                                                selectFileToUpload();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
+                                        ),
+                                        Container(
+                                          child: ElevatedButton(
+                                            child: Text('Select Image and add'),
+                                            onPressed: () {
+                                              selectFileToUpload();
+                                              Navigator.pop(context);
+                                            },
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -373,15 +367,15 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                             ),
                           ),
                         ],
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          value: 5,
-                          semanticsLabel: 'Loading',
-                        ),
-                      );
-          },
-        ),
+                      ),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        value: 5,
+                        semanticsLabel: 'Loading',
+                      ),
+                    );
+        },
       ),
     );
   }

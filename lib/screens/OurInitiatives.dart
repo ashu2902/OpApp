@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/WebViewScreens/Initiatives.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OurInitiatives extends StatefulWidget {
@@ -24,6 +24,24 @@ class _OurInitiativesState extends State<OurInitiatives> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Our Initiatives',
+          style: TextStyle(color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            color: Colors.black,
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
       body: StreamBuilder(
         stream: _firestore.collection('OurInitiatives').snapshots(),
         builder: (context, snapshot) {
@@ -41,20 +59,29 @@ class _OurInitiativesState extends State<OurInitiatives> {
                             var img = snapshot.data.docs[index].data();
                             return Container(
                               child: GestureDetector(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      child: Image.network(
-                                        img['url'],
-                                        fit: BoxFit.fill,
-                                      ),
+                                child: Card(
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          child: Image.network(
+                                            img['url'],
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        Container(
+                                            child: Center(
+                                          child: Text(
+                                            doc['heading'],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ))
+                                      ],
                                     ),
-                                    Container(
-                                        child: Text(
-                                      doc['heading'],
-                                      style: TextStyle(fontSize: 18),
-                                    ))
-                                  ],
+                                  ),
                                 ),
                                 onTap: () => Navigator.push(
                                   context,
@@ -70,29 +97,6 @@ class _OurInitiativesState extends State<OurInitiatives> {
                   : Center(
                       child: CircularProgressIndicator(),
                     );
-        },
-      ),
-    );
-  }
-}
-
-class Initiatives extends StatelessWidget {
-  // final String title;
-  final String selectedUrl;
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-  Initiatives({
-    // @required this.title,
-    @required this.selectedUrl,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: WebView(
-        initialUrl: selectedUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
         },
       ),
     );
