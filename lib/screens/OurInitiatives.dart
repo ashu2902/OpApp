@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,15 +41,58 @@ class _OurInitiativesState extends State<OurInitiatives> {
                             var img = snapshot.data.docs[index].data();
                             return Container(
                               child: GestureDetector(
-                                child: Image.network(
-                                  img['url'],
-                                  fit: BoxFit.fill,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Image.network(
+                                        img['url'],
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Container(
+                                        child: Text(
+                                      doc['heading'],
+                                      style: TextStyle(fontSize: 18),
+                                    ))
+                                  ],
                                 ),
-                                onTap: () {},
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Initiatives(selectedUrl: doc['desc']),
+                                  ),
+                                ),
                               ),
                             );
-                          }))
-                  : CircularProgressIndicator();
+                          }),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    );
+        },
+      ),
+    );
+  }
+}
+
+class Initiatives extends StatelessWidget {
+  // final String title;
+  final String selectedUrl;
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+  Initiatives({
+    // @required this.title,
+    @required this.selectedUrl,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: WebView(
+        initialUrl: selectedUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller.complete(webViewController);
         },
       ),
     );

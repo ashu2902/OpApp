@@ -11,6 +11,10 @@ class EditOurInitiatives extends StatefulWidget {
 }
 
 class _EditOurInitiativesState extends State<EditOurInitiatives> {
+  var desc = '';
+  var editDesc = '';
+  var heading = '';
+
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -27,29 +31,25 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
     return task;
   }
 
-  var desc = '';
-  var editDesc = '';
-  var linl = '';
   TextEditingController initiativeController = TextEditingController();
-  TextEditingController editDescriptionController = TextEditingController();
+  TextEditingController headingController = TextEditingController();
 
-  writeImageUrlToFireStore(
-    imageUrl,
-    desc,
-  ) {
+  TextEditingController editDescriptionController = TextEditingController();
+  TextEditingController editHeadingController = TextEditingController();
+
+  writeImageUrlToFireStore(imageUrl, desc, heading) {
     desc = initiativeController.text;
     _firebaseFirestore
         .collection("OurInitiatives")
-        .add({"url": imageUrl, "desc": desc}).whenComplete(
+        .add({"url": imageUrl, "desc": desc, "heading": heading}).whenComplete(
             () => print("$imageUrl is saved in Firestore. $desc"));
   }
 
   saveImageUrlToFirebase(UploadTask task) {
     task.snapshotEvents.listen((snapShot) {
       if (snapShot.state == TaskState.success) {
-        snapShot.ref
-            .getDownloadURL()
-            .then((imageUrl) => writeImageUrlToFireStore(imageUrl, desc));
+        snapShot.ref.getDownloadURL().then(
+            (imageUrl) => writeImageUrlToFireStore(imageUrl, desc, heading));
       }
     });
   }
@@ -183,6 +183,28 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                 ),
                                                               ),
                                                             ),
+                                                            Container(
+                                                              width: _width / 2,
+                                                              child: TextField(
+                                                                onEditingComplete:
+                                                                    () {
+                                                                  editDesc =
+                                                                      editHeadingController
+                                                                          .text;
+                                                                },
+                                                                controller:
+                                                                    editHeadingController,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  border:
+                                                                      UnderlineInputBorder(),
+                                                                  hintText:
+                                                                      'Enter Heading',
+                                                                ),
+                                                              ),
+                                                            ),
                                                             ElevatedButton(
                                                                 onPressed: () {
                                                                   snapshot
@@ -193,13 +215,16 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                       .update({
                                                                     "desc":
                                                                         editDescriptionController
+                                                                            .text,
+                                                                    "heading":
+                                                                        editHeadingController
                                                                             .text
                                                                   }).whenComplete(() =>
                                                                           Navigator.pop(
                                                                               context));
                                                                 },
                                                                 child: Text(
-                                                                    'Edit Link')),
+                                                                    'Edit')),
                                                             Container(
                                                               child:
                                                                   ElevatedButton(
@@ -311,6 +336,21 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                               decoration: InputDecoration(
                                                 border: UnderlineInputBorder(),
                                                 hintText: 'Enter the Link',
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: _width / 2,
+                                            height: _height / 20,
+                                            child: TextField(
+                                              onEditingComplete: () {
+                                                desc = headingController.text;
+                                              },
+                                              controller: headingController,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                border: UnderlineInputBorder(),
+                                                hintText: 'Enter the Heading',
                                               ),
                                             ),
                                           ),
