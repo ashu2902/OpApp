@@ -29,6 +29,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
 
   var desc = '';
   var editDesc = '';
+  var linl = '';
   TextEditingController initiativeController = TextEditingController();
   TextEditingController editDescriptionController = TextEditingController();
 
@@ -178,7 +179,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                   border:
                                                                       UnderlineInputBorder(),
                                                                   hintText:
-                                                                      'Enter Description',
+                                                                      'Enter Link',
                                                                 ),
                                                               ),
                                                             ),
@@ -198,7 +199,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                               context));
                                                                 },
                                                                 child: Text(
-                                                                    'Edit Description')),
+                                                                    'Edit Link')),
                                                             Container(
                                                               child:
                                                                   ElevatedButton(
@@ -285,7 +286,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                 elevation: 10,
                                 focusElevation: 10,
                                 color: Colors.blue,
-                                child: Text('Add Activity'),
+                                child: Text('Add Initiative'),
                                 onPressed: () => showDialog(
                                   context: context,
                                   builder: (context) => Dialog(
@@ -309,13 +310,14 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 border: UnderlineInputBorder(),
-                                                hintText: 'Enter Description',
+                                                hintText: 'Enter the Link',
                                               ),
                                             ),
                                           ),
                                           Container(
                                             child: ElevatedButton(
-                                              child: Text('Add Activity'),
+                                              child:
+                                                  Text('Select Image and add'),
                                               onPressed: () {
                                                 selectFileToUpload();
                                                 Navigator.pop(context);
