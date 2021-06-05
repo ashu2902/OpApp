@@ -1,7 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
+import 'package:opbhallafoundation/screens/Donate.dart';
 import 'package:opbhallafoundation/screens/OurInitiatives.dart';
+import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
+import 'package:opbhallafoundation/screens/users/HomePage.dart';
 import 'package:opbhallafoundation/widgets/Carousels.dart';
 import 'package:opbhallafoundation/widgets/RecentActivitiesList.dart';
 
@@ -13,85 +16,58 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
+  GlobalKey _bottomNavigationKey = GlobalKey();
+  int _page = 1;
+  final screens = [DonationScreen(), HomePage(), Spotlight()];
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      bottomNavigationBar: CurvedNavigationBar(
-        index: 1,
-        height: _height / 17,
-        color: Colors.blue[900],
-        backgroundColor: Colors.white.withOpacity(0.0),
-        buttonBackgroundColor: Colors.blue[700],
-        animationCurve: Curves.easeIn,
-        animationDuration: Duration(milliseconds: 250),
-        items: <Widget>[
-          Icon(Icons.attach_money,
-              size: 36, color: Colors.black, semanticLabel: 'Donate'),
-          Icon(Icons.home,
-              size: 36, color: Colors.black, semanticLabel: 'Home'),
-          Icon(Icons.calendar_today_outlined, size: 36, color: Colors.black),
-        ],
-      ),
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'The OP Bhalla Foundation',
-          style: TextStyle(color: Colors.black),
-          textAlign: TextAlign.center,
+        resizeToAvoidBottomInset: true,
+        bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: _page,
+          height: _height / 17,
+          color: Colors.blue[900],
+          backgroundColor: Colors.white.withOpacity(0.0),
+          buttonBackgroundColor: Colors.blue[700],
+          animationCurve: Curves.easeIn,
+          animationDuration: Duration(milliseconds: 300),
+          items: <Widget>[
+            Icon(Icons.attach_money,
+                size: 36, color: Colors.black, semanticLabel: 'Donate'),
+            Icon(Icons.home,
+                size: 36, color: Colors.black, semanticLabel: 'Home'),
+            Icon(Icons.calendar_today_outlined, size: 36, color: Colors.black),
+          ],
+          onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
         ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            color: Colors.black,
-            onPressed: () => Scaffold.of(context).openDrawer(),
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'The OP Bhalla Foundation',
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
           ),
-        ),
-      ),
-      drawer: Drawer(child: DrawerTiles()),
-      body: Container(
-        width: _width,
-        color: Colors.white,
-        height: _height,
-        child: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 40, bottom: 8),
-                //   child: Text(
-                //     'Highlights',
-                //     style: TextStyle(fontSize: 18, color: Colors.black45),
-                //   ),
-                // ),
-                SizedBox(
-                  height: _height / 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: HighlightsCarousel(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Recent Activities',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ),
-                // RecentActivitiesCarousel(),
-                RecentActivitiesList()
-              ],
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu),
+              color: Colors.black,
+              onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
         ),
-      ),
-    );
+        drawer: Drawer(child: DrawerTiles()),
+        body: screens[_page]);
   }
 }
 

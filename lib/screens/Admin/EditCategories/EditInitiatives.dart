@@ -144,110 +144,122 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              IconButton(
-                                                  icon: Icon(Icons.edit),
-                                                  onPressed: () {
-                                                    editDescriptionController
-                                                        .text = doc['desc'];
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          Dialog(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              width: _width / 2,
-                                                              child: TextField(
-                                                                onEditingComplete:
-                                                                    () {
-                                                                  editDesc =
-                                                                      editDescriptionController
-                                                                          .text;
-                                                                },
-                                                                controller:
-                                                                    editDescriptionController,
-                                                                obscureText:
-                                                                    false,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  border:
-                                                                      UnderlineInputBorder(),
-                                                                  hintText:
-                                                                      'Enter Link',
+                                              Container(
+                                                width: _width / 9,
+                                                child: Center(
+                                                  child: IconButton(
+                                                      constraints:
+                                                          BoxConstraints
+                                                              .expand(),
+                                                      icon: Icon(Icons.edit),
+                                                      onPressed: () {
+                                                        editDescriptionController
+                                                            .text = doc['desc'];
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              Dialog(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Container(
+                                                                  width:
+                                                                      _width /
+                                                                          2,
+                                                                  child:
+                                                                      TextField(
+                                                                    onEditingComplete:
+                                                                        () {
+                                                                      editDesc =
+                                                                          editDescriptionController
+                                                                              .text;
+                                                                    },
+                                                                    controller:
+                                                                        editDescriptionController,
+                                                                    obscureText:
+                                                                        false,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      border:
+                                                                          UnderlineInputBorder(),
+                                                                      hintText:
+                                                                          'Enter Link',
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: _width / 2,
-                                                              child: TextField(
-                                                                onEditingComplete:
-                                                                    () {
-                                                                  editDesc =
-                                                                      editHeadingController
-                                                                          .text;
-                                                                },
-                                                                controller:
-                                                                    editHeadingController,
-                                                                obscureText:
-                                                                    false,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  border:
-                                                                      UnderlineInputBorder(),
-                                                                  hintText:
-                                                                      'Enter Heading',
+                                                                Container(
+                                                                  width:
+                                                                      _width /
+                                                                          2,
+                                                                  child:
+                                                                      TextField(
+                                                                    onEditingComplete:
+                                                                        () {
+                                                                      editDesc =
+                                                                          editHeadingController
+                                                                              .text;
+                                                                    },
+                                                                    controller:
+                                                                        editHeadingController,
+                                                                    obscureText:
+                                                                        false,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      border:
+                                                                          UnderlineInputBorder(),
+                                                                      hintText:
+                                                                          'Enter Heading',
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                              ),
+                                                                ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      snapshot
+                                                                          .data
+                                                                          .docs[
+                                                                              index]
+                                                                          .reference
+                                                                          .update({
+                                                                        "desc":
+                                                                            editDescriptionController.text,
+                                                                        "heading":
+                                                                            editHeadingController.text
+                                                                      }).whenComplete(() =>
+                                                                              Navigator.pop(context));
+                                                                    },
+                                                                    child: Text(
+                                                                        'Edit')),
+                                                                Container(
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      snapshot
+                                                                          .data
+                                                                          .docs[
+                                                                              index]
+                                                                          .reference
+                                                                          .delete()
+                                                                          .whenComplete(() =>
+                                                                              Navigator.pop(context));
+                                                                    },
+                                                                    child: Text(
+                                                                        'Delete'),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .update({
-                                                                    "desc":
-                                                                        editDescriptionController
-                                                                            .text,
-                                                                    "heading":
-                                                                        editHeadingController
-                                                                            .text
-                                                                  }).whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
-                                                                },
-                                                                child: Text(
-                                                                    'Edit')),
-                                                            Container(
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .delete()
-                                                                      .whenComplete(() =>
-                                                                          Navigator.pop(
-                                                                              context));
-                                                                },
-                                                                child: Text(
-                                                                    'Delete'),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }),
+                                                          ),
+                                                        );
+                                                      }),
+                                                ),
+                                              ),
                                               Container(
                                                 width: _width / 3,
                                                 child: ListTile(
@@ -257,35 +269,38 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                 ),
                                               ),
                                               Container(
-                                                child: Image.network(
-                                                  img['url'],
-                                                  height: _height / 8,
-                                                  width: _height / 6,
-                                                  fit: BoxFit.fill,
-                                                  alignment: Alignment.topRight,
-                                                  loadingBuilder:
-                                                      (BuildContext context,
-                                                          Widget child,
-                                                          ImageChunkEvent
-                                                              loadingProgress) {
-                                                    if (loadingProgress ==
-                                                        null) {
-                                                      return child;
-                                                    }
-                                                    return Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        value: loadingProgress
-                                                                    .expectedTotalBytes !=
-                                                                null
-                                                            ? loadingProgress
-                                                                    .cumulativeBytesLoaded /
-                                                                loadingProgress
-                                                                    .expectedTotalBytes
-                                                            : null,
-                                                      ),
-                                                    );
-                                                  },
+                                                child: Center(
+                                                  child: Image.network(
+                                                    img['url'],
+                                                    height: _height / 8,
+                                                    width: _height / 6,
+                                                    fit: BoxFit.fill,
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    loadingBuilder: (BuildContext
+                                                            context,
+                                                        Widget child,
+                                                        ImageChunkEvent
+                                                            loadingProgress) {
+                                                      if (loadingProgress ==
+                                                          null) {
+                                                        return child;
+                                                      }
+                                                      return Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes
+                                                              : null,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                             ],
