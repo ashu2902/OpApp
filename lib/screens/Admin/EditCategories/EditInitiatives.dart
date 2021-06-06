@@ -14,6 +14,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
   var desc = '';
   var editDesc = '';
   var heading = '';
+  var editHeading = '';
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -39,6 +40,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
 
   writeImageUrlToFireStore(imageUrl, desc, heading) {
     desc = initiativeController.text;
+    heading = headingController.text;
     _firebaseFirestore
         .collection("OurInitiatives")
         .add({"url": imageUrl, "desc": desc, "heading": heading}).whenComplete(
@@ -155,6 +157,9 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                       onPressed: () {
                                                         editDescriptionController
                                                             .text = doc['desc'];
+                                                        editHeadingController
+                                                                .text =
+                                                            doc['heading'];
                                                         showDialog(
                                                           context: context,
                                                           builder: (context) =>
@@ -200,7 +205,7 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                                       TextField(
                                                                     onEditingComplete:
                                                                         () {
-                                                                      editDesc =
+                                                                      editHeading =
                                                                           editHeadingController
                                                                               .text;
                                                                     },
@@ -261,11 +266,12 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                 ),
                                               ),
                                               Container(
+                                                alignment: Alignment.centerLeft,
                                                 width: _width / 3,
-                                                child: ListTile(
-                                                  title: Text(
-                                                    doc["desc"],
-                                                  ),
+                                                child: Text(
+                                                  doc["heading"],
+                                                  style:
+                                                      TextStyle(fontSize: 18),
                                                 ),
                                               ),
                                               Container(

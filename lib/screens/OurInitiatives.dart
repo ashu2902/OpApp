@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/Initiatives.dart';
+import 'package:opbhallafoundation/screens/users/Home.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OurInitiatives extends StatefulWidget {
@@ -24,6 +24,7 @@ class _OurInitiativesState extends State<OurInitiatives> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -42,6 +43,9 @@ class _OurInitiativesState extends State<OurInitiatives> {
           ),
         ),
       ),
+      drawer: Drawer(
+        child: DrawerTiles(),
+      ),
       body: StreamBuilder(
         stream: _firestore.collection('OurInitiatives').snapshots(),
         builder: (context, snapshot) {
@@ -52,35 +56,45 @@ class _OurInitiativesState extends State<OurInitiatives> {
                       child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 2, crossAxisCount: 3),
+                                  mainAxisSpacing: _height / 47,
+                                  mainAxisExtent: _height / 4.1,
+                                  crossAxisSpacing: 2,
+                                  crossAxisCount: 2),
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (BuildContext context, int index) {
                             var doc = snapshot.data.docs[index].data();
                             var img = snapshot.data.docs[index].data();
-                            return Container(
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 3),
                               child: GestureDetector(
                                 child: Card(
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          child: Image.network(
-                                            img['url'],
-                                            fit: BoxFit.fill,
-                                          ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: _height / 6,
+                                        width: _width / 2,
+                                        child: Image.network(
+                                          img['url'],
+                                          fit: BoxFit.fill,
+                                          height: _height,
+                                          width: _width,
                                         ),
-                                        Container(
-                                            child: Center(
-                                          child: Text(
-                                            doc['heading'],
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                        ))
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                          height: _height / 16,
+                                          child: Center(
+                                            child: Text(
+                                              doc['heading'],
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                          ))
+                                    ],
                                   ),
                                 ),
                                 onTap: () => Navigator.push(

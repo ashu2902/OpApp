@@ -92,7 +92,8 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
       padding: EdgeInsets.all(2),
       height: _height / 3.4,
       width: _width,
@@ -104,48 +105,50 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                   child: Text("There is some problem loading your images"),
                 )
               : snapshot.hasData
-                  ? CarouselSlider(
-                      items: snapshot.data.docs
-                          .map(
-                            (e) => Card(
-                              elevation: 15,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: _height,
-                                    width: _width,
-                                    child: Image.network(
-                                      e.get('url'),
-                                      fit: BoxFit.cover,
-                                      scale: 1,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    child: Container(
-                                      height: _height / 10,
-                                      width: _width / 1.2,
-                                      color: Colors.white10.withOpacity(0.2),
-                                      child: Text(
-                                        e.get('desc'),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.white),
+                  ? Card(
+                      child: CarouselSlider(
+                        items: snapshot.data.docs
+                            .map(
+                              (e) => Card(
+                                elevation: 5,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: _height,
+                                      width: _width,
+                                      child: Image.network(
+                                        e.get('url'),
+                                        fit: BoxFit.cover,
+                                        scale: 1,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Positioned(
+                                      bottom: 0,
+                                      child: Container(
+                                        height: _height / 10,
+                                        width: _width / 1.2,
+                                        color: Colors.white10.withOpacity(0.2),
+                                        child: Text(
+                                          e.get('desc'),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                      options: CarouselOptions(
-                          height: _height / 3,
-                          autoPlayAnimationDuration: Duration(seconds: 2),
-                          autoPlayInterval: Duration(seconds: 6),
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.82),
+                            )
+                            .toList(),
+                        options: CarouselOptions(
+                            height: _height / 3,
+                            autoPlayAnimationDuration: Duration(seconds: 2),
+                            autoPlayInterval: Duration(seconds: 6),
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            viewportFraction: 0.8),
+                      ),
                     )
                   : Center(
                       child: CircularProgressIndicator(

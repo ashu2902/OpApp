@@ -4,6 +4,8 @@ import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/screens/Donate.dart';
 import 'package:opbhallafoundation/screens/OurInitiatives.dart';
 import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
+import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
+import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
 import 'package:opbhallafoundation/widgets/Carousels.dart';
 import 'package:opbhallafoundation/widgets/RecentActivitiesList.dart';
@@ -107,12 +109,12 @@ class DrawerTiles extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SupportAsVolunteer()));
+                                  builder: (context) => VolunteerSupport()));
                         } else if (value == 'Support as Intern') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SupportAsIntern()));
+                                  builder: (context) => InternSupport()));
                         }
                       },
                       hint: Text(

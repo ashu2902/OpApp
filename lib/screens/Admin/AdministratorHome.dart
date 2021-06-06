@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/Register.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditInitiatives.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/RecentActivities.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Categories extends StatefulWidget {

@@ -14,8 +14,8 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
-        width: _width / 1.2,
-        height: _height / 2.55,
+        width: _width / 1.1,
+        height: _height / 2.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           // boxShadow: [
@@ -48,27 +48,59 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                               showDialog(
                                 context: context,
                                 builder: (context) => Dialog(
+                                  insetAnimationCurve: Curves.bounceIn,
+                                  insetAnimationDuration:
+                                      Duration(milliseconds: 600),
                                   child: Material(
                                     child: Container(
-                                      height: _height / 2,
+                                      color: Colors.white,
+                                      height: _height / 1.5,
+                                      width: _width,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              child: Image.network(
-                                                img['url'],
-                                                fit: BoxFit.fill,
-                                                width: _height / 4,
-                                                height: _height / 4,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                child: Card(
+                                                  elevation: 2,
+                                                  child: Container(
+                                                    color: Colors.black,
+                                                    child: Image.network(
+                                                      img['url'],
+                                                      fit: BoxFit.fill,
+                                                      width: _height / 2,
+                                                      height: _height / 4,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                            Text(
-                                              doc['desc'],
-                                              style: TextStyle(fontSize: 18),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: Colors.black12),
+                                                width: _width / 1.5,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    doc['desc'],
+                                                    style:
+                                                        TextStyle(fontSize: 18),
+                                                  ),
+                                                ),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -96,15 +128,20 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(40)),
+                                            margin: EdgeInsets.all(5),
+                                            width: _width / 3,
                                             height: _height,
-                                            width: _width / 3.3,
+                                            decoration: BoxDecoration(
+                                                color: Colors.black12
+                                                    .withOpacity(0.2),
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
                                             child: Center(
                                               child: Image.network(
                                                 img['url'],
                                                 fit: BoxFit.fill,
+                                                height: _height,
+                                                width: _width,
                                               ),
                                             ),
                                           ),
@@ -112,13 +149,11 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                                             padding: EdgeInsets.all(4),
                                             height: _height / 4,
                                             width: _width / 2.5,
-                                            child: Center(
-                                              child: Text(
-                                                doc['desc'],
-                                                style: TextStyle(fontSize: 16),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 4,
-                                              ),
+                                            child: Text(
+                                              doc['desc'],
+                                              style: TextStyle(fontSize: 16),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 4,
                                             ),
                                           )
                                         ],
