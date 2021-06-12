@@ -5,6 +5,7 @@ import 'package:opbhallafoundation/screens/Admin/EditCategories/EditInitiatives.
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/Gallery/EditGallery.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -163,15 +164,6 @@ class EditOnGoingEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Text('Edit OnGoing Activities'),
-    );
-  }
-}
-
-class EditGallery extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Edit Gallery'),
     );
   }
 }

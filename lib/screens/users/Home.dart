@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/screens/Donate.dart';
 import 'package:opbhallafoundation/screens/OurInitiatives.dart';
+import 'package:opbhallafoundation/screens/PhotoGallery.dart';
 import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
+import 'package:opbhallafoundation/screens/VideoGallery.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
-import 'package:opbhallafoundation/widgets/Carousels.dart';
-import 'package:opbhallafoundation/widgets/RecentActivitiesList.dart';
-
-import '../SupportUs.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -24,7 +22,6 @@ class _UserHomePageState extends State<UserHomePage> {
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
-    final _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -52,6 +49,7 @@ class _UserHomePageState extends State<UserHomePage> {
         ),
         appBar: AppBar(
           centerTitle: true,
+          toolbarOpacity: 1,
           elevation: 0,
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
@@ -96,11 +94,40 @@ class DrawerTiles extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => OurInitiatives()))),
               ListTile(
-                  title: Text(
-                    'Gallery',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {}),
+                title: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      onChanged: (value) {
+                        if (value == 'Photo Gallery') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PhotoGallery()));
+                        } else if (value == 'Video Gallery') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VideoGallery()));
+                        }
+                      },
+                      hint: Text(
+                        'Gallery',
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      items: <String>['Photo Gallery', 'Video Gallery']
+                          .map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(
+                            value,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      }).toList()),
+                ),
+              ),
               ListTile(
                 title: DropdownButtonHideUnderline(
                   child: DropdownButton(
@@ -119,7 +146,10 @@ class DrawerTiles extends StatelessWidget {
                       },
                       hint: Text(
                         'Support Us',
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                       ),
                       items: <String>[
                         'Support as Volunteer',
