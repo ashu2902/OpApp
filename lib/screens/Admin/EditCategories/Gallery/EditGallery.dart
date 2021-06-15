@@ -45,23 +45,26 @@ class _EditGalleryState extends State<EditGallery> {
                         child: Center(
                           child: Column(
                             children: [
-                              Text('Events'),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Events',
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                              ),
                               Container(
-                                height: _height / 2,
+                                height: _height / 1.3,
                                 child: ListView.builder(
                                     itemCount: snapshot.data.docs.length,
                                     itemBuilder: (context, index) {
                                       var doc =
                                           snapshot.data.docs[index].data();
+                                      String id = snapshot.data.docs[index].id;
                                       return Container(
                                         child: Row(
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                setState(() {
-                                                  id = snapshot
-                                                      .data.docs[index].id;
-                                                });
                                                 print(id);
                                                 openDialog(id);
                                               },
@@ -69,7 +72,10 @@ class _EditGalleryState extends State<EditGallery> {
                                                 height: _height / 12,
                                                 width: _width,
                                                 child: Card(
-                                                    child: Text(doc["title"])),
+                                                  child: Center(
+                                                    child: Text(doc["title"]),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],
@@ -78,41 +84,40 @@ class _EditGalleryState extends State<EditGallery> {
                                     }),
                               ),
                               ElevatedButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => Dialog(
-                                              child: Container(
-                                                height: _height / 2,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                        width: _width / 2,
-                                                        child: TextField(
-                                                          controller:
-                                                              titleController,
-                                                          onEditingComplete:
-                                                              () {
-                                                            eventTitle =
-                                                                titleController
-                                                                    .text;
-                                                          },
-                                                        )),
-                                                    ElevatedButton(
-                                                        onPressed: () {
-                                                          addTitle();
-                                                          Navigator.pop(
-                                                              context);
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                            child: Container(
+                                              height: _height / 2,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                      width: _width / 2,
+                                                      child: TextField(
+                                                        controller:
+                                                            titleController,
+                                                        onEditingComplete: () {
+                                                          eventTitle =
+                                                              titleController
+                                                                  .text;
                                                         },
-                                                        child: Text('Button'))
-                                                  ],
-                                                ),
+                                                      )),
+                                                  ElevatedButton(
+                                                      onPressed: () {
+                                                        addTitle();
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('Add Event'))
+                                                ],
                                               ),
-                                            ));
-                                  },
-                                  child: Text("Add Event")),
+                                            ),
+                                          ));
+                                },
+                                child: Text("Add Event"),
+                              ),
                             ],
                           ),
                         ),
@@ -127,25 +132,62 @@ class _EditGalleryState extends State<EditGallery> {
       context: context,
       builder: (context) => Dialog(
         child: Container(
+          height: 800,
+          width: 600,
           child: StreamBuilder(
-              stream: _firestore.collection('Gallery').snapshots(),
-              builder: (context, snapshot) {
-                return Container(
-                  child: Column(
-                    children: [
-                      Text('Dialog'),
-                      Container(
-                        child: ElevatedButton(
-                            onPressed: () {
-                              print(id);
-                              selectFileToUpload(id);
-                            },
-                            child: Text('Add Images')),
-                      )
-                    ],
-                  ),
-                );
-              }),
+            stream: _firestore
+                .collection('Gallery')
+                .doc(id)
+                .collection('photo')
+                .snapshots(),
+            builder: (context, snapshot) {
+              return snapshot.hasData
+                  ? Container(
+                      child: Column(
+                        children: [
+                          Text('Dialog'),
+                          Container(
+                            height: 700,
+                            width: 180,
+                            child: ListView.builder(
+                                itemCount: snapshot.data.docs.length,
+                                itemBuilder: (context, index) {
+                                  var img = snapshot.data.docs[index].data();
+                                  return Container(
+                                    height: 180,
+                                    margin: EdgeInsets.only(top: 6, bottom: 6),
+                                    child: Image.network(
+                                      img['url'],
+                                      fit: BoxFit.fill,
+                                      alignment: Alignment.topRight,
+                                    ),
+                                  );
+                                }),
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  print(id);
+                                  selectFileToUpload(id);
+                                },
+                                child: Text('Add Images')),
+                          )
+                        ],
+                      ),
+                    )
+                  : snapshot.hasError
+                      ? Container(
+                          child: Text(snapshot.error),
+                        )
+                      : Center(
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+            },
+          ),
         ),
       ),
     );
@@ -182,7 +224,7 @@ class _EditGalleryState extends State<EditGallery> {
   Future selectFileToUpload(id) async {
     try {
       FilePickerResult result = await FilePicker.platform
-          .pickFiles(allowMultiple: true, type: FileType.image);
+          .pickFiles(allowMultiple: false, type: FileType.image);
       if (result != null) {
         selectedFiles.clear();
 
@@ -205,5 +247,12 @@ class _EditGalleryState extends State<EditGallery> {
     } catch (e) {
       print(e);
     }
+  }
+}
+
+class EditImageDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
