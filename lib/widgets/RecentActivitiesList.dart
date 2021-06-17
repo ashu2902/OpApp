@@ -14,162 +14,159 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
-        width: _width / 1.1,
-        height: _height / 2.3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.black.withOpacity(0.2),
-          //     spreadRadius: 1.5,
-          //     blurRadius: 2,
-          //     offset: Offset(0, 3), // changes position of shadow
-          //   ),
-          // ],
-        ),
-        child: StreamBuilder(
-          stream: _firestore.collection('RecentActivities').snapshots(),
-          builder: (context, snapshot) {
-            return snapshot.hasError
-                ? Center(
-                    child: Container(
-                    child: Text('Error'),
-                  ))
-                : snapshot.hasData
-                    ? ListView.builder(
-                        itemExtent: _height / 6,
-                        shrinkWrap: false,
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          var doc = snapshot.data.docs[index].data();
-                          var img = snapshot.data.docs[index].data();
-                          return GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  insetAnimationCurve: Curves.bounceIn,
-                                  insetAnimationDuration:
-                                      Duration(milliseconds: 600),
-                                  child: Material(
-                                    child: Container(
-                                      color: Colors.white,
-                                      height: _height / 1.5,
-                                      width: _width,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                child: Card(
-                                                  elevation: 2,
-                                                  child: Container(
-                                                    color: Colors.black,
-                                                    child: Image.network(
-                                                      img['url'],
-                                                      fit: BoxFit.fill,
-                                                      width: _height / 2,
-                                                      height: _height / 4,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: Colors.black12),
-                                                width: _width / 1.5,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    doc['desc'],
-                                                    style:
-                                                        TextStyle(fontSize: 18),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Card(
-                              elevation: 6,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+      width: _width / 1.1,
+      height: _height / 2.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.2),
+        //     spreadRadius: 1.5,
+        //     blurRadius: 2,
+        //     offset: Offset(0, 3), // changes position of shadow
+        //   ),
+        // ],
+      ),
+      child: StreamBuilder(
+        stream: _firestore.collection('RecentActivities').snapshots(),
+        builder: (context, snapshot) {
+          return snapshot.hasError
+              ? Center(
+                  child: Container(
+                  child: Text('Error'),
+                ))
+              : snapshot.hasData
+                  ? ListView.builder(
+                      itemExtent: _height / 6,
+                      shrinkWrap: false,
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) {
+                        var doc = snapshot.data.docs[index].data();
+                        var img = snapshot.data.docs[index].data();
+                        return GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                insetAnimationCurve: Curves.bounceIn,
+                                insetAnimationDuration:
+                                    Duration(milliseconds: 600),
+                                child: Material(
+                                  child: Container(
+                                    color: Colors.white,
+                                    height: _height / 1.5,
+                                    width: _width,
+                                    child: SingleChildScrollView(
+                                      child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            margin: EdgeInsets.all(5),
-                                            width: _width / 3,
-                                            height: _height,
-                                            decoration: BoxDecoration(
-                                                color: Colors.black12
-                                                    .withOpacity(0.2),
-                                                borderRadius:
-                                                    BorderRadius.circular(12)),
-                                            child: Center(
-                                              child: Image.network(
-                                                img['url'],
-                                                fit: BoxFit.fill,
-                                                height: _height,
-                                                width: _width,
+                                          Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: Card(
+                                                elevation: 2,
+                                                child: Container(
+                                                  color: Colors.black,
+                                                  child: Image.network(
+                                                    img['url'],
+                                                    fit: BoxFit.fill,
+                                                    width: _height / 2,
+                                                    height: _height / 4,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.all(4),
-                                            height: _height / 4,
-                                            width: _width / 2.5,
-                                            child: Text(
-                                              doc['desc'],
-                                              style: TextStyle(fontSize: 16),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 4,
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.black12),
+                                              width: _width / 1.5,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  doc['desc'],
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
                                             ),
                                           )
                                         ],
                                       ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
+                            );
+                          },
+                          child: Card(
+                            elevation: 6,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          width: _width / 3,
+                                          height: _height,
+                                          decoration: BoxDecoration(
+                                              color: Colors.black12
+                                                  .withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Center(
+                                            child: Image.network(
+                                              img['url'],
+                                              fit: BoxFit.fill,
+                                              height: _height,
+                                              width: _width,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(4),
+                                          height: _height / 4,
+                                          width: _width / 2.5,
+                                          child: Text(
+                                            doc['desc'],
+                                            style: TextStyle(fontSize: 16),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 4,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      );
-          },
-        ));
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    );
+        },
+      ),
+    );
   }
 }

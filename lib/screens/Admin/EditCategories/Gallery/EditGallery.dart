@@ -41,85 +41,78 @@ class _EditGalleryState extends State<EditGallery> {
                     ? Container(
                         height: _height,
                         width: _width,
-                        alignment: Alignment.center,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Events',
-                                  style: TextStyle(fontSize: 24),
-                                ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Events',
+                                style: TextStyle(fontSize: 24),
                               ),
-                              Container(
-                                height: _height / 1.3,
-                                child: ListView.builder(
-                                    itemCount: snapshot.data.docs.length,
-                                    itemBuilder: (context, index) {
-                                      var doc =
-                                          snapshot.data.docs[index].data();
-                                      String id = snapshot.data.docs[index].id;
-                                      return Container(
-                                        child: Row(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                print(id);
-                                                openDialog(id);
-                                              },
-                                              child: Container(
-                                                height: _height / 12,
-                                                width: _width,
-                                                child: Card(
-                                                  child: Center(
-                                                    child: Text(doc["title"]),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => Dialog(
-                                            child: Container(
-                                              height: _height / 2,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                      width: _width / 2,
-                                                      child: TextField(
-                                                        controller:
-                                                            titleController,
-                                                        onEditingComplete: () {
-                                                          eventTitle =
-                                                              titleController
-                                                                  .text;
-                                                        },
-                                                      )),
-                                                  ElevatedButton(
-                                                      onPressed: () {
-                                                        addTitle();
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text('Add Event'))
-                                                ],
-                                              ),
+                            ),
+                            Container(
+                              height: _height / 1.35,
+                              width: _width / 1.2,
+                              child: ListView.builder(
+                                  itemCount: snapshot.data.docs.length,
+                                  itemBuilder: (context, index) {
+                                    var doc = snapshot.data.docs[index].data();
+                                    String id = snapshot.data.docs[index].id;
+                                    return Container(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          print(id);
+                                          openDialog(id);
+                                        },
+                                        child: Container(
+                                          height: _height / 12,
+                                          width: _width / 1.2,
+                                          child: Card(
+                                            child: Center(
+                                              child: Text(doc["title"]),
                                             ),
-                                          ));
-                                },
-                                child: Text("Add Event"),
-                              ),
-                            ],
-                          ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    child: Container(
+                                      height: _height / 2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                              width: _width / 2,
+                                              child: TextField(
+                                                controller: titleController,
+                                                onEditingComplete: () {
+                                                  eventTitle =
+                                                      titleController.text;
+                                                },
+                                              )),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              addTitle();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Add Event'),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text("Add Event"),
+                            ),
+                          ],
                         ),
                       )
                     : CircularProgressIndicator();
@@ -141,38 +134,50 @@ class _EditGalleryState extends State<EditGallery> {
                 .collection('photo')
                 .snapshots(),
             builder: (context, snapshot) {
+              final _height = MediaQuery.of(context).size.height;
+              final _width = MediaQuery.of(context).size.width;
+
               return snapshot.hasData
-                  ? Container(
-                      child: Column(
-                        children: [
-                          Text('Dialog'),
-                          Container(
-                            height: 700,
-                            width: 180,
-                            child: ListView.builder(
-                                itemCount: snapshot.data.docs.length,
-                                itemBuilder: (context, index) {
-                                  var img = snapshot.data.docs[index].data();
-                                  return Container(
-                                    height: 180,
-                                    margin: EdgeInsets.only(top: 6, bottom: 6),
-                                    child: Image.network(
-                                      img['url'],
-                                      fit: BoxFit.fill,
-                                      alignment: Alignment.topRight,
-                                    ),
-                                  );
-                                }),
-                          ),
-                          Container(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  print(id);
-                                  selectFileToUpload(id);
-                                },
-                                child: Text('Add Images')),
-                          )
-                        ],
+                  ? SingleChildScrollView(
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Photos',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: _height / 1.3,
+                              width: _width / 1.5,
+                              child: ListView.builder(
+                                  itemCount: snapshot.data.docs.length,
+                                  itemBuilder: (context, index) {
+                                    final _height =
+                                        MediaQuery.of(context).size.height;
+
+                                    var img = snapshot.data.docs[index].data();
+                                    return Container(
+                                      height: _height / 6,
+                                      margin:
+                                          EdgeInsets.only(top: 6, bottom: 6),
+                                      child: Image.network(
+                                        img['url'],
+                                        fit: BoxFit.fill,
+                                        alignment: Alignment.topRight,
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            Container(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    print(id);
+                                    selectFileToUpload(id);
+                                  },
+                                  child: Text('Add Images')),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   : snapshot.hasError
