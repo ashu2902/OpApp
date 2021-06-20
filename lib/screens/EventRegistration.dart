@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/screens/WebViewScreens/Events.dart';
 
-class PhotoGallery extends StatefulWidget {
+class EventRegistration extends StatefulWidget {
   @override
-  _PhotoGalleryState createState() => _PhotoGalleryState();
+  _EventRegistrationState createState() => _EventRegistrationState();
 }
 
-class _PhotoGalleryState extends State<PhotoGallery> {
+class _EventRegistrationState extends State<EventRegistration> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
@@ -17,13 +18,13 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gallery'),
+        title: Text('Event Registration'),
       ),
       resizeToAvoidBottomInset: true,
       body: Container(
         child: Container(
           child: StreamBuilder(
-            stream: _firebaseFirestore.collection('Gallery').snapshots(),
+            stream: _firebaseFirestore.collection('OnGoingEvents').snapshots(),
             builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
               return snapshot.hasError
                   ? Container(
@@ -72,23 +73,25 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                                 snapshot.data.docs[index].id;
                                             var name = snapshot.data.docs[index]
                                                 .data();
+                                            var url;
 
                                             return GestureDetector(
                                               onTap: () {
+                                                url = name["link"];
                                                 eventID = id;
                                                 eventName = name['title'];
+                                                print(url);
                                                 print(eventID);
                                                 print(eventName);
                                                 Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EventPage(
-                                                      eventID: eventID,
-                                                      eventName: eventName,
-                                                    ),
-                                                  ),
-                                                );
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Events(
+                                                              selectedUrl: url,
+                                                              eventName:
+                                                                  eventName,
+                                                            )));
                                               },
                                               child: Container(
                                                 height: _height / 12,
@@ -127,67 +130,5 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         ),
       ),
     );
-  }
-}
-
-class EventPage extends StatefulWidget {
-  final String eventID;
-  final String eventName;
-  EventPage({@required this.eventID, this.eventName});
-
-  @override
-  _EventPageState createState() => _EventPageState();
-}
-
-class _EventPageState extends State<EventPage> {
-  @override
-  Widget build(BuildContext context) {
-    FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('${widget.eventName}'),
-        ),
-        body: StreamBuilder(
-            stream: _firebaseFirestore
-                .collection('Gallery')
-                .doc(widget.eventID)
-                .collection('photo')
-                .snapshots(),
-            builder: (context, snapshot) {
-              return snapshot.hasError
-                  ? Container(
-                      child: Center(
-                        child: Text('${snapshot.error}'),
-                      ),
-                    )
-                  : snapshot.hasData
-                      ? Container(
-                          child: GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                var img = snapshot.data.docs[index].data();
-                                var item = snapshot.data.docs.length;
-                                return item == null
-                                    ? Container(
-                                        child: Center(
-                                          child: Text('NO images'),
-                                        ),
-                                      )
-                                    : Container(
-                                        child: Center(
-                                          child: Image.network(img['url']),
-                                        ),
-                                      );
-                              }),
-                        )
-                      : Container(
-                          height: 50,
-                          width: 50,
-                          child: CircularProgressIndicator());
-            }));
   }
 }

@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
 import 'package:opbhallafoundation/screens/Donate.dart';
+import 'package:opbhallafoundation/screens/EventRegistration.dart';
 import 'package:opbhallafoundation/screens/OurInitiatives.dart';
 import 'package:opbhallafoundation/screens/PhotoGallery.dart';
 import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
@@ -167,7 +168,12 @@ class DrawerTiles extends StatelessWidget {
                     'Event Registration',
                     style: TextStyle(color: Colors.blue[900], fontSize: 18),
                   ),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EventRegistration()));
+                  }),
               ListTile(
                   title: Text(
                     'About Us',

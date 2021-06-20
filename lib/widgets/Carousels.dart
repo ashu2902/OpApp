@@ -91,28 +91,28 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
 
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return Card(
-      elevation: 5,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.white),
-        padding: EdgeInsets.all(2),
-        height: _height / 3.4,
-        width: _width,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection("highlights").snapshots(),
-          builder: (context, snapshot) {
-            return snapshot.hasError
-                ? Center(
-                    child: Text("There is some problem loading your images"),
-                  )
-                : snapshot.hasData
-                    ? CarouselSlider(
-                        items: snapshot.data.docs
-                            .map(
-                              (e) => Stack(
-                                children: [
-                                  Container(
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
+      padding: EdgeInsets.all(2),
+      height: _height / 3.4,
+      width: _width,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection("highlights").snapshots(),
+        builder: (context, snapshot) {
+          return snapshot.hasError
+              ? Center(
+                  child: Text("There is some problem loading your images"),
+                )
+              : snapshot.hasData
+                  ? CarouselSlider(
+                      items: snapshot.data.docs
+                          .map(
+                            (e) => Stack(
+                              children: [
+                                Card(
+                                  elevation: 21,
+                                  child: Container(
                                     height: _height,
                                     width: _width,
                                     child: Card(
@@ -123,40 +123,40 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    bottom: 0,
-                                    child: Container(
-                                      height: _height / 10,
-                                      width: _width / 1.2,
-                                      color: Colors.white10.withOpacity(0.2),
-                                      child: Text(
-                                        e.get('desc'),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  child: Container(
+                                    height: _height / 10,
+                                    width: _width / 1.2,
+                                    color: Colors.white10.withOpacity(0.2),
+                                    child: Text(
+                                      e.get('desc'),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                        options: CarouselOptions(
-                            height: _height / 3,
-                            autoPlayAnimationDuration: Duration(seconds: 2),
-                            autoPlayInterval: Duration(seconds: 6),
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.8),
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          value: 5,
-                          semanticsLabel: 'Loading',
-                        ),
-                      );
-          },
-        ),
+                                ),
+                              ],
+                            ),
+                          )
+                          .toList(),
+                      options: CarouselOptions(
+                          height: _height / 3,
+                          autoPlayAnimationDuration: Duration(seconds: 2),
+                          autoPlayInterval: Duration(seconds: 6),
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.8),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        value: 5,
+                        semanticsLabel: 'Loading',
+                      ),
+                    );
+        },
       ),
     );
   }

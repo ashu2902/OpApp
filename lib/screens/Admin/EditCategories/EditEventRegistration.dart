@@ -5,41 +5,51 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class EditGallery extends StatefulWidget {
+class EditEventRegistrations extends StatefulWidget {
   @override
-  _EditGalleryState createState() => _EditGalleryState();
+  _EditEventRegistrationsState createState() => _EditEventRegistrationsState();
 }
 
-class _EditGalleryState extends State<EditGallery> {
+class _EditEventRegistrationsState extends State<EditEventRegistrations> {
   String id;
   var eventTitle;
+  var eventUrl;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   TextEditingController titleController = TextEditingController();
+  TextEditingController urlController = TextEditingController();
+
   TextEditingController editTitleController = TextEditingController();
+  TextEditingController editUrlController = TextEditingController();
+  var editUrl;
   var editTitle;
 
   addTitle() {
+    eventUrl = urlController.text;
     eventTitle = titleController.text;
-    _firestore.collection('Gallery').add({"title": eventTitle}).whenComplete(
-        () => print('Event Title is $eventTitle'));
+    _firestore
+        .collection('OnGoingEvents')
+        .add({"title": eventTitle, "link": eventUrl}).whenComplete(() => print(
+            'Event Title is: $eventTitle \n Registration link is:$eventUrl'));
     titleController.clear();
+    urlController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Gallery',
-          style: TextStyle(fontSize: 23),
-        ),
+        title: Text('Event Registrations'),
       ),
       body: StreamBuilder(
-          stream: _firestore.collection('Gallery').snapshots(),
+          stream: _firestore
+              .collection('OnGoingEvents')
+              .snapshots(), //Change to ONGOING EVENTS
           builder: (context, snapshot) {
             return snapshot.hasError
                 ? Container(
@@ -54,7 +64,7 @@ class _EditGalleryState extends State<EditGallery> {
                             Padding(
                               padding: const EdgeInsets.all(33.0),
                               child: Text(
-                                'Events',
+                                'OnGoing Events',
                                 style: TextStyle(fontSize: 24),
                               ),
                             ),
@@ -76,15 +86,15 @@ class _EditGalleryState extends State<EditGallery> {
                                                   //bottomSheet
                                                   editTitleController.text =
                                                       doc['title'];
+                                                  editUrlController.text =
+                                                      doc['link'];
                                                   showModalBottomSheet(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          BottomSheet(
-                                                              onClosing: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          }, builder:
-                                                                  (builder) {
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Expanded(
+                                                      child: BottomSheet(
+                                                          onClosing: () {},
+                                                          builder: (builder) {
                                                             return Container(
                                                               height:
                                                                   _height / 4,
@@ -120,6 +130,31 @@ class _EditGalleryState extends State<EditGallery> {
                                                                       ),
                                                                     ),
                                                                   ),
+                                                                  Container(
+                                                                    width:
+                                                                        _width /
+                                                                            2,
+                                                                    child:
+                                                                        TextField(
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      onEditingComplete:
+                                                                          () {
+                                                                        editUrl =
+                                                                            editUrlController.text;
+                                                                      },
+                                                                      controller:
+                                                                          editUrlController,
+                                                                      obscureText:
+                                                                          false,
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        border:
+                                                                            UnderlineInputBorder(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                   ElevatedButton(
                                                                       onPressed:
                                                                           () {
@@ -130,11 +165,17 @@ class _EditGalleryState extends State<EditGallery> {
                                                                             .reference
                                                                             .update({
                                                                           "title":
-                                                                              editTitleController.text
+                                                                              editTitleController.text,
+                                                                          "link":
+                                                                              editUrlController.text
                                                                         }).whenComplete(
                                                                           () =>
                                                                               Navigator.pop(context),
                                                                         );
+                                                                        editTitleController
+                                                                            .clear();
+                                                                        editUrlController
+                                                                            .clear();
                                                                       },
                                                                       child: Text(
                                                                           'Edit')),
@@ -155,21 +196,17 @@ class _EditGalleryState extends State<EditGallery> {
                                                                 ],
                                                               ),
                                                             );
-                                                          }));
+                                                          }),
+                                                    ),
+                                                  );
                                                   print('tapped');
                                                 }),
-                                            GestureDetector(
-                                              onTap: () {
-                                                print(id);
-                                                openDialog(id);
-                                              },
-                                              child: Container(
-                                                height: _height / 12,
-                                                width: _width / 1.5,
-                                                child: Card(
-                                                  child: Center(
-                                                    child: Text(doc["title"]),
-                                                  ),
+                                            Container(
+                                              height: _height / 12,
+                                              width: _width / 1.5,
+                                              child: Card(
+                                                child: Center(
+                                                  child: Text(doc["title"]),
                                                 ),
                                               ),
                                             ),
@@ -196,14 +233,31 @@ class _EditGalleryState extends State<EditGallery> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                  width: _width / 2,
-                                                  child: TextField(
-                                                    controller: titleController,
-                                                    onEditingComplete: () {
-                                                      eventTitle =
-                                                          titleController.text;
-                                                    },
-                                                  )),
+                                                width: _width / 2,
+                                                child: TextField(
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          'Enter Event Title'),
+                                                  controller: titleController,
+                                                  onEditingComplete: () {
+                                                    eventTitle =
+                                                        titleController.text;
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: _width / 2,
+                                                child: TextField(
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          'Enter the Link'),
+                                                  controller: urlController,
+                                                  onEditingComplete: () {
+                                                    eventTitle =
+                                                        urlController.text;
+                                                  },
+                                                ),
+                                              ),
                                               ElevatedButton(
                                                 onPressed: () {
                                                   addTitle();
@@ -370,12 +424,5 @@ class _EditGalleryState extends State<EditGallery> {
     } catch (e) {
       print(e);
     }
-  }
-}
-
-class EditImageDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
