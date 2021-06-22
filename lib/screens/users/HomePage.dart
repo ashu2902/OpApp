@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       height: _height,
       child: SingleChildScrollView(
         child: Container(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Column(
             children: [
               // Padding(
@@ -28,9 +28,7 @@ class _HomePageState extends State<HomePage> {
               //     style: TextStyle(fontSize: 18, color: Colors.black45),
               //   ),
               // ),
-              SizedBox(
-                height: _height / 25,
-              ),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: HighlightsCarousel(),
@@ -43,7 +41,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               // RecentActivitiesCarousel(),
-              RecentActivitiesList()
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: RecentActivitiesList(),
+              )
             ],
           ),
         ),

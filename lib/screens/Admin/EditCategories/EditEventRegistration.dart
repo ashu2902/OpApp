@@ -76,7 +76,6 @@ class _EditEventRegistrationsState extends State<EditEventRegistrations> {
                                     itemBuilder: (context, index) {
                                       var doc =
                                           snapshot.data.docs[index].data();
-                                      String id = snapshot.data.docs[index].id;
                                       return Container(
                                         child: Row(
                                           children: [
@@ -89,115 +88,96 @@ class _EditEventRegistrationsState extends State<EditEventRegistrations> {
                                                   editUrlController.text =
                                                       doc['link'];
                                                   showModalBottomSheet(
+                                                    enableDrag: true,
                                                     context: context,
-                                                    builder: (context) =>
-                                                        Expanded(
-                                                      child: BottomSheet(
-                                                          onClosing: () {},
-                                                          builder: (builder) {
-                                                            return Container(
-                                                              height:
-                                                                  _height / 4,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10)),
-                                                              child: Column(
-                                                                children: [
-                                                                  Container(
-                                                                    width:
-                                                                        _width /
-                                                                            2,
+                                                    builder:
+                                                        (context) =>
+                                                            BottomSheet(
+                                                                clipBehavior:
+                                                                    Clip.none,
+                                                                elevation: 18,
+                                                                onClosing:
+                                                                    () {},
+                                                                builder:
+                                                                    (builder) {
+                                                                  return SingleChildScrollView(
                                                                     child:
-                                                                        TextField(
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      onEditingComplete:
-                                                                          () {
-                                                                        editTitle =
-                                                                            editTitleController.text;
-                                                                      },
-                                                                      controller:
-                                                                          editTitleController,
-                                                                      obscureText:
-                                                                          false,
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                        border:
-                                                                            UnderlineInputBorder(),
-                                                                      ),
+                                                                        Column(
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.symmetric(horizontal: 60),
+                                                                          child:
+                                                                              TextField(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            onEditingComplete:
+                                                                                () {
+                                                                              editTitle = editTitleController.text;
+                                                                            },
+                                                                            controller:
+                                                                                editTitleController,
+                                                                            obscureText:
+                                                                                false,
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              border: UnderlineInputBorder(),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.symmetric(horizontal: 60),
+                                                                          child:
+                                                                              TextField(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            onEditingComplete:
+                                                                                () {
+                                                                              editUrl = editUrlController.text;
+                                                                            },
+                                                                            controller:
+                                                                                editUrlController,
+                                                                            obscureText:
+                                                                                false,
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              border: UnderlineInputBorder(),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsets.symmetric(
+                                                                              horizontal: 60,
+                                                                              vertical: 2),
+                                                                          child: ElevatedButton(
+                                                                              onPressed: () {
+                                                                                snapshot.data.docs[index].reference.update({
+                                                                                  "title": editTitleController.text,
+                                                                                  "link": editUrlController.text
+                                                                                }).whenComplete(
+                                                                                  () => Navigator.pop(context),
+                                                                                );
+                                                                                editTitleController.clear();
+                                                                                editUrlController.clear();
+                                                                              },
+                                                                              child: Text('Edit')),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.symmetric(horizontal: 60),
+                                                                          child: ElevatedButton(
+                                                                              onPressed: () {
+                                                                                snapshot.data.docs[index].reference.delete().whenComplete(
+                                                                                      () => Navigator.pop(context),
+                                                                                    );
+                                                                              },
+                                                                              child: Text('Delete')),
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                  ),
-                                                                  Container(
-                                                                    width:
-                                                                        _width /
-                                                                            2,
-                                                                    child:
-                                                                        TextField(
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      onEditingComplete:
-                                                                          () {
-                                                                        editUrl =
-                                                                            editUrlController.text;
-                                                                      },
-                                                                      controller:
-                                                                          editUrlController,
-                                                                      obscureText:
-                                                                          false,
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                        border:
-                                                                            UnderlineInputBorder(),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        snapshot
-                                                                            .data
-                                                                            .docs[
-                                                                                index]
-                                                                            .reference
-                                                                            .update({
-                                                                          "title":
-                                                                              editTitleController.text,
-                                                                          "link":
-                                                                              editUrlController.text
-                                                                        }).whenComplete(
-                                                                          () =>
-                                                                              Navigator.pop(context),
-                                                                        );
-                                                                        editTitleController
-                                                                            .clear();
-                                                                        editUrlController
-                                                                            .clear();
-                                                                      },
-                                                                      child: Text(
-                                                                          'Edit')),
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        snapshot
-                                                                            .data
-                                                                            .docs[index]
-                                                                            .reference
-                                                                            .delete()
-                                                                            .whenComplete(
-                                                                              () => Navigator.pop(context),
-                                                                            );
-                                                                      },
-                                                                      child: Text(
-                                                                          'Delete')),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }),
-                                                    ),
+                                                                  );
+                                                                }),
                                                   );
                                                   print('tapped');
                                                 }),

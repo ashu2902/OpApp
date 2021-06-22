@@ -1,12 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
-import 'package:opbhallafoundation/screens/Donate.dart';
 import 'package:opbhallafoundation/screens/EventRegistration.dart';
 import 'package:opbhallafoundation/screens/OurInitiatives.dart';
 import 'package:opbhallafoundation/screens/PhotoGallery.dart';
 import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
 import 'package:opbhallafoundation/screens/VideoGallery.dart';
+import 'package:opbhallafoundation/screens/WebViewScreens/Donate.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
@@ -19,7 +19,7 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage> {
   GlobalKey _bottomNavigationKey = GlobalKey();
   int _page = 1;
-  final screens = [DonationScreen(), HomePage(), Spotlight()];
+  final screens = [Donate(), HomePage(), Spotlight()];
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -29,18 +29,50 @@ class _UserHomePageState extends State<UserHomePage> {
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
           index: _page,
-          height: _height / 17,
+          height: _height / 15,
           color: Colors.blue[900],
-          backgroundColor: Colors.white.withOpacity(0.0),
+          backgroundColor: Colors.transparent,
           buttonBackgroundColor: Colors.blue[700],
           animationCurve: Curves.easeIn,
           animationDuration: Duration(milliseconds: 300),
           items: <Widget>[
-            Icon(Icons.attach_money,
-                size: 36, color: Colors.black, semanticLabel: 'Donate'),
-            Icon(Icons.home,
-                size: 36, color: Colors.black, semanticLabel: 'Home'),
-            Icon(Icons.calendar_today_outlined, size: 36, color: Colors.black),
+            Container(
+              color: Colors.transparent,
+              height: _height / 18,
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.attach_money,
+                        size: 29, color: Colors.black, semanticLabel: 'Donate'),
+                    Text('Donate')
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: _height / 18,
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.home,
+                        size: 29, color: Colors.black, semanticLabel: 'Home'),
+                    Text('Home')
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: _height / 18,
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.calendar_today_outlined,
+                        size: 29, color: Colors.black),
+                    Text('Spotlights')
+                  ],
+                ),
+              ),
+            ),
           ],
           onTap: (index) {
             setState(() {
