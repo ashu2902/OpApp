@@ -167,14 +167,18 @@ class DrawerTiles extends StatelessWidget {
                       onChanged: (value) {
                         if (value == 'Support as Volunteer') {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VolunteerSupport()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VolunteerSupport(),
+                            ),
+                          );
                         } else if (value == 'Support as Intern') {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => InternSupport()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InternSupport(),
+                            ),
+                          );
                         }
                       },
                       hint: Text(
@@ -202,9 +206,11 @@ class DrawerTiles extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EventRegistration()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EventRegistration(),
+                      ),
+                    );
                   }),
               ListTile(
                   title: Text(
