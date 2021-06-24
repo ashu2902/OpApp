@@ -116,8 +116,8 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.docs.length,
                                 itemBuilder: (context, index) {
-                                  var doc = snapshot.data.docs[index].data();
-                                  var img = snapshot.data.docs[index].data();
+                                  var doc = snapshot.data.docs[index];
+                                  var img = snapshot.data.docs[index];
 
                                   return Column(
                                     children: [

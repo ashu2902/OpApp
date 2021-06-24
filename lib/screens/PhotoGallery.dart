@@ -65,13 +65,12 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                           clipBehavior: Clip.hardEdge,
                                           itemCount: snapshot.data.docs.length,
                                           itemBuilder: (context, index) {
-                                            var doc = snapshot.data.docs[index]
-                                                .data();
+                                            var doc = snapshot.data.docs[index];
 
                                             var id =
                                                 snapshot.data.docs[index].id;
-                                            var name = snapshot.data.docs[index]
-                                                .data();
+                                            var name =
+                                                snapshot.data.docs[index];
 
                                             return GestureDetector(
                                               onTap: () {

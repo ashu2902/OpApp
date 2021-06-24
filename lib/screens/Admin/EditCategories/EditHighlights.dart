@@ -113,8 +113,8 @@ class _EditHighlightsState extends State<EditHighlights> {
                               clipBehavior: Clip.hardEdge,
                               itemCount: snapshot.data.docs.length,
                               itemBuilder: (context, index) {
-                                var doc = snapshot.data.docs[index].data();
-                                var img = snapshot.data.docs[index].data();
+                                var doc = snapshot.data.docs[index];
+                                var img = snapshot.data.docs[index];
 
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
