@@ -8,8 +8,6 @@ import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivi
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/Gallery/EditGallery.dart';
 
-import '../AdminEvents.dart';
-
 class Categories extends StatefulWidget {
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -31,9 +29,14 @@ class _CategoriesState extends State<Categories> {
             }),
         actions: [
           IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdminRegister())))
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AdminRegister(),
+              ),
+            ),
+          )
         ],
         title: Center(
             child: Text(
@@ -61,9 +64,11 @@ class _CategoriesState extends State<Categories> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditHighlights()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditHighlights(),
+                              ),
+                            );
                           },
                           child: Text('Highlights'),
                         ),
@@ -89,26 +94,7 @@ class _CategoriesState extends State<Categories> {
                         ),
                       ),
                     ),
-                    //OnGoing Events
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AdminEvents(),
-                              ),
-                            );
-                          },
-                          child: Text('OnGoing Events'),
-                        ),
-                      ),
-                    ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(

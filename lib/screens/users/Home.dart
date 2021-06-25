@@ -44,7 +44,9 @@ class _UserHomePageState extends State<UserHomePage> {
                   children: [
                     Icon(Icons.attach_money,
                         size: 29, color: Colors.black, semanticLabel: 'Donate'),
-                    Text('Donate')
+                    Text('Donate',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.bold))
                   ],
                 ),
               ),
@@ -56,7 +58,9 @@ class _UserHomePageState extends State<UserHomePage> {
                   children: [
                     Icon(Icons.home,
                         size: 29, color: Colors.black, semanticLabel: 'Home'),
-                    Text('Home')
+                    Text('Home',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.bold))
                   ],
                 ),
               ),
@@ -68,7 +72,12 @@ class _UserHomePageState extends State<UserHomePage> {
                   children: [
                     Icon(Icons.calendar_today_outlined,
                         size: 29, color: Colors.black),
-                    Text('Spotlights')
+                    Expanded(
+                        child: Text(
+                      'Spotlights',
+                      style:
+                          TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    ))
                   ],
                 ),
               ),
