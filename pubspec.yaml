@@ -35,6 +35,7 @@ dependencies:
   fluttertoast: ^8.0.7
   webview_flutter: ^2.0.8
   expandable: ^5.0.1
+  video_player: ^2.1.6
 
 dev_dependencies:
   flutter_test:
