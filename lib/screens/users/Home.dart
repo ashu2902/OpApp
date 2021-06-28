@@ -10,6 +10,7 @@ import 'package:opbhallafoundation/screens/WebViewScreens/Donate.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
+import 'package:opbhallafoundation/widgets/VideoPlayer.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
