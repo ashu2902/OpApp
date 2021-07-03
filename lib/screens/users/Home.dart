@@ -10,7 +10,6 @@ import 'package:opbhallafoundation/screens/WebViewScreens/Donate.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
-import 'package:opbhallafoundation/widgets/VideoPlayer.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -31,10 +30,10 @@ class _UserHomePageState extends State<UserHomePage> {
           key: _bottomNavigationKey,
           index: _page,
           height: _height / 15,
-          color: Colors.blue[900],
+          color: Color(0xffff6b5c),
           backgroundColor: Colors.transparent,
-          buttonBackgroundColor: Colors.blue[700],
-          animationCurve: Curves.easeIn,
+          buttonBackgroundColor: Color(0xffff6b5c),
+          animationCurve: Curves.ease,
           animationDuration: Duration(milliseconds: 300),
           items: <Widget>[
             Container(
@@ -94,7 +93,7 @@ class _UserHomePageState extends State<UserHomePage> {
           centerTitle: true,
           toolbarOpacity: 1,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xffff6b5c),
           automaticallyImplyLeading: false,
           title: Text(
             'The OP Bhalla Foundation',
@@ -121,8 +120,14 @@ class DrawerTiles extends StatelessWidget {
       child: Stack(children: [
         ListView(addRepaintBoundaries: true, children: [
           DrawerHeader(
-              child: Image(
-            image: AssetImage("assets/FoundationLogo.png"),
+              child: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => UserHomePage()));
+            },
+            child: Image(
+              image: AssetImage("assets/FoundationLogo.png"),
+            ),
           )),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/widgets/VideoPlayer.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoGallery extends StatefulWidget {
   @override
@@ -13,6 +12,8 @@ class _VideoGalleryState extends State<VideoGallery> {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -39,34 +40,53 @@ class _VideoGalleryState extends State<VideoGallery> {
               return snapshot.hasError
                   ? Container()
                   : snapshot.hasData
-                      ? Container(
-                          child: ListView.builder(
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (context, index) {
-                                var url = snapshot.data.docs[index];
-                                var img = snapshot.data.docs[index];
-                                return snapshot.hasData
-                                    ? Container(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        VideoPlayerWidget(
-                                                          url: url["url"],
-                                                        )));
-                                          },
-                                          child: Card(
-                                            child: Image.network(img["img"]),
-                                          ),
-                                        ),
-                                      )
-                                    : snapshot.hasError
-                                        ? Container()
-                                        : Center(
-                                            child: CircularProgressIndicator());
-                              }),
+                      ? Center(
+                          child: Container(
+                            width: _width / 1.2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListView.builder(
+                                  itemCount: snapshot.data.docs.length,
+                                  itemBuilder: (context, index) {
+                                    var doc = snapshot.data.docs[index];
+                                    var img = snapshot.data.docs[index];
+                                    return snapshot.hasData
+                                        ? Card(
+                                            elevation: 10,
+                                            child: Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                VideoPlayerWidget(
+                                                                  url: doc[
+                                                                      "url"],
+                                                                )));
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            3.0),
+                                                    child: Image.network(
+                                                        img["img"]),
+                                                  ),
+                                                ),
+                                                Text('Name: ${doc['title']}'),
+                                                Text('Date:${doc['date']} ')
+                                              ],
+                                            ),
+                                          )
+                                        : snapshot.hasError
+                                            ? Container()
+                                            : Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                  }),
+                            ),
+                          ),
                         )
                       : Center(child: CircularProgressIndicator());
             }));

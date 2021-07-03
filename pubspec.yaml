@@ -38,6 +38,14 @@ dependencies:
   video_player: ^2.1.6
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.8.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/FoundationLogo.png"
+
+
   flutter_test:
     sdk: flutter
 

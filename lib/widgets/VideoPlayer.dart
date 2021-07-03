@@ -6,6 +6,7 @@ class VideoPlayerWidget extends StatefulWidget {
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
   final String url;
+  var icon = Icons.play_arrow_rounded;
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
@@ -17,7 +18,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _controller = VideoPlayerController.network(widget.url)
       ..initialize().then((_) {
         _controller.setVolume(1);
-        
+
         setState(() {});
       });
   }
@@ -30,24 +31,44 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      body: Container(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Center(child: CircularProgressIndicator())),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          _controller.value.isPlaying
-              ? _controller.pause()
-              : _controller.play();
-          _controller.value.isBuffering
-              ? CircularProgressIndicator()
-              : Container();
-        });
-      }),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              height: _height / 3,
+              child: _controller.value.isInitialized
+                  ? Column(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        ),
+                        Row(
+                          children: [
+                            Icon(widget.icon),
+                            
+                          ],
+                        )
+                      ],
+                    )
+                  : Center(child: CircularProgressIndicator())),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(widget.icon),
+          onPressed: () {
+            setState(() {
+              _controller.value.isPlaying
+                  ? widget.icon = Icons.play_arrow_rounded
+                  : widget.icon = Icons.pause_rounded;
+              _controller.value.isPlaying
+                  ? _controller.pause()
+                  : _controller.play();
+            });
+          }),
     );
   }
 }
