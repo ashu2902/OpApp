@@ -14,9 +14,11 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
+      transformAlignment: Alignment.topCenter,
       width: _width / 1.1,
-      height: _height / 2.3,
+      height: _height / 2.7,
       decoration: BoxDecoration(
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         // boxShadow: [
         //   BoxShadow(
@@ -37,13 +39,66 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                 ))
               : snapshot.hasData
                   ? ListView.builder(
+                      padding: EdgeInsets.all(0),
                       itemExtent: _height / 6,
-                      shrinkWrap: false,
+                      shrinkWrap: true,
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
                         var doc = snapshot.data.docs[index].data();
                         var img = snapshot.data.docs[index].data();
                         return GestureDetector(
+                          child: Card(
+                            elevation: 3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          width: _width / 3,
+                                          height: _height,
+                                          decoration: BoxDecoration(
+                                              color: Colors.black12
+                                                  .withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Center(
+                                            child: Image.network(
+                                              img['url'],
+                                              fit: BoxFit.fill,
+                                              height: _height,
+                                              width: _width,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(4),
+                                          height: _height / 4,
+                                          width: _width / 2.5,
+                                          child: Text(
+                                            doc['desc'],
+                                            style: TextStyle(fontSize: 16),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 4,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           onTap: () {
                             showDialog(
                               context: context,
@@ -107,58 +162,6 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                               ),
                             );
                           },
-                          child: Card(
-                            elevation: 6,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Container(
-                                    color: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.all(5),
-                                          width: _width / 3,
-                                          height: _height,
-                                          decoration: BoxDecoration(
-                                              color: Colors.black12
-                                                  .withOpacity(0.2),
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          child: Center(
-                                            child: Image.network(
-                                              img['url'],
-                                              fit: BoxFit.fill,
-                                              height: _height,
-                                              width: _width,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(4),
-                                          height: _height / 4,
-                                          width: _width / 2.5,
-                                          child: Text(
-                                            doc['desc'],
-                                            style: TextStyle(fontSize: 16),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 4,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         );
                       },
                     )
