@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/users/Home.dart';
+import 'package:opbhallafoundation/widgets/NewAppBar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: UserHomePage(),
+      home: Container(child: NewAppBar()),
     );
   }
 }
