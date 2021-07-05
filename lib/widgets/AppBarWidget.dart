@@ -8,12 +8,24 @@ class AppBarWidget extends StatelessWidget {
     final _height = MediaQuery.of(context).size.height;
 
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(102)),
+        gradient: LinearGradient(
+          colors: [
+            Color(0xffff6b5c).withOpacity(0.9),
+            Color(0xffff6b5c),
+            Colors.red
+          ],
+          stops: [0.2, 0.5, 0.9],
+        ),
+      ),
       height: _height / 3,
       child: AppBar(
-        elevation: 20,
+        elevation: 0,
         title: Text(heading),
         centerTitle: true,
-        backgroundColor: Color(0xffff6b5c),
+        foregroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(102),

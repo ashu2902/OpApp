@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       height: _height,
       child: Stack(
         children: [
-          AppBarWidget(heading: 'Home'),
+          AppBarWidget(heading: 'DR. O P Bhalla Foundation'),
           Positioned(
               top: _height / 7,
               child: Padding(

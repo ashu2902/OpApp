@@ -2,83 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class RecentActivitiesCarousel extends StatefulWidget {
-  @override
-  _RecentActivitiesCarouselState createState() =>
-      _RecentActivitiesCarouselState();
-}
-
-class _RecentActivitiesCarouselState extends State<RecentActivitiesCarousel> {
-  @override
-  Widget build(BuildContext context) {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    final _height = MediaQuery.of(context).size.height;
-    final _width = MediaQuery.of(context).size.width;
-    return Container(
-      height: _height / 3,
-      child: Container(
-        padding: const EdgeInsets.all(2),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection("RecentActivities").snapshots(),
-          builder: (context, snapshot) {
-            return snapshot.hasError
-                ? Center(
-                    child: Text("There is some problem loading your images"),
-                  )
-                : snapshot.hasData
-                    ? Container(
-                        height: _height / 3,
-                        width: _width,
-                        child: CarouselSlider(
-                          items: snapshot.data.docs
-                              .map(
-                                (e) => Stack(
-                                  children: [
-                                    Container(
-                                      width: _width,
-                                      height: _height,
-                                      child: Image.network(
-                                        e.get('url'),
-                                        fit: BoxFit.cover,
-                                        scale: 1,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      child: Container(
-                                        height: _height / 9,
-                                        width: _width,
-                                        color:
-                                            const Color(0xF).withOpacity(0.5),
-                                        child: Text(
-                                          e.get('desc'),
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                          options: CarouselOptions(
-                              height: _height,
-                              autoPlayAnimationDuration: Duration(seconds: 2),
-                              autoPlayInterval: Duration(seconds: 6),
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              aspectRatio: 16 / 9,
-                              viewportFraction: .8),
-                        ),
-                      )
-                    : Container();
-          },
-        ),
-      ),
-    );
-  }
-}
-
 class HighlightsCarousel extends StatefulWidget {
   @override
   _HighlightsCarouselState createState() => _HighlightsCarouselState();
@@ -112,6 +35,7 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                             (e) => Stack(
                               children: [
                                 Card(
+                                  borderOnForeground: false,
                                   clipBehavior: Clip.hardEdge,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18)),
@@ -120,25 +44,32 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                     height: _height,
                                     width: _width,
                                     child: Card(
-                                      child: Image.network(
-                                        e.get('url'),
-                                        fit: BoxFit.fill,
-                                        scale: 1,
+                                      child: ClipRect(
+                                        clipBehavior: Clip.hardEdge,
+                                        child: Image.network(
+                                          e.get('url'),
+                                          fit: BoxFit.fill,
+                                          scale: .5,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Positioned(
                                   bottom: 0,
-                                  child: Container(
-                                    height: _height / 10,
-                                    width: _width / 1.2,
-                                    color: Colors.white10.withOpacity(0.2),
-                                    child: Text(
-                                      e.get('desc'),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(color: Colors.white),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Container(
+                                      height: _height / 10,
+                                      width: _width / 1.3,
+                                      color: Colors.white10.withOpacity(0.2),
+                                      child: Text(
+                                        e.get('desc'),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
