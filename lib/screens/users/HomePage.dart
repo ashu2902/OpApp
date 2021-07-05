@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           AppBarWidget(heading: 'DR. O P Bhalla Foundation'),
           Positioned(
-              top: _height / 7,
+              top: _height / 6.6,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
@@ -37,10 +37,13 @@ class _HomePageState extends State<HomePage> {
           Positioned(
               top: _height / 1.9,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   'Recent Activities',
-                  style: TextStyle(fontSize: 23),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 23,
+                      color: Color(0xffff6b5c)),
                 ),
               )),
           Positioned(
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               width: _width,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: RecentActivitiesList(),
               ))
         ],
