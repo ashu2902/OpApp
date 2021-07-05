@@ -35,22 +35,19 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                             (e) => Stack(
                               children: [
                                 Card(
-                                  borderOnForeground: false,
                                   clipBehavior: Clip.hardEdge,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18)),
-                                  elevation: 2,
+                                  elevation: 3,
                                   child: Container(
                                     height: _height,
                                     width: _width,
-                                    child: Card(
-                                      child: ClipRect(
-                                        clipBehavior: Clip.hardEdge,
-                                        child: Image.network(
-                                          e.get('url'),
-                                          fit: BoxFit.fill,
-                                          scale: .5,
-                                        ),
+                                    child: ClipRect(
+                                      clipBehavior: Clip.hardEdge,
+                                      child: Image.network(
+                                        e.get('url'),
+                                        fit: BoxFit.fill,
+                                        scale: 1,
                                       ),
                                     ),
                                   ),
