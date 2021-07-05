@@ -34,7 +34,7 @@ class _UserHomePageState extends State<UserHomePage> {
           height: _height / 15,
           color: Color(0xffff6b5c),
           backgroundColor: Colors.transparent,
-          buttonBackgroundColor: Color(0xffff6b5c),
+          buttonBackgroundColor: Color(0xffff6b5c).withOpacity(0.95),
           animationCurve: Curves.ease,
           animationDuration: Duration(milliseconds: 300),
           items: <Widget>[

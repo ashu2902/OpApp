@@ -112,14 +112,17 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                             (e) => Stack(
                               children: [
                                 Card(
-                                  elevation: 21,
+                                  clipBehavior: Clip.hardEdge,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)),
+                                  elevation: 2,
                                   child: Container(
                                     height: _height,
                                     width: _width,
                                     child: Card(
                                       child: Image.network(
                                         e.get('url'),
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                         scale: 1,
                                       ),
                                     ),
@@ -145,8 +148,8 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                           .toList(),
                       options: CarouselOptions(
                           height: _height / 3,
-                          autoPlayAnimationDuration: Duration(seconds: 2),
-                          autoPlayInterval: Duration(seconds: 6),
+                          autoPlayAnimationDuration: Duration(seconds: 1),
+                          autoPlayInterval: Duration(seconds: 2),
                           autoPlay: false,
                           enableInfiniteScroll: false,
                           enlargeCenterPage: true,
