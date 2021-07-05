@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/Initiatives.dart';
-import 'package:opbhallafoundation/screens/users/Home.dart';
+import 'package:opbhallafoundation/widgets/DrawerTiles.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OurInitiatives extends StatefulWidget {
@@ -62,7 +62,6 @@ class _OurInitiativesState extends State<OurInitiatives> {
                                   crossAxisCount: 2),
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            
                             var doc = snapshot.data.docs[index].data();
                             var img = snapshot.data.docs[index].data();
                             return Padding(

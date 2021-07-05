@@ -93,7 +93,8 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
     final _width = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
+        borderRadius: BorderRadius.circular(10),
+      ),
       padding: EdgeInsets.all(2),
       height: _height / 3.4,
       width: _width,
@@ -146,7 +147,8 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                           height: _height / 3,
                           autoPlayAnimationDuration: Duration(seconds: 2),
                           autoPlayInterval: Duration(seconds: 6),
-                          autoPlay: true,
+                          autoPlay: false,
+                          enableInfiniteScroll: false,
                           enlargeCenterPage: true,
                           viewportFraction: 0.8),
                     )

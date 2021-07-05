@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/widgets/AppBarWidget.dart';
 import 'package:opbhallafoundation/widgets/Carousels.dart';
 import 'package:opbhallafoundation/widgets/RecentActivitiesList.dart';
 
@@ -14,40 +16,42 @@ class _HomePageState extends State<HomePage> {
     final _width = MediaQuery.of(context).size.width;
     return Container(
       width: _width,
-      color: Colors.white,
+      color: Colors.grey[100],
       height: _height,
-      child: SingleChildScrollView(
-        child: Container(
-          color: Colors.transparent,
-          child: Column(
-            children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 40, bottom: 8),
-              //   child: Text(
-              //     'Highlights',
-              //     style: TextStyle(fontSize: 18, color: Colors.black45),
-              //   ),
-              // ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: HighlightsCarousel(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
+      child: Stack(
+        children: [
+          AppBarWidget(heading: 'Home'),
+          Positioned(
+              top: _height / 7,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'Highlights',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 23,
+                      color: Colors.white),
+                ),
+              )),
+          Positioned(top: _height / 5, child: HighlightsCarousel()),
+          Positioned(
+              top: _height / 1.9,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Text(
                   'Recent Activities',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(fontSize: 23),
                 ),
-              ),
-              // RecentActivitiesCarousel(),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
+              )),
+          Positioned(
+              top: _height / 1.8,
+              width: _width,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: RecentActivitiesList(),
-              )
-            ],
-          ),
-        ),
+              ))
+        ],
       ),
     );
   }

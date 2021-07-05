@@ -10,6 +10,8 @@ import 'package:opbhallafoundation/screens/WebViewScreens/Donate.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsIntern.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/SupportAsVolunteer.dart';
 import 'package:opbhallafoundation/screens/users/HomePage.dart';
+import 'package:opbhallafoundation/widgets/AppBarWidget.dart';
+import 'package:opbhallafoundation/widgets/DrawerTiles.dart';
 
 class UserHomePage extends StatefulWidget {
   @override
@@ -42,11 +44,13 @@ class _UserHomePageState extends State<UserHomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(Icons.attach_money,
-                        size: 29, color: Colors.black, semanticLabel: 'Donate'),
+                    Icon(Icons.attach_money_rounded,
+                        size: 29, color: Colors.white, semanticLabel: 'Donate'),
                     Text('Donate',
                         style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.bold))
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold))
                   ],
                 ),
               ),
@@ -56,11 +60,13 @@ class _UserHomePageState extends State<UserHomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(Icons.home,
-                        size: 29, color: Colors.black, semanticLabel: 'Home'),
+                    Icon(Icons.home_rounded,
+                        size: 29, color: Colors.white, semanticLabel: 'Home'),
                     Text('Home',
                         style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.bold))
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold))
                   ],
                 ),
               ),
@@ -70,13 +76,14 @@ class _UserHomePageState extends State<UserHomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(Icons.calendar_today_outlined,
-                        size: 29, color: Colors.black),
+                    Icon(Icons.calendar_today, size: 29, color: Colors.white),
                     Expanded(
                         child: Text(
                       'Spotlights',
-                      style:
-                          TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold),
                     ))
                   ],
                 ),
@@ -89,176 +96,7 @@ class _UserHomePageState extends State<UserHomePage> {
             });
           },
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          toolbarOpacity: 1,
-          elevation: 0,
-          backgroundColor: Color(0xffff6b5c),
-          automaticallyImplyLeading: false,
-          title: Text(
-            'The OP Bhalla Foundation',
-            style: TextStyle(color: Colors.black),
-            textAlign: TextAlign.center,
-          ),
-          leading: Builder(
-            builder: (context) => IconButton(
-              icon: Icon(Icons.menu),
-              color: Colors.black,
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
-          ),
-        ),
         drawer: Drawer(child: DrawerTiles()),
         body: screens[_page]);
-  }
-}
-
-class DrawerTiles extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Stack(children: [
-        ListView(addRepaintBoundaries: true, children: [
-          DrawerHeader(
-              child: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => UserHomePage()));
-            },
-            child: Image(
-              image: AssetImage("assets/FoundationLogo.png"),
-            ),
-          )),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ListTile(
-                  title: Text(
-                    'Our Initiatives',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OurInitiatives()))),
-              ListTile(
-                title: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                      onChanged: (value) {
-                        if (value == 'Photo Gallery') {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PhotoGallery()));
-                        } else if (value == 'Video Gallery') {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VideoGallery()));
-                        }
-                      },
-                      hint: Text(
-                        'Gallery',
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      items: <String>['Photo Gallery', 'Video Gallery']
-                          .map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(
-                            value,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      }).toList()),
-                ),
-              ),
-              ListTile(
-                title: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                      onChanged: (value) {
-                        if (value == 'Support as Volunteer') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VolunteerSupport(),
-                            ),
-                          );
-                        } else if (value == 'Support as Intern') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InternSupport(),
-                            ),
-                          );
-                        }
-                      },
-                      hint: Text(
-                        'Support Us',
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      items: <String>[
-                        'Support as Volunteer',
-                        'Support as Intern'
-                      ].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList()),
-                ),
-              ),
-              ListTile(
-                  title: Text(
-                    'Event Registration',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EventRegistration(),
-                      ),
-                    );
-                  }),
-              ListTile(
-                  title: Text(
-                    'About Us',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {}),
-              ListTile(
-                  title: Text(
-                    'Contact Us',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {}),
-            ],
-          ),
-        ]),
-        Positioned(
-            left: 1,
-            right: 1,
-            bottom: 2,
-            child: TextButton(
-              child: Text(
-                'Sign In as Admin',
-                style: TextStyle(fontSize: 13, color: Colors.black),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SignIn(),
-                ),
-              ),
-            )),
-      ]),
-    );
   }
 }
