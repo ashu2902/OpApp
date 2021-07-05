@@ -92,9 +92,10 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
       padding: EdgeInsets.all(2),
-      height: _height / 3,
+      height: _height / 3.4,
       width: _width,
       child: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection("highlights").snapshots(),
@@ -109,23 +110,30 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                           .map(
                             (e) => Stack(
                               children: [
-                                Container(
-                                  height: _height,
-                                  width: _width,
-                                  child: Image.network(
-                                    e.get('url'),
-                                    fit: BoxFit.cover,
-                                    scale: 1,
+                                Card(
+                                  elevation: 21,
+                                  child: Container(
+                                    height: _height,
+                                    width: _width,
+                                    child: Card(
+                                      child: Image.network(
+                                        e.get('url'),
+                                        fit: BoxFit.cover,
+                                        scale: 1,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Positioned(
                                   bottom: 0,
                                   child: Container(
                                     height: _height / 10,
-                                    width: _width,
-                                    color: const Color(0xF).withOpacity(0.5),
+                                    width: _width / 1.2,
+                                    color: Colors.white10.withOpacity(0.2),
                                     child: Text(
                                       e.get('desc'),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -135,15 +143,19 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                           )
                           .toList(),
                       options: CarouselOptions(
-                          height: _height,
+                          height: _height / 3,
                           autoPlayAnimationDuration: Duration(seconds: 2),
                           autoPlayInterval: Duration(seconds: 6),
-                          autoPlay: false,
+                          autoPlay: true,
                           enlargeCenterPage: true,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 1),
+                          viewportFraction: 0.8),
                     )
-                  : Container();
+                  : Center(
+                      child: CircularProgressIndicator(
+                        value: 5,
+                        semanticsLabel: 'Loading',
+                      ),
+                    );
         },
       ),
     );

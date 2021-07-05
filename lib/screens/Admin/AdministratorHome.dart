@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/Register.dart';
 import 'package:opbhallafoundation/screens/Admin/Authentication/SignIn.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditEventRegistration.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditInitiatives.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/Highlights.dart';
-import 'package:opbhallafoundation/screens/Admin/EditCategories/RecentActivities.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/Gallery/EditGallery.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -27,9 +29,14 @@ class _CategoriesState extends State<Categories> {
             }),
         actions: [
           IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdminRegister())))
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AdminRegister(),
+              ),
+            ),
+          )
         ],
         title: Center(
             child: Text(
@@ -57,9 +64,11 @@ class _CategoriesState extends State<Categories> {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditHighlights()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditHighlights(),
+                              ),
+                            );
                           },
                           child: Text('Highlights'),
                         ),
@@ -85,26 +94,7 @@ class _CategoriesState extends State<Categories> {
                         ),
                       ),
                     ),
-                    //OnGoing Events
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditOnGoingEvents(),
-                              ),
-                            );
-                          },
-                          child: Text('OnGoing Events'),
-                        ),
-                      ),
-                    ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -139,6 +129,25 @@ class _CategoriesState extends State<Categories> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: _height / 10,
+                        width: _width / 2,
+                        decoration: BoxDecoration(color: Colors.red),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditEventRegistrations(),
+                              ),
+                            );
+                          },
+                          child: Text('Event Registration'),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -155,23 +164,5 @@ class _CategoriesState extends State<Categories> {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => SignIn()), (route) => false);
     print('user signed out');
-  }
-}
-
-class EditOnGoingEvents extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Edit OnGoing Activities'),
-    );
-  }
-}
-
-class EditGallery extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Edit Gallery'),
-    );
   }
 }
