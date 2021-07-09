@@ -48,8 +48,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         ),
                         Row(
                           children: [
-                            Icon(widget.icon),
-                            
+                            GestureDetector(
+                                onTap: () => pauseorplay(),
+                                child: Icon(widget.icon)),
                           ],
                         )
                       ],
@@ -70,5 +71,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             });
           }),
     );
+  }
+
+  pauseorplay() {
+    setState(() {
+      _controller.value.isPlaying
+          ? widget.icon = Icons.play_arrow_rounded
+          : widget.icon = Icons.pause_rounded;
+      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+    });
   }
 }

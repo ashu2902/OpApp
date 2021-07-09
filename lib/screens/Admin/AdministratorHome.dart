@@ -8,6 +8,8 @@ import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivi
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/Gallery/EditGallery.dart';
 
+import 'EditCategories/Gallery/EditVideoGallery.dart';
+
 class Categories extends StatefulWidget {
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -109,6 +111,22 @@ class _CategoriesState extends State<Categories> {
                                         builder: (context) => EditGallery()));
                               },
                               child: Text('Gallery'))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          height: _height / 10,
+                          width: _width / 2,
+                          decoration: BoxDecoration(color: Colors.red),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditVideoGallery()));
+                              },
+                              child: Text('Video Gallery'))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

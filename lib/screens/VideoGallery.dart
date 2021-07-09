@@ -58,13 +58,14 @@ class _VideoGalleryState extends State<VideoGallery> {
                                                 GestureDetector(
                                                   onTap: () {
                                                     Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                VideoPlayerWidget(
-                                                                  url: doc[
-                                                                      "url"],
-                                                                )));
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            VideoPlayerWidget(
+                                                          url: doc["url"],
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   child: Padding(
                                                     padding:
