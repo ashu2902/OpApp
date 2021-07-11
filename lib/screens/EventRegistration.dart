@@ -32,7 +32,7 @@ class _EventRegistrationState extends State<EventRegistration> {
                     )
                   : snapshot.hasData
                       ? Container(
-                          color: Colors.white,
+                          color: Colors.grey[100],
                           height: _height,
                           width: _width,
                           child: Padding(
@@ -54,51 +54,55 @@ class _EventRegistrationState extends State<EventRegistration> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 20),
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
                                       height: _height / 1.5,
                                       width: _width / 2,
-                                      child: Container(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          clipBehavior: Clip.hardEdge,
-                                          itemCount: snapshot.data.docs.length,
-                                          itemBuilder: (context, index) {
-                                            var doc = snapshot.data.docs[index];
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        clipBehavior: Clip.hardEdge,
+                                        itemCount: snapshot.data.docs.length,
+                                        itemBuilder: (context, index) {
+                                          var doc = snapshot.data.docs[index];
 
-                                            var id =
-                                                snapshot.data.docs[index].id;
-                                            var name =
-                                                snapshot.data.docs[index];
-                                            var url;
+                                          var id = snapshot.data.docs[index].id;
+                                          var name = snapshot.data.docs[index];
+                                          var url;
 
-                                            return GestureDetector(
-                                              onTap: () {
-                                                url = name["link"];
-                                                eventID = id;
-                                                eventName = name['title'];
-                                                print(url);
-                                                print(eventID);
-                                                print(eventName);
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Events(
-                                                              selectedUrl: url,
-                                                              eventName:
-                                                                  eventName,
-                                                            )));
-                                              },
+                                          return GestureDetector(
+                                            onTap: () {
+                                              url = name["link"];
+                                              eventID = id;
+                                              eventName = name['title'];
+                                              print(url);
+                                              print(eventID);
+                                              print(eventName);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Events(
+                                                            selectedUrl: url,
+                                                            eventName:
+                                                                eventName,
+                                                          )));
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 6),
                                               child: Container(
-                                                height: _height / 12,
+                                                alignment: Alignment.center,
+                                                height: _height / 9,
                                                 child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30)),
                                                   elevation: 5,
                                                   child: Center(
                                                     child: Text(
                                                       doc["title"],
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           fontStyle:
@@ -107,9 +111,9 @@ class _EventRegistrationState extends State<EventRegistration> {
                                                   ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                        ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),

@@ -299,7 +299,7 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                           bottom: 20,
                           child: ElevatedButton(
                             child: Text(
-                              'Add Highlight',
+                              'Add Recent Activity',
                               style: TextStyle(fontSize: 18),
                             ),
                             onPressed: () => showDialog(

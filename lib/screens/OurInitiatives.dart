@@ -53,6 +53,8 @@ class _OurInitiativesState extends State<OurInitiatives> {
               ? Container(child: Text('${snapshot.error}'))
               : snapshot.hasData
                   ? Container(
+                      color: Colors.grey[200],
+                      padding: EdgeInsets.only(top: 30),
                       child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -69,32 +71,41 @@ class _OurInitiativesState extends State<OurInitiatives> {
                                   const EdgeInsets.symmetric(horizontal: 3),
                               child: GestureDetector(
                                 child: Card(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: _height / 6,
-                                        width: _width / 2,
-                                        child: Image.network(
-                                          img['url'],
-                                          fit: BoxFit.fill,
-                                          height: _height,
+                                  clipBehavior: Clip.hardEdge,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Container(
+                                          height: _height / 5,
                                           width: _width,
-                                        ),
-                                      ),
-                                      Container(
-                                          height: _height / 16,
-                                          child: Center(
-                                            child: Text(
-                                              doc['heading'],
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 18),
+                                          child: ClipRect(
+                                            clipBehavior: Clip.hardEdge,
+                                            child: Image.network(
+                                              img['url'],
+                                              filterQuality: FilterQuality.low,
+                                              fit: BoxFit.fill,
+                                              height: _height,
+                                              width: _width,
                                             ),
-                                          ))
-                                    ],
+                                          ),
+                                        ),
+                                        Container(
+                                            child: Center(
+                                          child: Text(
+                                            doc['heading'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ))
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 onTap: () => Navigator.push(
