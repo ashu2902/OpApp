@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class PhotoGallery extends StatefulWidget {
@@ -48,63 +49,57 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    height: _height / 1.5,
-                                    width: _width / 1.44,
-                                    child: Container(
+                                Container(
+                                  decoration: BoxDecoration(
                                       color: Colors.transparent,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        clipBehavior: Clip.hardEdge,
-                                        itemCount: snapshot.data.docs.length,
-                                        itemBuilder: (context, index) {
-                                          var doc = snapshot.data.docs[index];
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: _height / 1.3,
+                                  width: _width / 1.41,
+                                  child: Container(
+                                    child: ListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      clipBehavior: Clip.hardEdge,
+                                      itemCount: snapshot.data.docs.length,
+                                      itemBuilder: (context, index) {
+                                        var doc = snapshot.data.docs[index];
 
-                                          var id = snapshot.data.docs[index].id;
-                                          var name = snapshot.data.docs[index];
+                                        var id = snapshot.data.docs[index].id;
+                                        var name = snapshot.data.docs[index];
 
-                                          return GestureDetector(
-                                            onTap: () {
-                                              eventID = id;
-                                              eventName = name['title'];
-                                              print(eventID);
-                                              print(eventName);
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EventPage(
-                                                    eventID: eventID,
-                                                    eventName: eventName,
-                                                  ),
+                                        return GestureDetector(
+                                          onTap: () {
+                                            eventID = id;
+                                            eventName = name['title'];
+                                            print(eventID);
+                                            print(eventName);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => EventPage(
+                                                  eventID: eventID,
+                                                  eventName: eventName,
                                                 ),
-                                              );
-                                            },
-                                            child: Container(
-                                              height: _height / 12,
-                                              child: Card(
-                                                elevation: 5,
-                                                child: Center(
-                                                  child: Text(
-                                                    doc["title"],
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontStyle:
-                                                            FontStyle.normal),
-                                                  ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: _height / 6,
+                                            child: Card(
+                                              elevation: 5,
+                                              child: Center(
+                                                child: Text(
+                                                  doc["title"],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontStyle:
+                                                          FontStyle.normal),
                                                 ),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -139,10 +134,17 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+    final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('${widget.eventName}'),
+          title: Text(
+            widget.eventName,
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xffff6b5c),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         body: StreamBuilder(
             stream: _firebaseFirestore
@@ -159,10 +161,17 @@ class _EventPageState extends State<EventPage> {
                     )
                   : snapshot.hasData
                       ? Container(
+                          color: Colors.black.withOpacity(.21),
                           child: GridView.builder(
+                              scrollDirection: Axis.vertical,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
+                                      crossAxisCount: 1,
+                                      mainAxisSpacing: 6,
+                                      crossAxisSpacing: 1,
+                                      mainAxisExtent: _height / 2),
+                              physics: BouncingScrollPhysics(),
+                              dragStartBehavior: DragStartBehavior.start,
                               itemCount: snapshot.data.docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 var img = snapshot.data.docs[index].data();
@@ -173,11 +182,26 @@ class _EventPageState extends State<EventPage> {
                                           child: Text('NO images'),
                                         ),
                                       )
-                                    : Container(
-                                        child: Center(
-                                          child: Image.network(
-                                            img['url'],
-                                            fit: BoxFit.cover,
+                                    : Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: Container(
+                                          child: Center(
+                                            child: Card(
+                                              elevation: 6,
+                                              clipBehavior: Clip.hardEdge,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30)),
+                                              child: Image.network(
+                                                img['url'],
+                                                height: _height / 1.8,
+                                                width: _width,
+                                                fit: BoxFit.fill,
+                                                filterQuality:
+                                                    FilterQuality.high,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       );
