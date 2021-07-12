@@ -19,6 +19,8 @@ class _EventRegistrationState extends State<EventRegistration> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Registration'),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xffff6b5c),
       ),
       resizeToAvoidBottomInset: true,
       body: Container(

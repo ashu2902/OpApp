@@ -15,7 +15,7 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
     final _width = MediaQuery.of(context).size.width;
     return Container(
       width: _width / 1.1,
-      height: _height / 3,
+      height: _height / 2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         // boxShadow: [

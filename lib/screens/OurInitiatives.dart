@@ -28,23 +28,13 @@ class _OurInitiativesState extends State<OurInitiatives> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xffff6b5c),
         title: Text(
           'Our Initiatives',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            color: Colors.black,
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-      ),
-      drawer: Drawer(
-        child: DrawerTiles(),
       ),
       body: StreamBuilder(
         stream: _firestore.collection('OurInitiatives').snapshots(),

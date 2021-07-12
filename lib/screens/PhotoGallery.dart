@@ -18,6 +18,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xffff6b5c),
         title: Text('Gallery'),
       ),
@@ -177,7 +178,7 @@ class _EventPageState extends State<EventPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 var img = snapshot.data.docs[index].data();
                                 var item = snapshot.data.docs.length;
-                                return item == null
+                                return snapshot.data.docs.length == 0
                                     ? Container(
                                         child: Center(
                                           child: Text('NO images'),

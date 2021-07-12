@@ -60,6 +60,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xffff6b5c),
         title: Text('Video Gallery'),
       ),
       body: Container(

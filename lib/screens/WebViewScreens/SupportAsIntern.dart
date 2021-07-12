@@ -12,20 +12,11 @@ class InternSupport extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xffff6b5c),
         title: Text(
           'Support as Intern',
-          style: TextStyle(color: Colors.black),
           textAlign: TextAlign.center,
-        ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.chevron_left_sharp),
-            iconSize: 30,
-            color: Colors.black,
-            onPressed: () => Navigator.pop(context),
-          ),
         ),
       ),
       body: Container(
