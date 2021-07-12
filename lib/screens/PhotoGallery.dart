@@ -18,6 +18,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xffff6b5c),
         title: Text('Gallery'),
       ),
       resizeToAvoidBottomInset: true,

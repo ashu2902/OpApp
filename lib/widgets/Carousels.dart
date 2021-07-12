@@ -55,13 +55,12 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                 ),
                                 Positioned(
                                   bottom: 0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Container(
-                                      height: _height / 10,
-                                      width: _width / 1.3,
-                                      color: Colors.white10.withOpacity(0.2),
+                                  child: Container(
+                                    height: _height / 10,
+                                    width: _width / 1.25,
+                                    color: Colors.white10.withOpacity(0.2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         e.get('desc'),
                                         maxLines: 3,

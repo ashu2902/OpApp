@@ -41,6 +41,7 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                         padding: EdgeInsets.all(0),
                         itemExtent: _height / 6,
                         shrinkWrap: false,
+                        physics: BouncingScrollPhysics(),
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
                           var doc = snapshot.data.docs[index].data();

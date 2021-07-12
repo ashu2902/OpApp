@@ -13,130 +13,133 @@ class DrawerTiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Stack(children: [
-        ListView(addRepaintBoundaries: true, children: [
-          DrawerHeader(
-              child: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => UserHomePage()));
-            },
-            child: Image(
-              image: AssetImage("assets/FoundationLogo.png"),
-            ),
-          )),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        ListView(
+            physics: BouncingScrollPhysics(),
+            addRepaintBoundaries: true,
             children: [
-              ListTile(
-                  title: Text(
-                    'Our Initiatives',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OurInitiatives()))),
-              ListTile(
-                title: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                      onChanged: (value) {
-                        if (value == 'Photo Gallery') {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PhotoGallery()));
-                        } else if (value == 'Video Gallery') {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VideoGallery()));
-                        }
-                      },
-                      hint: Text(
-                        'Gallery',
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+              DrawerHeader(
+                  child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => UserHomePage()));
+                },
+                child: Image(
+                  image: AssetImage("assets/FoundationLogo.png"),
+                ),
+              )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ListTile(
+                      title: Text(
+                        'Our Initiatives',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
                       ),
-                      items: <String>['Photo Gallery', 'Video Gallery']
-                          .map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(
-                            value,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OurInitiatives()))),
+                  ListTile(
+                    title: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          onChanged: (value) {
+                            if (value == 'Photo Gallery') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PhotoGallery()));
+                            } else if (value == 'Video Gallery') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VideoGallery()));
+                            }
+                          },
+                          hint: Text(
+                            'Gallery',
+                            style: TextStyle(
+                                color: Colors.blue[900],
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          items: <String>['Photo Gallery', 'Video Gallery']
+                              .map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(
+                                value,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            );
+                          }).toList()),
+                    ),
+                  ),
+                  ListTile(
+                    title: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          onChanged: (value) {
+                            if (value == 'Support as Volunteer') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VolunteerSupport(),
+                                ),
+                              );
+                            } else if (value == 'Support as Intern') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => InternSupport(),
+                                ),
+                              );
+                            }
+                          },
+                          hint: Text(
+                            'Support Us',
+                            style: TextStyle(
+                                color: Colors.blue[900],
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          items: <String>[
+                            'Support as Volunteer',
+                            'Support as Intern'
+                          ].map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList()),
+                    ),
+                  ),
+                  ListTile(
+                      title: Text(
+                        'Event Registration',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventRegistration(),
                           ),
                         );
-                      }).toList()),
-                ),
-              ),
-              ListTile(
-                title: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                      onChanged: (value) {
-                        if (value == 'Support as Volunteer') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VolunteerSupport(),
-                            ),
-                          );
-                        } else if (value == 'Support as Intern') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InternSupport(),
-                            ),
-                          );
-                        }
-                      },
-                      hint: Text(
-                        'Support Us',
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                      }),
+                  ListTile(
+                      title: Text(
+                        'About Us',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
                       ),
-                      items: <String>[
-                        'Support as Volunteer',
-                        'Support as Intern'
-                      ].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList()),
-                ),
-              ),
-              ListTile(
-                  title: Text(
-                    'Event Registration',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EventRegistration(),
+                      onTap: () {}),
+                  ListTile(
+                      title: Text(
+                        'Contact Us',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
                       ),
-                    );
-                  }),
-              ListTile(
-                  title: Text(
-                    'About Us',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {}),
-              ListTile(
-                  title: Text(
-                    'Contact Us',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                  ),
-                  onTap: () {}),
-            ],
-          ),
-        ]),
+                      onTap: () {}),
+                ],
+              ),
+            ]),
         Positioned(
             left: 1,
             right: 1,
