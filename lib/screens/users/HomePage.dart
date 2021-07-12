@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
     final _width = MediaQuery.of(context).size.width;
     return Container(
       width: _width,
-      color: Colors.grey[100],
+      color: Colors.grey[200],
       height: _height,
       child: Stack(
         children: [

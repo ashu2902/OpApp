@@ -21,108 +21,105 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       ),
       resizeToAvoidBottomInset: true,
       body: Container(
-        child: Container(
-          child: StreamBuilder(
-            stream: _firebaseFirestore.collection('Gallery').snapshots(),
-            builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
-              return snapshot.hasError
-                  ? Container(
-                      child: Text('error'),
-                    )
-                  : snapshot.hasData
-                      ? Container(
-                          color: Colors.white,
-                          height: _height,
-                          width: _width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: Container(
-                                      child: Text(
-                                        'Select event',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
+        child: StreamBuilder(
+          stream: _firebaseFirestore.collection('Gallery').snapshots(),
+          builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
+            return snapshot.hasError
+                ? Container(
+                    child: Text('error'),
+                  )
+                : snapshot.hasData
+                    ? Container(
+                        color: Colors.grey[200],
+                        height: _height,
+                        width: _width,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Container(
+                                    child: Text(
+                                      'Select event',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    height: _height / 1.5,
+                                    width: _width / 1.44,
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      height: _height / 1.5,
-                                      width: _width / 2,
-                                      child: Container(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          clipBehavior: Clip.hardEdge,
-                                          itemCount: snapshot.data.docs.length,
-                                          itemBuilder: (context, index) {
-                                            var doc = snapshot.data.docs[index];
+                                      color: Colors.transparent,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        clipBehavior: Clip.hardEdge,
+                                        itemCount: snapshot.data.docs.length,
+                                        itemBuilder: (context, index) {
+                                          var doc = snapshot.data.docs[index];
 
-                                            var id =
-                                                snapshot.data.docs[index].id;
-                                            var name =
-                                                snapshot.data.docs[index];
+                                          var id = snapshot.data.docs[index].id;
+                                          var name = snapshot.data.docs[index];
 
-                                            return GestureDetector(
-                                              onTap: () {
-                                                eventID = id;
-                                                eventName = name['title'];
-                                                print(eventID);
-                                                print(eventName);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EventPage(
-                                                      eventID: eventID,
-                                                      eventName: eventName,
-                                                    ),
+                                          return GestureDetector(
+                                            onTap: () {
+                                              eventID = id;
+                                              eventName = name['title'];
+                                              print(eventID);
+                                              print(eventName);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EventPage(
+                                                    eventID: eventID,
+                                                    eventName: eventName,
                                                   ),
-                                                );
-                                              },
-                                              child: Container(
-                                                height: _height / 12,
-                                                child: Card(
-                                                  elevation: 5,
-                                                  child: Center(
-                                                    child: Text(
-                                                      doc["title"],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontStyle:
-                                                              FontStyle.normal),
-                                                    ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: _height / 12,
+                                              child: Card(
+                                                elevation: 5,
+                                                child: Center(
+                                                  child: Text(
+                                                    doc["title"],
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontStyle:
+                                                            FontStyle.normal),
                                                   ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                        ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(
-                            value: 5,
-                            semanticsLabel: 'Loading',
-                          ),
-                        );
-            },
-          ),
+                        ),
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(
+                          value: 5,
+                          semanticsLabel: 'Loading',
+                        ),
+                      );
+          },
         ),
       ),
     );
@@ -178,7 +175,10 @@ class _EventPageState extends State<EventPage> {
                                       )
                                     : Container(
                                         child: Center(
-                                          child: Image.network(img['url']),
+                                          child: Image.network(
+                                            img['url'],
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       );
                               }),

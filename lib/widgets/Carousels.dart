@@ -46,6 +46,7 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                       clipBehavior: Clip.hardEdge,
                                       child: Image.network(
                                         e.get('url'),
+                                        filterQuality: FilterQuality.low,
                                         fit: BoxFit.fill,
                                         scale: 1,
                                       ),
