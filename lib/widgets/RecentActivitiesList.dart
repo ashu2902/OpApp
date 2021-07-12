@@ -51,9 +51,11 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                               showDialog(
                                 context: context,
                                 builder: (context) => Dialog(
-                                  insetAnimationCurve: Curves.bounceIn,
-                                  insetAnimationDuration:
-                                      Duration(milliseconds: 600),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)),
+                                  clipBehavior: Clip.hardEdge,
+                                  insetAnimationCurve: Curves.easeIn,
+                                  insetAnimationDuration: Duration(seconds: 2),
                                   child: Material(
                                     child: Container(
                                       color: Colors.white,

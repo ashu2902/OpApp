@@ -32,45 +32,118 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                   ? CarouselSlider(
                       items: snapshot.data.docs
                           .map(
-                            (e) => Stack(
-                              children: [
-                                Card(
-                                  clipBehavior: Clip.hardEdge,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18)),
-                                  elevation: 3,
-                                  child: Container(
-                                    height: _height,
-                                    width: _width,
-                                    child: ClipRect(
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Image.network(
-                                        e.get('url'),
-                                        filterQuality: FilterQuality.low,
-                                        fit: BoxFit.fill,
-                                        scale: 1,
+                            (e) => GestureDetector(
+                              onTap: () {
+                                debugPrint('tapped');
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    clipBehavior: Clip.hardEdge,
+                                    insetAnimationCurve: Curves.bounceIn,
+                                    child: Material(
+                                      child: Container(
+                                        color: Colors.white,
+                                        height: _height / 1.5,
+                                        width: _width,
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  child: Card(
+                                                    elevation: 0,
+                                                    child: Container(
+                                                      color: Colors.black,
+                                                      child: Image.network(
+                                                        e.get('url'),
+                                                        fit: BoxFit.fill,
+                                                        width: _height / 2,
+                                                        height: _height / 4,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      color: Colors.black12),
+                                                  width: _width / 1.5,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      e.get('desc'),
+                                                      style: TextStyle(
+                                                          fontSize: 18),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                    height: _height / 10,
-                                    width: _width / 1.25,
-                                    color: Colors.white10.withOpacity(0.2),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        e.get('desc'),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Colors.white),
+                                );
+                              },
+                              child: Stack(
+                                children: [
+                                  Card(
+                                    clipBehavior: Clip.hardEdge,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    elevation: 3,
+                                    child: Container(
+                                      height: _height,
+                                      width: _width,
+                                      child: ClipRect(
+                                        clipBehavior: Clip.hardEdge,
+                                        child: Image.network(
+                                          e.get('url'),
+                                          filterQuality: FilterQuality.low,
+                                          fit: BoxFit.fill,
+                                          scale: 1,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Positioned(
+                                    bottom: 0,
+                                    child: Container(
+                                      height: _height / 10,
+                                      width: _width / 1.25,
+                                      color: Colors.white10.withOpacity(0.2),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          e.get('desc'),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                           .toList(),
