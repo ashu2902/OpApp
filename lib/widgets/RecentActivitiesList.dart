@@ -156,8 +156,9 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
+                                            clipBehavior: Clip.hardEdge,
                                             margin: EdgeInsets.all(5),
-                                            width: _width / 3,
+                                            width: _width / 2.5,
                                             height: _height,
                                             decoration: BoxDecoration(
                                                 color: Colors.black12
@@ -176,10 +177,10 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                                           Container(
                                             padding: EdgeInsets.all(4),
                                             height: _height / 4,
-                                            width: _width / 2.5,
                                             child: Text(
-                                              doc['desc'],
-                                              style: TextStyle(fontSize: 16),
+                                              doc['title'],
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(fontSize: 18),
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 4,
                                             ),

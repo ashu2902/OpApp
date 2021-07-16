@@ -73,10 +73,7 @@ class _SpotlightState extends State<Spotlight> {
                                                                           30)),
                                                           child:
                                                               Stack(children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0.0),
+                                                            Container(
                                                               child:
                                                                   Image.network(
                                                                 img["img"],
@@ -88,25 +85,29 @@ class _SpotlightState extends State<Spotlight> {
                                                               ),
                                                             ),
                                                             Positioned(
-                                                              left: 6,
+                                                              left: _width / 13,
                                                               bottom:
-                                                                  _height / 24,
+                                                                  _height / 66,
                                                               child: Icon(
                                                                 Icons
                                                                     .calendar_today_rounded,
                                                                 color: Colors
                                                                     .white,
-                                                                size: 33,
+                                                                size: 24,
                                                               ),
                                                             ),
                                                             Positioned(
-                                                                left: 6,
+                                                                left:
+                                                                    _width / 7,
                                                                 bottom:
                                                                     _height /
                                                                         51,
                                                                 child: Text(
                                                                   doc['Date'],
                                                                   style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
                                                                       fontSize:
                                                                           15,
                                                                       color: Colors

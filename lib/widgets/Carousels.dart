@@ -158,7 +158,7 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          e.get('desc'),
+                                          e.get('title'),
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(color: Colors.white),
