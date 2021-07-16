@@ -26,7 +26,7 @@ class _UserHomePageState extends State<UserHomePage> {
           index: _page,
           height: _height / 15,
           color: Color(0xffff6b5c),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white.withOpacity(0),
           buttonBackgroundColor: Color(0xffff6b5c).withOpacity(0.95),
           animationCurve: Curves.ease,
           animationDuration: Duration(milliseconds: 300),

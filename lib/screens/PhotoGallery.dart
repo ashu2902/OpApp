@@ -177,7 +177,6 @@ class _EventPageState extends State<EventPage> {
                               itemCount: snapshot.data.docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 var img = snapshot.data.docs[index].data();
-                                var item = snapshot.data.docs.length;
                                 return snapshot.data.docs.length == 0
                                     ? Container(
                                         child: Center(
@@ -201,7 +200,7 @@ class _EventPageState extends State<EventPage> {
                                                 width: _width,
                                                 fit: BoxFit.fill,
                                                 filterQuality:
-                                                    FilterQuality.high,
+                                                    FilterQuality.medium,
                                               ),
                                             ),
                                           ),

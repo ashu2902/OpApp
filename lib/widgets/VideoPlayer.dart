@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class VideoPlayerWidget extends StatefulWidget {
   VideoPlayerWidget({@required this.url});
   @override

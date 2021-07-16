@@ -6,6 +6,7 @@ import 'package:opbhallafoundation/screens/Admin/EditCategories/EditInitiatives.
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditHighlights.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/EditRecentActivities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:opbhallafoundation/screens/Admin/EditCategories/EditSpotlights.dart';
 import 'package:opbhallafoundation/screens/Admin/EditCategories/Gallery/EditGallery.dart';
 
 import 'EditCategories/Gallery/EditVideoGallery.dart';
@@ -127,6 +128,24 @@ class _CategoriesState extends State<Categories> {
                                             EditVideoGallery()));
                               },
                               child: Text('Video Gallery'))),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          height: _height / 10,
+                          width: _width / 2,
+                          decoration: BoxDecoration(color: Colors.red),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditSpotlights(),
+                                  ),
+                                );
+                              },
+                              child: Text('Spotlights'))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

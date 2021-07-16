@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/Initiatives.dart';
-import 'package:opbhallafoundation/widgets/DrawerTiles.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OurInitiatives extends StatefulWidget {
@@ -46,11 +45,12 @@ class _OurInitiativesState extends State<OurInitiatives> {
                       color: Colors.grey[200],
                       padding: EdgeInsets.only(top: 30),
                       child: GridView.builder(
+                          physics: BouncingScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: _height / 47,
-                                  mainAxisExtent: _height / 4.1,
-                                  crossAxisSpacing: 2,
+                                  mainAxisSpacing: _height / 48,
+                                  mainAxisExtent: _height / 4.2,
+                                  crossAxisSpacing: 0,
                                   crossAxisCount: 2),
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (BuildContext context, int index) {

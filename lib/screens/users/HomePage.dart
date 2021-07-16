@@ -34,7 +34,10 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white),
                   ),
                 )),
-            Positioned(top: _height / 5, child: HighlightsCarousel()),
+            Positioned(
+              top: _height / 5,
+              child: HighlightsCarousel(),
+            ),
             Positioned(
                 top: _height / 1.9,
                 child: Padding(
