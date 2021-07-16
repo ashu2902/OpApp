@@ -27,20 +27,25 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
     return task;
   }
 
+  var title = "";
+  TextEditingController titleController = TextEditingController();
+  var editTitle = "";
+  TextEditingController editTitleController = TextEditingController();
+
   var desc = '';
-  var editDesc = '';
   TextEditingController highlightController = TextEditingController();
+
+  var editDesc = '';
   TextEditingController editRecentActDescriptionController =
       TextEditingController();
 
-  writeImageUrlToFireStore(
-    imageUrl,
-    desc,
-  ) {
+  writeImageUrlToFireStore(imageUrl, desc) {
     desc = highlightController.text;
+    title = titleController.text;
+
     _firebaseFirestore
         .collection("RecentActivities")
-        .add({"url": imageUrl, "desc": desc}).whenComplete(
+        .add({"url": imageUrl, "desc": desc, "title": title}).whenComplete(
             () => print("$imageUrl is saved in Firestore. $desc"));
   }
 
@@ -103,42 +108,150 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
               : snapshot.hasData
                   ? Container(
                       height: _height,
-                      child: Stack(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20)),
-                            height: _height / 1.35,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              clipBehavior: Clip.hardEdge,
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (context, index) {
-                                var doc = snapshot.data.docs[index];
-                                var img = snapshot.data.docs[index];
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)),
+                          height: _height / 1.35,
+                          child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            clipBehavior: Clip.hardEdge,
+                            itemExtent: _height / 6,
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              var doc = snapshot.data.docs[index];
+                              var img = snapshot.data.docs[index];
 
-                                return Column(
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: _height / 6,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.5),
-                                              spreadRadius: 1,
-                                              blurRadius: 8,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
+                                    Container(
+                                      width: _width / 12,
+                                      child: Center(
+                                        child: IconButton(
+                                            constraints:
+                                                BoxConstraints.expand(),
+                                            iconSize: 24,
+                                            icon: Icon(Icons.edit),
+                                            onPressed: () {
+                                              editTitleController.clear();
+                                              editRecentActDescriptionController
+                                                  .text = doc['desc'];
+                                              editTitleController.text =
+                                                  doc['title'];
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => Dialog(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        width: _width / 2,
+                                                        child: TextField(
+                                                          onEditingComplete:
+                                                              () {
+                                                            editDesc =
+                                                                editTitleController
+                                                                    .text;
+                                                          },
+                                                          controller:
+                                                              editTitleController,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(),
+                                                            hintText:
+                                                                'Enter Title',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: _width / 2,
+                                                        child: TextField(
+                                                          onEditingComplete:
+                                                              () {
+                                                            editDesc =
+                                                                editRecentActDescriptionController
+                                                                    .text;
+                                                          },
+                                                          controller:
+                                                              editRecentActDescriptionController,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            border:
+                                                                UnderlineInputBorder(),
+                                                            hintText:
+                                                                'Enter Description',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          snapshot
+                                                              .data
+                                                              .docs[index]
+                                                              .reference
+                                                              .update({
+                                                            "title":
+                                                                editTitleController
+                                                                    .text,
+                                                            "desc":
+                                                                editRecentActDescriptionController
+                                                                    .text
+                                                          }).whenComplete(
+                                                            () => Navigator.pop(
+                                                                context),
+                                                          );
+                                                        },
+                                                        child: Text('Edit '),
+                                                      ),
+                                                      Container(
+                                                        child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty
+                                                                      .all(Colors
+                                                                          .red)),
+                                                          onPressed: () {
+                                                            snapshot
+                                                                .data
+                                                                .docs[index]
+                                                                .reference
+                                                                .delete()
+                                                                .whenComplete(
+                                                                  () => Navigator
+                                                                      .pop(
+                                                                          context),
+                                                                );
+                                                          },
+                                                          child: Text('Delete'),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: _width / 1.2,
+                                      child: Card(
+                                        clipBehavior: Clip.hardEdge,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(21))),
+                                        elevation: 6,
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -146,114 +259,13 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Container(
-                                              width: _width / 9,
-                                              child: Center(
-                                                child: IconButton(
-                                                    constraints:
-                                                        BoxConstraints.expand(),
-                                                    iconSize: 24,
-                                                    icon: Icon(Icons.edit),
-                                                    onPressed: () {
-                                                      editRecentActDescriptionController
-                                                          .text = doc['desc'];
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            Dialog(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                width:
-                                                                    _width / 2,
-                                                                child:
-                                                                    TextField(
-                                                                  onEditingComplete:
-                                                                      () {
-                                                                    editDesc =
-                                                                        editRecentActDescriptionController
-                                                                            .text;
-                                                                  },
-                                                                  controller:
-                                                                      editRecentActDescriptionController,
-                                                                  obscureText:
-                                                                      false,
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Enter Description',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .update({
-                                                                    "desc":
-                                                                        editRecentActDescriptionController
-                                                                            .text
-                                                                  }).whenComplete(
-                                                                    () => Navigator
-                                                                        .pop(
-                                                                            context),
-                                                                  );
-                                                                },
-                                                                child: Text(
-                                                                    'Edit Description'),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    snapshot
-                                                                        .data
-                                                                        .docs[
-                                                                            index]
-                                                                        .reference
-                                                                        .delete()
-                                                                        .whenComplete(
-                                                                          () =>
-                                                                              Navigator.pop(context),
-                                                                        );
-                                                                  },
-                                                                  child: Text(
-                                                                      'Delete'),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: _width / 2.2,
-                                              child: SingleChildScrollView(
-                                                child: ListTile(
-                                                  title: Text(
-                                                    doc["desc"],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: _width / 3.5,
+                                              height: _height / 6,
+                                              width: _width / 3,
                                               child: Center(
                                                 child: Image.network(
                                                   img['url'],
+                                                  width: _width,
+                                                  height: _height,
                                                   fit: BoxFit.fill,
                                                   loadingBuilder:
                                                       (BuildContext context,
@@ -281,65 +293,26 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                                                 ),
                                               ),
                                             ),
+                                            Container(
+                                              height: _height / 6,
+                                              width: _width / 2.2,
+                                              child: ListTile(
+                                                title: Text(
+                                                  doc["title"],
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                     ),
                                   ],
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Positioned.directional(
-                          textDirection: TextDirection.ltr,
-                          start: _width / 4,
-                          width: _width / 2,
-                          height: _height / 15,
-                          bottom: 20,
-                          child: ElevatedButton(
-                            child: Text(
-                              'Add Recent Activity',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            onPressed: () => showDialog(
-                              context: context,
-                              builder: (context) => Dialog(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: _width / 2,
-                                      height: _height / 20,
-                                      child: TextField(
-                                        onEditingComplete: () {
-                                          desc = highlightController.text;
-                                        },
-                                        controller: highlightController,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          border: UnderlineInputBorder(),
-                                          hintText: 'Enter Description',
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: ElevatedButton(
-                                        child: Text('Add Highlight'),
-                                        onPressed: () {
-                                          selectFileToUpload();
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         ),
-                      ]),
+                      ),
                     )
                   : Center(
                       child: CircularProgressIndicator(
@@ -348,6 +321,65 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                       ),
                     );
         },
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 102),
+        child: ElevatedButton(
+          child: Text(
+            'Add Recent Activity',
+            style: TextStyle(fontSize: 18),
+          ),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: _width / 2,
+                    height: _height / 20,
+                    child: TextField(
+                      onEditingComplete: () {
+                        desc = titleController.text;
+                      },
+                      controller: titleController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        hintText: 'Enter Title',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: _width / 2,
+                    height: _height / 20,
+                    child: TextField(
+                      onEditingComplete: () {
+                        desc = highlightController.text;
+                      },
+                      controller: highlightController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        hintText: 'Enter Description',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      child: Text('Add Highlight'),
+                      onPressed: () {
+                        selectFileToUpload();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
