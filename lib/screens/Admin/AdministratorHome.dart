@@ -63,8 +63,12 @@ class _CategoriesState extends State<Categories> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
+                        width: _width / 1.5,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -74,7 +78,10 @@ class _CategoriesState extends State<Categories> {
                               ),
                             );
                           },
-                          child: Text('Highlights'),
+                          child: Text(
+                            'Highlights',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
@@ -83,8 +90,12 @@ class _CategoriesState extends State<Categories> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
+                        width: _width / 1.5,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -94,7 +105,10 @@ class _CategoriesState extends State<Categories> {
                               ),
                             );
                           },
-                          child: Text('Recent Activities'),
+                          child: Text(
+                            'Recent Activities',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
@@ -103,8 +117,12 @@ class _CategoriesState extends State<Categories> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                           height: _height / 10,
-                          width: _width / 2,
-                          decoration: BoxDecoration(color: Colors.red),
+                          width: _width / 1.5,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
                           child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -112,14 +130,21 @@ class _CategoriesState extends State<Categories> {
                                     MaterialPageRoute(
                                         builder: (context) => EditGallery()));
                               },
-                              child: Text('Gallery'))),
+                              child: Text(
+                                'Gallery',
+                                style: TextStyle(fontSize: 18),
+                              ))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                           height: _height / 10,
-                          width: _width / 2,
-                          decoration: BoxDecoration(color: Colors.red),
+                          width: _width / 1.5,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
                           child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -128,15 +153,22 @@ class _CategoriesState extends State<Categories> {
                                         builder: (context) =>
                                             EditVideoGallery()));
                               },
-                              child: Text('Video Gallery'))),
+                              child: Text(
+                                'Video Gallery',
+                                style: TextStyle(fontSize: 18),
+                              ))),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                           height: _height / 10,
-                          width: _width / 2,
-                          decoration: BoxDecoration(color: Colors.red),
+                          width: _width / 1.5,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
                           child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -146,14 +178,21 @@ class _CategoriesState extends State<Categories> {
                                   ),
                                 );
                               },
-                              child: Text('Spotlights'))),
+                              child: Text(
+                                'Spotlights',
+                                style: TextStyle(fontSize: 18),
+                              ))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
+                        width: _width / 1.5,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -163,7 +202,10 @@ class _CategoriesState extends State<Categories> {
                               ),
                             );
                           },
-                          child: Text('Our Initiatives'),
+                          child: Text(
+                            'Our Initiatives',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
@@ -171,8 +213,12 @@ class _CategoriesState extends State<Categories> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: _height / 10,
-                        width: _width / 2,
-                        decoration: BoxDecoration(color: Colors.red),
+                        width: _width / 1.5,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30))),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -182,7 +228,10 @@ class _CategoriesState extends State<Categories> {
                               ),
                             );
                           },
-                          child: Text('Event Registration'),
+                          child: Text(
+                            'Event Registration',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                     ),

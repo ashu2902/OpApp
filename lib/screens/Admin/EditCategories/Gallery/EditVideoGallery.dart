@@ -109,337 +109,199 @@ class _EditVideoGalleryState extends State<EditVideoGallery> {
                 )
               : snapshot.hasData
                   ? Container(
+                      color: Colors.grey[200],
                       height: _height,
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: _height / 1.35,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.docs.length,
-                                itemBuilder: (context, index) {
-                                  var doc = snapshot.data.docs[index];
-                                  var img = snapshot.data.docs[index];
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          var doc = snapshot.data.docs[index];
+                          var img = snapshot.data.docs[index];
 
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height: _height / 6,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.5),
-                                                spreadRadius: 1,
-                                                blurRadius: 8,
-                                                offset: Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
-                                          ),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Container(
-                                                width: _width / 9,
-                                                child: Center(
-                                                  child: IconButton(
-                                                    constraints:
-                                                        BoxConstraints.expand(),
-                                                    icon: Icon(Icons.edit),
+                          return Container(
+                            height: _height / 6,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: _width / 12,
+                                  child: Center(
+                                    child: IconButton(
+                                      constraints: BoxConstraints.expand(),
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        editdateriptionController.text =
+                                            doc['date'];
+                                        edittitleController.text = doc['title'];
+                                        editvideoUrlController.text =
+                                            doc["url"];
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => Dialog(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: _width / 2,
+                                                  child: TextField(
+                                                    onEditingComplete: () {
+                                                      editdate =
+                                                          editdateriptionController
+                                                              .text;
+                                                    },
+                                                    controller:
+                                                        editdateriptionController,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          UnderlineInputBorder(),
+                                                      hintText: 'Enter Date',
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: _width / 2,
+                                                  child: TextField(
+                                                    onEditingComplete: () {
+                                                      edittitle =
+                                                          edittitleController
+                                                              .text;
+                                                    },
+                                                    controller:
+                                                        edittitleController,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          UnderlineInputBorder(),
+                                                      hintText: 'Enter title',
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: _width / 2,
+                                                  child: TextField(
+                                                    onEditingComplete: () {
+                                                      editvideoUrl =
+                                                          editvideoUrlController
+                                                              .text;
+                                                    },
+                                                    controller:
+                                                        editvideoUrlController,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          UnderlineInputBorder(),
+                                                      hintText:
+                                                          'Enter Video URL',
+                                                    ),
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    snapshot.data.docs[index]
+                                                        .reference
+                                                        .update(
+                                                      {
+                                                        "date":
+                                                            editdateriptionController
+                                                                .text,
+                                                        "title":
+                                                            edittitleController
+                                                                .text,
+                                                        "url":
+                                                            editvideoUrlController
+                                                                .text
+                                                      },
+                                                    ).whenComplete(
+                                                      () => Navigator.pop(
+                                                          context),
+                                                    );
+                                                  },
+                                                  child: Text('Edit'),
+                                                ),
+                                                Container(
+                                                  child: ElevatedButton(
                                                     onPressed: () {
-                                                      editdateriptionController
-                                                          .text = doc['date'];
-                                                      edittitleController.text =
-                                                          doc['title'];
-                                                      editvideoUrlController
-                                                          .text = doc["url"];
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            Dialog(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                width:
-                                                                    _width / 2,
-                                                                child:
-                                                                    TextField(
-                                                                  onEditingComplete:
-                                                                      () {
-                                                                    editdate =
-                                                                        editdateriptionController
-                                                                            .text;
-                                                                  },
-                                                                  controller:
-                                                                      editdateriptionController,
-                                                                  obscureText:
-                                                                      false,
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Enter Date',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                width:
-                                                                    _width / 2,
-                                                                child:
-                                                                    TextField(
-                                                                  onEditingComplete:
-                                                                      () {
-                                                                    edittitle =
-                                                                        edittitleController
-                                                                            .text;
-                                                                  },
-                                                                  controller:
-                                                                      edittitleController,
-                                                                  obscureText:
-                                                                      false,
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Enter title',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                width:
-                                                                    _width / 2,
-                                                                child:
-                                                                    TextField(
-                                                                  onEditingComplete:
-                                                                      () {
-                                                                    editvideoUrl =
-                                                                        editvideoUrlController
-                                                                            .text;
-                                                                  },
-                                                                  controller:
-                                                                      editvideoUrlController,
-                                                                  obscureText:
-                                                                      false,
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Enter Video URL',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              ElevatedButton(
-                                                                onPressed: () {
-                                                                  snapshot
-                                                                      .data
-                                                                      .docs[
-                                                                          index]
-                                                                      .reference
-                                                                      .update(
-                                                                    {
-                                                                      "date": editdateriptionController
-                                                                          .text,
-                                                                      "title":
-                                                                          edittitleController
-                                                                              .text,
-                                                                      "url": editvideoUrlController
-                                                                          .text
-                                                                    },
-                                                                  ).whenComplete(
-                                                                    () => Navigator
-                                                                        .pop(
-                                                                            context),
-                                                                  );
-                                                                },
-                                                                child: Text(
-                                                                    'Edit'),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    snapshot
-                                                                        .data
-                                                                        .docs[
-                                                                            index]
-                                                                        .reference
-                                                                        .delete()
-                                                                        .whenComplete(() =>
-                                                                            Navigator.pop(context));
-                                                                  },
-                                                                  child: Text(
-                                                                      'Delete'),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
+                                                      snapshot.data.docs[index]
+                                                          .reference
+                                                          .delete()
+                                                          .whenComplete(() =>
+                                                              Navigator.pop(
+                                                                  context));
                                                     },
+                                                    child: Text('Delete'),
                                                   ),
                                                 ),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.centerLeft,
-                                                width: _width / 3,
-                                                child: Text(
-                                                  doc["title"],
-                                                  style:
-                                                      TextStyle(fontSize: 18),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: Center(
-                                                  child: Image.network(
-                                                    img['img'],
-                                                    height: _height / 8,
-                                                    width: _height / 6,
-                                                    fit: BoxFit.fill,
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    loadingBuilder: (BuildContext
-                                                            context,
-                                                        Widget child,
-                                                        ImageChunkEvent
-                                                            loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) {
-                                                        return child;
-                                                      }
-                                                      return Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          value: loadingProgress
-                                                                      .expectedTotalBytes !=
-                                                                  null
-                                                              ? loadingProgress
-                                                                      .cumulativeBytesLoaded /
-                                                                  loadingProgress
-                                                                      .expectedTotalBytes
-                                                              : null,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          Positioned.directional(
-                            textDirection: TextDirection.ltr,
-                            start: _width / 4,
-                            width: _width / 2,
-                            height: _height / 15,
-                            bottom: 20,
-                            child: ElevatedButton(
-                              child: Text(
-                                'Add Video',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              onPressed: () => showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  child: Container(
-                                    height: _height / 4,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: _width / 1.2,
+                                  child: Card(
+                                    elevation: 6,
+                                    child: Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          width: _width / 2,
-                                          height: _height / 20,
-                                          child: TextField(
-                                            onEditingComplete: () {
-                                              date = initiativeController.text;
-                                            },
-                                            controller: initiativeController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              border: UnderlineInputBorder(),
-                                              hintText: 'Enter the date',
+                                          child: Center(
+                                            child: Image.network(
+                                              img['img'],
+                                              height: _height / 8,
+                                              width: _height / 6,
+                                              fit: BoxFit.fill,
+                                              alignment: Alignment.topRight,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           ),
                                         ),
                                         Container(
-                                          width: _width / 2,
-                                          height: _height / 20,
-                                          child: TextField(
-                                            onEditingComplete: () {
-                                              date = titleController.text;
-                                            },
-                                            controller: titleController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              border: UnderlineInputBorder(),
-                                              hintText: 'Enter the title',
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: _width / 2,
-                                          height: _height / 20,
-                                          child: TextField(
-                                            onEditingComplete: () {
-                                              date = videoUrlController.text;
-                                            },
-                                            controller: videoUrlController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              border: UnderlineInputBorder(),
-                                              hintText: 'Enter Video URL',
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: ElevatedButton(
-                                            child: Text('Select Image and add'),
-                                            onPressed: () {
-                                              selectFileToUpload();
-                                              Navigator.pop(context);
-                                            },
+                                          alignment: Alignment.centerLeft,
+                                          width: _width / 3,
+                                          child: Text(
+                                            doc["title"],
+                                            style: TextStyle(fontSize: 18),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     )
                   : Center(
@@ -449,6 +311,83 @@ class _EditVideoGalleryState extends State<EditVideoGallery> {
                       ),
                     );
         },
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 130),
+        child: ElevatedButton(
+          child: Text(
+            'Add Video',
+            style: TextStyle(fontSize: 18),
+          ),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              child: Container(
+                height: _height / 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          date = initiativeController.text;
+                        },
+                        controller: initiativeController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter the date',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          date = titleController.text;
+                        },
+                        controller: titleController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter the title',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          date = videoUrlController.text;
+                        },
+                        controller: videoUrlController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter Video URL',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        child: Text('Select Image and add'),
+                        onPressed: () {
+                          selectFileToUpload();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

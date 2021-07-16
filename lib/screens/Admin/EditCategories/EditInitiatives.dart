@@ -90,6 +90,68 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 102),
+        child: ElevatedButton(
+          child: Text(
+            'Add Highlight',
+            style: TextStyle(fontSize: 18),
+          ),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              child: Container(
+                height: _height / 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          desc = initiativeController.text;
+                        },
+                        controller: initiativeController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter the Link',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          desc = headingController.text;
+                        },
+                        controller: headingController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter the Heading',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        child: Text('Select Image and add'),
+                        onPressed: () {
+                          selectFileToUpload();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: Text('Edit Our Initiatives'),
       ),
@@ -102,286 +164,186 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                   child: Text('error'),
                 )
               : snapshot.hasData
-                  ? Scaffold(
-                      floatingActionButton: ElevatedButton(
-                        child: Text(
-                          'Add Highlight',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
+                  ? Container(
+                      color: Colors.grey[200],
+                      height: _height,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          var doc = snapshot.data.docs[index];
+                          var img = snapshot.data.docs[index];
+
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: _height / 4,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              height: _height / 6,
+                              child: Row(
                                 children: [
                                   Container(
-                                    width: _width / 2,
-                                    height: _height / 20,
-                                    child: TextField(
-                                      onEditingComplete: () {
-                                        desc = initiativeController.text;
-                                      },
-                                      controller: initiativeController,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        hintText: 'Enter the Link',
-                                      ),
+                                    width: _width / 12,
+                                    child: Center(
+                                      child: IconButton(
+                                          constraints: BoxConstraints.expand(),
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            editDescriptionController.text =
+                                                doc['desc'];
+                                            editHeadingController.text =
+                                                doc['heading'];
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => Dialog(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: _width / 2,
+                                                      child: TextField(
+                                                        onEditingComplete: () {
+                                                          editDesc =
+                                                              editDescriptionController
+                                                                  .text;
+                                                        },
+                                                        controller:
+                                                            editDescriptionController,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          border:
+                                                              UnderlineInputBorder(),
+                                                          hintText:
+                                                              'Enter Link',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      width: _width / 2,
+                                                      child: TextField(
+                                                        onEditingComplete: () {
+                                                          editHeading =
+                                                              editHeadingController
+                                                                  .text;
+                                                        },
+                                                        controller:
+                                                            editHeadingController,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          border:
+                                                              UnderlineInputBorder(),
+                                                          hintText:
+                                                              'Enter Heading',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          snapshot
+                                                              .data
+                                                              .docs[index]
+                                                              .reference
+                                                              .update({
+                                                            "desc":
+                                                                editDescriptionController
+                                                                    .text,
+                                                            "heading":
+                                                                editHeadingController
+                                                                    .text
+                                                          }).whenComplete(() =>
+                                                                  Navigator.pop(
+                                                                      context));
+                                                        },
+                                                        child: Text('Edit')),
+                                                    Container(
+                                                      child: ElevatedButton(
+                                                        onPressed: () {
+                                                          snapshot
+                                                              .data
+                                                              .docs[index]
+                                                              .reference
+                                                              .delete()
+                                                              .whenComplete(() =>
+                                                                  Navigator.pop(
+                                                                      context));
+                                                        },
+                                                        child: Text('Delete'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }),
                                     ),
                                   ),
                                   Container(
-                                    width: _width / 2,
-                                    height: _height / 20,
-                                    child: TextField(
-                                      onEditingComplete: () {
-                                        desc = headingController.text;
-                                      },
-                                      controller: headingController,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        hintText: 'Enter the Heading',
+                                    width: _width / 1.2,
+                                    child: Card(
+                                      clipBehavior: Clip.hardEdge,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(21))),
+                                      elevation: 6,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            width: _width / 3,
+                                            child: Text(
+                                              doc["heading"],
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Center(
+                                              child: Image.network(
+                                                img['url'],
+                                                height: _height / 8,
+                                                width: _height / 6,
+                                                fit: BoxFit.fill,
+                                                alignment: Alignment.topRight,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  }
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes
+                                                          : null,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: ElevatedButton(
-                                      child: Text('Select Image and add'),
-                                      onPressed: () {
-                                        selectFileToUpload();
-                                        Navigator.pop(context);
-                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      body: Container(
-                        height: _height,
-                        child: Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20)),
-                                height: _height,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data.docs.length,
-                                  itemBuilder: (context, index) {
-                                    var doc = snapshot.data.docs[index];
-                                    var img = snapshot.data.docs[index];
-
-                                    return Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: _height / 6,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 8,
-                                                  offset: Offset(0,
-                                                      3), // changes position of shadow
-                                                ),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Container(
-                                                  width: _width / 9,
-                                                  child: Center(
-                                                    child: IconButton(
-                                                        constraints:
-                                                            BoxConstraints
-                                                                .expand(),
-                                                        icon: Icon(Icons.edit),
-                                                        onPressed: () {
-                                                          editDescriptionController
-                                                                  .text =
-                                                              doc['desc'];
-                                                          editHeadingController
-                                                                  .text =
-                                                              doc['heading'];
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (context) =>
-                                                                    Dialog(
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Container(
-                                                                    width:
-                                                                        _width /
-                                                                            2,
-                                                                    child:
-                                                                        TextField(
-                                                                      onEditingComplete:
-                                                                          () {
-                                                                        editDesc =
-                                                                            editDescriptionController.text;
-                                                                      },
-                                                                      controller:
-                                                                          editDescriptionController,
-                                                                      obscureText:
-                                                                          false,
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                        border:
-                                                                            UnderlineInputBorder(),
-                                                                        hintText:
-                                                                            'Enter Link',
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Container(
-                                                                    width:
-                                                                        _width /
-                                                                            2,
-                                                                    child:
-                                                                        TextField(
-                                                                      onEditingComplete:
-                                                                          () {
-                                                                        editHeading =
-                                                                            editHeadingController.text;
-                                                                      },
-                                                                      controller:
-                                                                          editHeadingController,
-                                                                      obscureText:
-                                                                          false,
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                        border:
-                                                                            UnderlineInputBorder(),
-                                                                        hintText:
-                                                                            'Enter Heading',
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        snapshot
-                                                                            .data
-                                                                            .docs[
-                                                                                index]
-                                                                            .reference
-                                                                            .update({
-                                                                          "desc":
-                                                                              editDescriptionController.text,
-                                                                          "heading":
-                                                                              editHeadingController.text
-                                                                        }).whenComplete(() =>
-                                                                                Navigator.pop(context));
-                                                                      },
-                                                                      child: Text(
-                                                                          'Edit')),
-                                                                  Container(
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        snapshot
-                                                                            .data
-                                                                            .docs[
-                                                                                index]
-                                                                            .reference
-                                                                            .delete()
-                                                                            .whenComplete(() =>
-                                                                                Navigator.pop(context));
-                                                                      },
-                                                                      child: Text(
-                                                                          'Delete'),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  width: _width / 3,
-                                                  child: Text(
-                                                    doc["heading"],
-                                                    style:
-                                                        TextStyle(fontSize: 18),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Center(
-                                                    child: Image.network(
-                                                      img['url'],
-                                                      height: _height / 8,
-                                                      width: _height / 6,
-                                                      fit: BoxFit.fill,
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      loadingBuilder: (BuildContext
-                                                              context,
-                                                          Widget child,
-                                                          ImageChunkEvent
-                                                              loadingProgress) {
-                                                        if (loadingProgress ==
-                                                            null) {
-                                                          return child;
-                                                        }
-                                                        return Center(
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            value: loadingProgress
-                                                                        .expectedTotalBytes !=
-                                                                    null
-                                                                ? loadingProgress
-                                                                        .cumulativeBytesLoaded /
-                                                                    loadingProgress
-                                                                        .expectedTotalBytes
-                                                                : null,
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     )
                   : Center(
