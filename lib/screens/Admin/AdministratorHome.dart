@@ -49,6 +49,7 @@ class _CategoriesState extends State<Categories> {
       body: Container(
         alignment: Alignment.center,
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
