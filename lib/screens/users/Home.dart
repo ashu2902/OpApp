@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:opbhallafoundation/presentation/my_flutter_app_icons.dart';
 import 'package:opbhallafoundation/screens/SpotlightScreen.dart';
 import 'package:opbhallafoundation/screens/WebViewScreens/Donate.dart';
 
@@ -37,7 +38,7 @@ class _UserHomePageState extends State<UserHomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(Icons.attach_money_rounded,
+                    Icon(MyFlutterApp.rupee,
                         size: 29, color: Colors.white, semanticLabel: 'Donate'),
                     Text('Donate',
                         style: TextStyle(

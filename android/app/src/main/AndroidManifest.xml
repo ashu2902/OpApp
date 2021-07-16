@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.opbhallafoundation">
    <application
-        android:label="opbhallafoundation"
+        android:label="OPB Foundation"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity

@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class EditEventRegistrations extends StatefulWidget {
@@ -15,7 +11,6 @@ class _EditEventRegistrationsState extends State<EditEventRegistrations> {
   var eventTitle;
   var eventUrl;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   TextEditingController titleController = TextEditingController();
   TextEditingController urlController = TextEditingController();
 
