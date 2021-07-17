@@ -116,10 +116,15 @@ class _SpotlightState extends State<Spotlight> {
                                                           ]),
                                                         ),
                                                       ),
-                                                      Text(
-                                                        'Name: ${doc['Name']}',
-                                                        style: TextStyle(
-                                                            fontSize: 18),
+                                                      SingleChildScrollView(
+                                                        child: Container(
+                                                          width: _width / 2.7,
+                                                          child: Text(
+                                                            'Name: ${doc['Name']}',
+                                                            style: TextStyle(
+                                                                fontSize: 18),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),

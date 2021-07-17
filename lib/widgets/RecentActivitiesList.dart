@@ -177,12 +177,15 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
                                           Container(
                                             padding: EdgeInsets.all(4),
                                             height: _height / 4,
-                                            child: Text(
-                                              doc['title'],
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(fontSize: 18),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 4,
+                                            width: _width / 2.7,
+                                            child: SingleChildScrollView(
+                                              child: Text(
+                                                doc['title'],
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(fontSize: 18),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 4,
+                                              ),
                                             ),
                                           )
                                         ],

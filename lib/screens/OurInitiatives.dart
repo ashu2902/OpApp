@@ -42,72 +42,83 @@ class _OurInitiativesState extends State<OurInitiatives> {
               ? Container(child: Text('${snapshot.error}'))
               : snapshot.hasData
                   ? Container(
+                      alignment: Alignment.center,
                       color: Colors.grey[200],
                       padding: EdgeInsets.only(top: 30),
-                      child: GridView.builder(
-                          physics: BouncingScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: _height / 48,
-                                  mainAxisExtent: _height / 4.2,
-                                  crossAxisSpacing: 0,
-                                  crossAxisCount: 2),
-                          itemCount: snapshot.data.docs.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var doc = snapshot.data.docs[index].data();
-                            var img = snapshot.data.docs[index].data();
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 3),
-                              child: GestureDetector(
-                                child: Card(
-                                  clipBehavior: Clip.hardEdge,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(0.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Container(
-                                          height: _height / 5,
-                                          width: _width,
-                                          child: ClipRect(
-                                            clipBehavior: Clip.hardEdge,
-                                            child: Image.network(
-                                              img['url'],
-                                              filterQuality: FilterQuality.low,
-                                              fit: BoxFit.fill,
-                                              height: _height,
+                      child: Container(
+                        width: _width / 1.25,
+                        child: GridView.builder(
+                            physics: BouncingScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    mainAxisSpacing: _height / 48,
+                                    mainAxisExtent: _height / 3,
+                                    crossAxisSpacing: 0,
+                                    crossAxisCount: 1),
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var doc = snapshot.data.docs[index].data();
+                              var img = snapshot.data.docs[index].data();
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                child: GestureDetector(
+                                  child: Container(
+                                    child: Card(
+                                      clipBehavior: Clip.hardEdge,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(18)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: _height / 4.5,
                                               width: _width,
+                                              child: ClipRect(
+                                                clipBehavior: Clip.hardEdge,
+                                                child: Image.network(
+                                                  img['url'],
+                                                  filterQuality:
+                                                      FilterQuality.low,
+                                                  fit: BoxFit.fill,
+                                                  height: _height,
+                                                  width: _width,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  doc['heading'],
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        Container(
-                                            child: Center(
-                                          child: Text(
-                                            doc['heading'],
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                        ))
-                                      ],
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Initiatives(selectedUrl: doc['desc']),
                                     ),
                                   ),
                                 ),
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        Initiatives(selectedUrl: doc['desc']),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
+                              );
+                            }),
+                      ),
                     )
                   : Center(
                       child: CircularProgressIndicator(),
