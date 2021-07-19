@@ -65,7 +65,7 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                                       color: Colors.black,
                                                       child: Image.network(
                                                         e.get('url'),
-                                                        fit: BoxFit.fill,
+                                                        fit: BoxFit.cover,
                                                         width: _height / 2,
                                                         height: _height / 4,
                                                         loadingBuilder:

@@ -77,8 +77,8 @@ class _SpotlightState extends State<Spotlight> {
                                                               child:
                                                                   Image.network(
                                                                 img["img"],
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                                 width: _width /
                                                                     2.2,
                                                                 height: _height,
@@ -88,12 +88,14 @@ class _SpotlightState extends State<Spotlight> {
                                                               left: _width / 13,
                                                               bottom:
                                                                   _height / 66,
-                                                              child: Icon(
-                                                                Icons
-                                                                    .calendar_today_rounded,
-                                                                color: Colors
-                                                                    .white,
-                                                                size: 24,
+                                                              child: Container(
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .calendar_today_rounded,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  size: 24,
+                                                                ),
                                                               ),
                                                             ),
                                                             Positioned(
@@ -102,16 +104,23 @@ class _SpotlightState extends State<Spotlight> {
                                                                 bottom:
                                                                     _height /
                                                                         51,
-                                                                child: Text(
-                                                                  doc['Date'],
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          15,
-                                                                      color: Colors
-                                                                          .white),
+                                                                child:
+                                                                    Container(
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    doc['Date'],
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
                                                                 ))
                                                           ]),
                                                         ),
@@ -120,7 +129,9 @@ class _SpotlightState extends State<Spotlight> {
                                                         child: Container(
                                                           width: _width / 2.7,
                                                           child: Text(
-                                                            'Name: ${doc['Name']}',
+                                                            '${doc['Name']}',
+                                                            textAlign:
+                                                                TextAlign.start,
                                                             style: TextStyle(
                                                                 fontSize: 18),
                                                           ),
