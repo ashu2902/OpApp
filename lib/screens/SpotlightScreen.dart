@@ -26,7 +26,10 @@ class _SpotlightState extends State<Spotlight> {
           ),
         ),
         body: StreamBuilder(
-            stream: _firebaseFirestore.collection('Spotlights').snapshots(),
+            stream: _firebaseFirestore
+                .collection('Spotlights')
+                .orderBy('serial', descending: true)
+                .snapshots(),
             builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
               return snapshot.hasError
                   ? Container()

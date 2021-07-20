@@ -22,7 +22,10 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
       height: _height / 3.4,
       width: _width,
       child: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection("highlights").snapshots(),
+        stream: _firestore
+            .collection("highlights")
+            .orderBy('serial', descending: false)
+            .snapshots(),
         builder: (context, snapshot) {
           return snapshot.hasError
               ? Center(

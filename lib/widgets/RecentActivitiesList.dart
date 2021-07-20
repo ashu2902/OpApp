@@ -28,7 +28,10 @@ class _RecentActivitiesListState extends State<RecentActivitiesList> {
         // ],
       ),
       child: StreamBuilder(
-        stream: _firestore.collection('RecentActivities').snapshots(),
+        stream: _firestore
+            .collection('RecentActivities')
+            .orderBy('serial', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           return snapshot.hasError
               ? Center(
