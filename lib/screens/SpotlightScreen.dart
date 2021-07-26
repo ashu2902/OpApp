@@ -92,39 +92,68 @@ class _SpotlightState extends State<Spotlight> {
                                                               bottom:
                                                                   _height / 66,
                                                               child: Container(
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .calendar_today_rounded,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 24,
+                                                                color: Colors
+                                                                    .black
+                                                                    .withOpacity(
+                                                                        0.6),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .calendar_today_rounded,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        doc['Date'],
+                                                                        style: TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            fontSize:
+                                                                                15,
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                    )
+                                                                  ],
                                                                 ),
                                                               ),
                                                             ),
-                                                            Positioned(
-                                                                left:
-                                                                    _width / 7,
-                                                                bottom:
-                                                                    _height /
-                                                                        51,
-                                                                child:
-                                                                    Container(
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    doc['Date'],
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: Colors
-                                                                            .white),
-                                                                  ),
-                                                                ))
+                                                            // Positioned(
+                                                            //     left:
+                                                            //         _width / 7,
+                                                            //     bottom:
+                                                            //         _height /
+                                                            //             51,
+                                                            //     child:
+                                                            //         Container(
+                                                            //       color: Colors
+                                                            //           .black
+                                                            //           .withOpacity(
+                                                            //               0.0),
+                                                            //       child: Text(
+                                                            //         doc['Date'],
+                                                            //         style: TextStyle(
+                                                            //             fontWeight:
+                                                            //                 FontWeight
+                                                            //                     .bold,
+                                                            //             fontSize:
+                                                            //                 15,
+                                                            //             color: Colors
+                                                            //                 .white),
+                                                            //       ),
+                                                            //     ))
                                                           ]),
                                                         ),
                                                       ),

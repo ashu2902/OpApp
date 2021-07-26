@@ -130,15 +130,14 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                   ),
                                 );
                               },
-                              child: Stack(
-                                children: [
-                                  Card(
-                                    clipBehavior: Clip.hardEdge,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18)),
-                                    elevation: 3,
-                                    child: Container(
+                              child: Card(
+                                clipBehavior: Clip.hardEdge,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18)),
+                                elevation: 3,
+                                child: Stack(
+                                  children: [
+                                    Container(
                                       height: _height,
                                       width: _width,
                                       child: ClipRect(
@@ -151,25 +150,26 @@ class _HighlightsCarouselState extends State<HighlightsCarousel> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    child: Container(
-                                      height: _height / 10,
-                                      width: _width / 1.25,
-                                      color: Colors.white10.withOpacity(0.2),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          e.get('title'),
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(color: Colors.white),
+                                    Positioned(
+                                      bottom: 0,
+                                      child: Container(
+                                        height: _height / 10,
+                                        width: _width / 1.25,
+                                        color: Colors.black.withOpacity(0.6),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            e.get('title'),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           )

@@ -201,6 +201,26 @@ class _EventPageState extends State<EventPage> {
                                                 fit: BoxFit.fill,
                                                 filterQuality:
                                                     FilterQuality.medium,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent
+                                                            loadingProgress) {
+                                                  return loadingProgress == null
+                                                      ? child
+                                                      : Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes
+                                                              : null,
+                                                        ));
+                                                },
                                               ),
                                             ),
                                           ),

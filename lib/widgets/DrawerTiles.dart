@@ -125,18 +125,18 @@ class DrawerTiles extends StatelessWidget {
                           ),
                         );
                       }),
-                  ListTile(
-                      title: Text(
-                        'About Us',
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                      ),
-                      onTap: () {}),
-                  ListTile(
-                      title: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                      ),
-                      onTap: () {}),
+                  // ListTile(
+                  //     title: Text(
+                  //       'About Us',
+                  //       style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  //     ),
+                  //     onTap: () {}),
+                  // ListTile(
+                  //     title: Text(
+                  //       'Contact Us',
+                  //       style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                  //     ),
+                  //     onTap: () {}),
                 ],
               ),
             ]),
