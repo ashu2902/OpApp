@@ -31,6 +31,8 @@ class _EditHighlightsState extends State<EditHighlights> {
   TextEditingController editHighlightDescriptionController =
       TextEditingController();
 
+  var srno = "";
+  TextEditingController serialController = TextEditingController();
   var desc = '';
   TextEditingController highlightController = TextEditingController();
 
@@ -43,10 +45,12 @@ class _EditHighlightsState extends State<EditHighlights> {
   writeImageUrlToFireStore(imageUrl, desc) {
     desc = highlightController.text;
     title = titleController.text;
-    _firebaseFirestore
-        .collection("highlights")
-        .add({"url": imageUrl, "desc": desc, "title": title}).whenComplete(
-            () => print("$imageUrl is saved in Firestore. $desc"));
+    _firebaseFirestore.collection("highlights").add({
+      "url": imageUrl,
+      "desc": desc,
+      "title": title,
+      "serial": srno
+    }).whenComplete(() => print("$imageUrl is saved in Firestore. $desc"));
   }
 
   saveImageUrlToFirebase(UploadTask task) {
@@ -155,6 +159,21 @@ class _EditHighlightsState extends State<EditHighlights> {
                               Navigator.pop(context);
                               highlightController.clear();
                             },
+                          ),
+                        ),
+                        Container(
+                          width: _width / 2,
+                          height: _height / 20,
+                          child: TextField(
+                            onEditingComplete: () {
+                              srno = serialController.text;
+                            },
+                            controller: serialController,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                              hintText: 'Enter Serial Number',
+                            ),
                           ),
                         ),
                       ],
@@ -344,20 +363,12 @@ class _EditHighlightsState extends State<EditHighlights> {
                                               ),
                                             ),
                                           ),
-                                          Column(
-                                            children: [
-                                              Expanded(
-                                                child: Center(
-                                                  child: Text(
-                                                    doc["title"],
-                                                  ),
-                                                ),
+                                          Expanded(
+                                            child: Center(
+                                              child: Text(
+                                                doc["title"],
                                               ),
-                                              Text(
-                                                '(edit description from icon)',
-                                                style: TextStyle(fontSize: 10),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),

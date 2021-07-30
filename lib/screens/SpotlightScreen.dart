@@ -74,87 +74,60 @@ class _SpotlightState extends State<Spotlight> {
                                                                   BorderRadius
                                                                       .circular(
                                                                           30)),
-                                                          child:
-                                                              Stack(children: [
-                                                            Container(
-                                                              child:
-                                                                  Image.network(
-                                                                img["img"],
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                width: _width /
-                                                                    2.2,
-                                                                height: _height,
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                              left: _width / 13,
-                                                              bottom:
-                                                                  _height / 66,
-                                                              child: Container(
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.6),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .calendar_today_rounded,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        size:
-                                                                            24,
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      color: Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                              0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        doc['Date'],
-                                                                        style: TextStyle(
-                                                                            fontWeight: FontWeight
-                                                                                .bold,
-                                                                            fontSize:
-                                                                                15,
-                                                                            color:
-                                                                                Colors.white),
-                                                                      ),
-                                                                    )
-                                                                  ],
+                                                          child: Container(
+                                                            height: _height / 2,
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceEvenly,
+                                                              children: [
+                                                                Container(
+                                                                  height:
+                                                                      _height /
+                                                                          5.5,
+                                                                  child: Image
+                                                                      .network(
+                                                                    img["img"],
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    width:
+                                                                        _width /
+                                                                            2.2,
+                                                                  ),
                                                                 ),
-                                                              ),
+                                                                Container(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .calendar_today_rounded,
+                                                                          color:
+                                                                              Colors.black,
+                                                                          size:
+                                                                              24,
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        color: Colors
+                                                                            .black
+                                                                            .withOpacity(0.0),
+                                                                        child:
+                                                                            Text(
+                                                                          doc['Date'],
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 15,
+                                                                              color: Colors.black),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            // Positioned(
-                                                            //     left:
-                                                            //         _width / 7,
-                                                            //     bottom:
-                                                            //         _height /
-                                                            //             51,
-                                                            //     child:
-                                                            //         Container(
-                                                            //       color: Colors
-                                                            //           .black
-                                                            //           .withOpacity(
-                                                            //               0.0),
-                                                            //       child: Text(
-                                                            //         doc['Date'],
-                                                            //         style: TextStyle(
-                                                            //             fontWeight:
-                                                            //                 FontWeight
-                                                            //                     .bold,
-                                                            //             fontSize:
-                                                            //                 15,
-                                                            //             color: Colors
-                                                            //                 .white),
-                                                            //       ),
-                                                            //     ))
-                                                          ]),
+                                                          ),
                                                         ),
                                                       ),
                                                       SingleChildScrollView(

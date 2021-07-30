@@ -16,6 +16,9 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
   var heading = '';
   var editHeading = '';
 
+  var srno = "";
+  TextEditingController serialController = TextEditingController();
+
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -41,10 +44,12 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
   writeImageUrlToFireStore(imageUrl, desc, heading) {
     desc = initiativeController.text;
     heading = headingController.text;
-    _firebaseFirestore
-        .collection("OurInitiatives")
-        .add({"url": imageUrl, "desc": desc, "heading": heading}).whenComplete(
-            () => print("$imageUrl is saved in Firestore. $desc"));
+    _firebaseFirestore.collection("OurInitiatives").add({
+      "url": imageUrl,
+      "desc": desc,
+      "heading": heading,
+      "serial": srno
+    }).whenComplete(() => print("$imageUrl is saved in Firestore. $desc"));
   }
 
   saveImageUrlToFirebase(UploadTask task) {
@@ -133,6 +138,21 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           hintText: 'Enter the Heading',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: _width / 2,
+                      height: _height / 20,
+                      child: TextField(
+                        onEditingComplete: () {
+                          srno = serialController.text;
+                        },
+                        controller: serialController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter Serial Number',
                         ),
                       ),
                     ),
@@ -295,14 +315,6 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Container(
-                                            alignment: Alignment.centerLeft,
-                                            width: _width / 3,
-                                            child: Text(
-                                              doc["heading"],
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                          ),
-                                          Container(
                                             child: Center(
                                               child: Image.network(
                                                 img['url'],
@@ -333,6 +345,14 @@ class _EditOurInitiativesState extends State<EditOurInitiatives> {
                                                   );
                                                 },
                                               ),
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            width: _width / 3,
+                                            child: Text(
+                                              doc["heading"],
+                                              style: TextStyle(fontSize: 18),
                                             ),
                                           ),
                                         ],

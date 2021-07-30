@@ -12,7 +12,7 @@ class EditGallery extends StatefulWidget {
 
 class _EditGalleryState extends State<EditGallery> {
   String id;
-  var eventTitle;
+  var eventTitle = '';
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   TextEditingController titleController = TextEditingController();
@@ -318,6 +318,7 @@ class _EditGalleryState extends State<EditGallery> {
 
   List<File> selectedFiles = <File>[];
   List<UploadTask> uploadedTasks = <UploadTask>[];
+  int srno;
 
   uploadFileToStorage(File file) {
     UploadTask task = _firebaseStorage
@@ -339,9 +340,12 @@ class _EditGalleryState extends State<EditGallery> {
   }
 
   writeImageUrlToFireStore(imageUrl, id) {
-    _firestore.collection("Gallery").doc(id).collection('photo').add({
-      "url": imageUrl,
-    }).whenComplete(() => print("$imageUrl is saved in Firestore."));
+    _firestore
+        .collection("Gallery")
+        .doc(id)
+        .collection('photo')
+        .add({"url": imageUrl, "serial": srno}).whenComplete(
+            () => print("$imageUrl is saved in Firestore."));
   }
 
   Future selectFileToUpload(id) async {

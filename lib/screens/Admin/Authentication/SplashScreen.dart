@@ -28,9 +28,7 @@ class _AdminSplashScreenState extends State<AdminSplashScreen> {
       }
     });
     return Scaffold(
-        body: Center(
-            child: FlutterLogo(
-      size: 40,
-    )));
+      body: Center(child: Image.asset('FoundationLogo')),
+    );
   }
 }

@@ -32,6 +32,9 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
   var editTitle = "";
   TextEditingController editTitleController = TextEditingController();
 
+  var srno = "";
+  TextEditingController serialController = TextEditingController();
+
   var desc = '';
   TextEditingController highlightController = TextEditingController();
 
@@ -42,11 +45,14 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
   writeImageUrlToFireStore(imageUrl, desc) {
     desc = highlightController.text;
     title = titleController.text;
+    srno = serialController.text;
 
-    _firebaseFirestore
-        .collection("RecentActivities")
-        .add({"url": imageUrl, "desc": desc, "title": title}).whenComplete(
-            () => print("$imageUrl is saved in Firestore. $desc"));
+    _firebaseFirestore.collection("RecentActivities").add({
+      "url": imageUrl,
+      "desc": desc,
+      "title": title,
+      "serial": srno
+    }).whenComplete(() => print("$imageUrl is saved in Firestore. $desc"));
   }
 
   saveImageUrlToFirebase(UploadTask task) {
@@ -363,6 +369,21 @@ class _EditRecentActivitiesState extends State<EditRecentActivities> {
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(),
                         hintText: 'Enter Description',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: _width / 2,
+                    height: _height / 20,
+                    child: TextField(
+                      onEditingComplete: () {
+                        srno = serialController.text;
+                      },
+                      controller: serialController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        hintText: 'Enter Serial Number',
                       ),
                     ),
                   ),

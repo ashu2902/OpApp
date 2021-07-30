@@ -12,6 +12,7 @@ class EditSpotlights extends StatefulWidget {
 
 class _EditSpotlightsState extends State<EditSpotlights> {
   String id;
+  var srno;
   var eventTitle;
   var eventUrl;
   var date;
@@ -21,12 +22,15 @@ class _EditSpotlightsState extends State<EditSpotlights> {
   TextEditingController dateController = TextEditingController();
 
   TextEditingController urlController = TextEditingController();
+  TextEditingController serialController = TextEditingController();
 
   TextEditingController editTitleController = TextEditingController();
   TextEditingController editUrlController = TextEditingController();
   TextEditingController editDateController = TextEditingController();
+  TextEditingController editSerialController = TextEditingController();
 
   var editUrl;
+  var editSerial;
   var editTitle;
   var editDate;
 
@@ -90,6 +94,8 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                                 icon: Icon(Icons.edit_outlined),
                                                 onPressed: () {
                                                   //bottomSheet
+                                                  editSerialController.text =
+                                                      doc['serial'].toString();
                                                   editTitleController.text =
                                                       doc['Name'];
                                                   editUrlController.text =
@@ -115,6 +121,34 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                                             return SingleChildScrollView(
                                                               child: Column(
                                                                 children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            60),
+                                                                    child:
+                                                                        TextField(
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      onEditingComplete:
+                                                                          () {
+                                                                        editSerial =
+                                                                            editSerialController.text;
+                                                                      },
+                                                                      controller:
+                                                                          editSerialController,
+                                                                      obscureText:
+                                                                          false,
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        hintText:
+                                                                            'Edit Serial',
+                                                                        border:
+                                                                            UnderlineInputBorder(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                   Padding(
                                                                     padding: const EdgeInsets
                                                                             .symmetric(
@@ -213,6 +247,8 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                                                               .docs[index]
                                                                               .reference
                                                                               .update({
+                                                                            "serial":
+                                                                                int.parse(editSerialController.text),
                                                                             "Name":
                                                                                 editTitleController.text,
                                                                             "Date":
@@ -260,6 +296,7 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                               height: _height / 6,
                                               width: _width / 1.2,
                                               child: Card(
+                                                clipBehavior: Clip.hardEdge,
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -271,7 +308,14 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                                       height: _height,
                                                       width: _width / 3,
                                                     ),
-                                                    Text(doc["Name"]),
+                                                    Expanded(
+                                                      child: Text(
+                                                        doc["Name"],
+                                                        // maxLines: 1,
+                                                        // overflow: TextOverflow
+                                                        //     .ellipsis,
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -298,6 +342,19 @@ class _EditSpotlightsState extends State<EditSpotlights> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
+                                              Container(
+                                                width: _width / 2,
+                                                child: TextField(
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          'Enter Serial number'),
+                                                  controller: serialController,
+                                                  onEditingComplete: () {
+                                                    srno =
+                                                        serialController.text;
+                                                  },
+                                                ),
+                                              ),
                                               Container(
                                                 width: _width / 2,
                                                 child: TextField(
